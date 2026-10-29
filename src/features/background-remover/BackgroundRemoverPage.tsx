@@ -20,18 +20,24 @@ import { ProcessingResultPanel } from '@/components/common/ProcessingResultPanel
 import { AssetPickerDialog } from '@/components/image-picker/AssetPickerDialog';
 import { ImageAsset } from '@/types';
 import { assetService } from '@/services/storage/assetService';
+import { bgRemovalService } from '@/services/image-processing/bgRemovalService';
 import { toast } from 'sonner';
 
 type BgMode = 'transparent' | 'color' | 'image' | 'blur';
-type ToolMode = 'smart' | 'chroma' | 'brush';
+type ToolMode = 'ai' | 'smart' | 'chroma' | 'brush';
 type BrushAction = 'erase' | 'restore';
 
 export const BackgroundRemoverPage: React.FC = () => {
   // Segmentation Settings
-  const [toolMode, setToolMode] = useState<ToolMode>('smart');
+  const [toolMode, setToolMode] = useState<ToolMode>('ai');
   const [tolerance, setTolerance] = useState<number>(32); // 0-100
   const [feather, setFeather] = useState<number>(2); // 0-10px
   const [keyColor, setKeyColor] = useState<{ r: number; g: number; b: number }>({ r: 255, g: 255, b: 255 });
+
+  // AI state
+  const [isAiRunning, setIsAiRunning] = useState(false);
+  const [aiProgress, setAiProgress] = useState<{ stage: string; percent: number } | null>(null);
+  const currentBlobRef = useRef<Blob | null>(null);
 
   // Brush settings
   const [brushAction, setBrushAction] = useState<BrushAction>('erase');
@@ -79,6 +85,64 @@ export const BackgroundRemoverPage: React.FC = () => {
   const handleAssetLoaded = (asset: ImageAsset | null) => {
     setCurrentAsset(asset);
     resetAll();
+  };
+
+  const handleRunAiSegmentation = async (sourceBlob?: Blob | null) => {
+    const blobToProcess = sourceBlob || currentBlobRef.current;
+    if (!blobToProcess) {
+      toast.error('Please select an image first');
+      return;
+    }
+
+    setIsAiRunning(true);
+    setAiProgress({ stage: 'Initializing neural engine...', percent: 10 });
+
+    try {
+      const cutoutBlob = await bgRemovalService.removeBackgroundAI(blobToProcess, (p) => {
+        setAiProgress(p);
+      });
+
+      const url = URL.createObjectURL(cutoutBlob);
+      const cutoutImg = new Image();
+      cutoutImg.src = url;
+      await new Promise<void>((resolve, reject) => {
+        cutoutImg.onload = () => resolve();
+        cutoutImg.onerror = () => reject(new Error('Failed to load cutout image'));
+      });
+
+      const w = cutoutImg.naturalWidth;
+      const h = cutoutImg.naturalHeight;
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = w;
+      offCanvas.height = h;
+      const offCtx = offCanvas.getContext('2d', { willReadFrequently: true });
+      if (!offCtx) throw new Error('Canvas context failed');
+
+      offCtx.drawImage(cutoutImg, 0, 0);
+      const imgData = offCtx.getImageData(0, 0, w, h);
+      const data = imgData.data;
+
+      const newMask = new Uint8Array(w * h);
+      for (let i = 0; i < newMask.length; i++) {
+        newMask[i] = data[i * 4 + 3];
+      }
+
+      if (maskData) {
+        setMaskHistory((prev) => [...prev.slice(-4), maskData]);
+      }
+      setMaskData(newMask);
+      URL.revokeObjectURL(url);
+      toast.success('AI background removal completed with clean edges!');
+    } catch (err) {
+      console.error(err);
+      toast.error('AI segmentation issue. Switched to smart edge mode.');
+      if (originalImgRef.current) {
+        setMaskData(generateInitialMask(originalImgRef.current, tolerance));
+      }
+    } finally {
+      setIsAiRunning(false);
+      setAiProgress(null);
+    }
   };
 
   // Build the initial mask using smart edge/color heuristics
@@ -414,6 +478,10 @@ export const BackgroundRemoverPage: React.FC = () => {
           if (!selectedAsset || !originalBlob) return null;
 
           // Load original image reference if not yet loaded
+          if (originalBlob) {
+            currentBlobRef.current = originalBlob;
+          }
+
           if (!originalImgRef.current && originalBlob) {
             const url = URL.createObjectURL(originalBlob);
             loadedBlobUrlRef.current = url;
@@ -515,45 +583,100 @@ export const BackgroundRemoverPage: React.FC = () => {
               <label className="text-xs font-semibold text-zinc-300 uppercase tracking-wider">
                 Segmentation Method
               </label>
-              <div className="grid grid-cols-3 gap-1.5 p-1 bg-zinc-900 rounded-xl border border-zinc-800">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1 bg-zinc-900 rounded-xl border border-zinc-800">
+                <button
+                  type="button"
+                  onClick={() => setToolMode('ai')}
+                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all interactive-press ${
+                    toolMode === 'ai'
+                      ? 'bg-lime-400 text-black shadow-sm font-semibold'
+                      : 'text-zinc-400 hover:text-zinc-200'
+                  }`}
+                >
+                  <Sparkles className="w-4 h-4 mb-1 text-current" />
+                  <span>AI Neural</span>
+                </button>
                 <button
                   type="button"
                   onClick={() => setToolMode('smart')}
-                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all ${
+                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all interactive-press ${
                     toolMode === 'smart'
                       ? 'bg-lime-400 text-black shadow-sm font-semibold'
                       : 'text-zinc-400 hover:text-zinc-200'
                   }`}
                 >
-                  <Sparkles className="w-4 h-4 mb-1" />
-                  <span>Smart Auto</span>
+                  <Sliders className="w-4 h-4 mb-1 text-current" />
+                  <span>Edge Auto</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setToolMode('chroma')}
-                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all ${
+                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all interactive-press ${
                     toolMode === 'chroma'
                       ? 'bg-lime-400 text-black shadow-sm font-semibold'
                       : 'text-zinc-400 hover:text-zinc-200'
                   }`}
                 >
-                  <Pipette className="w-4 h-4 mb-1" />
+                  <Pipette className="w-4 h-4 mb-1 text-current" />
                   <span>Color Key</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setToolMode('brush')}
-                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all ${
+                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all interactive-press ${
                     toolMode === 'brush'
                       ? 'bg-lime-400 text-black shadow-sm font-semibold'
                       : 'text-zinc-400 hover:text-zinc-200'
                   }`}
                 >
-                  <Paintbrush className="w-4 h-4 mb-1" />
+                  <Paintbrush className="w-4 h-4 mb-1 text-current" />
                   <span>Brush Polish</span>
                 </button>
               </div>
             </div>
+
+            {/* AI Neural Engine Action Card */}
+            {toolMode === 'ai' && (
+              <div className="p-4 bg-zinc-900/90 rounded-xl border border-zinc-800 space-y-3 animate-fade-in">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Sparkles className="w-4 h-4 text-lime-400" />
+                    <span className="text-xs font-bold text-zinc-100">AI Background Removal</span>
+                  </div>
+                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-lime-400/20 text-lime-400 font-semibold">
+                    Deep Learning
+                  </span>
+                </div>
+                <p className="text-xs text-zinc-400 leading-relaxed">
+                  Uses on-device ONNX WebAssembly segmentation to automatically isolate people, products, vehicles, and pets with crisp hair and border details.
+                </p>
+
+                {aiProgress && (
+                  <div className="space-y-1.5 pt-1">
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-zinc-300">{aiProgress.stage}</span>
+                      <span className="text-lime-400 font-bold">{aiProgress.percent}%</span>
+                    </div>
+                    <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                      <div
+                        className="h-full bg-lime-400 rounded-full transition-all duration-200"
+                        style={{ width: `${aiProgress.percent}%` }}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={() => handleRunAiSegmentation()}
+                  disabled={isAiRunning}
+                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-lime-400 hover:bg-lime-300 disabled:opacity-50 text-black font-bold text-xs rounded-lg shadow-sm transition-all interactive-press cursor-pointer"
+                >
+                  <Sparkles className={`w-4 h-4 ${isAiRunning ? 'animate-spin' : ''}`} />
+                  <span>{isAiRunning ? 'Removing Background...' : '✨ Run AI Cutout'}</span>
+                </button>
+              </div>
+            )}
 
             {/* Chroma Color Picker Indicator if in chroma mode */}
             {toolMode === 'chroma' && (

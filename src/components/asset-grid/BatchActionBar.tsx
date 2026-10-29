@@ -1,17 +1,21 @@
 import React, { useState } from 'react';
-import { Download, Trash2, FolderInput, X } from 'lucide-react';
+import { Download, Trash2, FolderInput, X, Layers } from 'lucide-react';
 import { useAssetStore } from '@/stores/assetStore';
 import { useProjectStore } from '@/stores/projectStore';
 import { downloadService } from '@/services/export/downloadService';
+import { BatchQueueModal } from '@/features/batch-queue/BatchQueueModal';
 import { toast } from 'sonner';
 
 export const BatchActionBar: React.FC = () => {
-  const { selectedIds, clearSelection, batchSoftDelete, batchMove } = useAssetStore();
+  const { assets, selectedIds, clearSelection, batchSoftDelete, batchMove } = useAssetStore();
   const { projects } = useProjectStore();
   const [showMoveModal, setShowMoveModal] = useState(false);
+  const [showBatchModal, setShowBatchModal] = useState(false);
   const [targetProjectId, setTargetProjectId] = useState('');
 
   if (selectedIds.length === 0) return null;
+
+  const selectedAssets = assets.filter((a) => selectedIds.includes(a.id));
 
   const handleBulkDownload = async () => {
     try {
@@ -45,12 +49,21 @@ export const BatchActionBar: React.FC = () => {
 
         <div className="flex items-center gap-1.5 shrink-0">
           <button
+            onClick={() => setShowBatchModal(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-lime-400 hover:bg-lime-300 text-black text-xs font-semibold shadow-sm transition-all interactive-press"
+          >
+            <Layers className="w-3.5 h-3.5 fill-black/20" />
+            <span>Process Batch</span>
+          </button>
+
+          <button
             onClick={handleBulkDownload}
             className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium transition-colors interactive-press"
           >
             <Download className="w-3.5 h-3.5 text-lime-400" />
             <span>Download ZIP</span>
           </button>
+
 
           <button
             onClick={() => setShowMoveModal(true)}
@@ -118,6 +131,13 @@ export const BatchActionBar: React.FC = () => {
           </div>
         </div>
       )}
+
+      {/* Batch Processing Queue Dialog */}
+      <BatchQueueModal
+        initialAssets={selectedAssets}
+        isOpen={showBatchModal}
+        onClose={() => setShowBatchModal(false)}
+      />
     </>
   );
 };

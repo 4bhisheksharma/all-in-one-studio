@@ -34,14 +34,19 @@ export const TopBar: React.FC = () => {
   return (
     <header className="h-16 px-4 md:px-6 bg-[#111115]/80 backdrop-blur-md border-b border-[#22222a] flex items-center justify-between sticky top-0 z-30">
       <div className="flex items-center gap-3">
-        {/* Mobile menu toggle */}
-        <button
-          onClick={() => setMobileDrawerOpen(true)}
-          className="md:hidden p-2 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 focus:outline-none"
-          aria-label="Open sidebar"
-        >
-          <Menu className="w-5 h-5" />
-        </button>
+        {/* Mobile menu toggle & brand */}
+        <div className="flex items-center gap-2 md:hidden">
+          <button
+            onClick={() => setMobileDrawerOpen(true)}
+            className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 focus:outline-none"
+            aria-label="Open sidebar"
+          >
+            <Menu className="w-5 h-5" />
+          </button>
+          <Link to="/" className="w-6 h-6 rounded-md overflow-hidden border border-zinc-800/80 shrink-0">
+            <img src={`${import.meta.env.BASE_URL}imago-logo.png`} alt="Logo" className="w-full h-full object-cover" />
+          </Link>
+        </div>
 
         {/* Breadcrumb Navigation */}
         <nav className="flex items-center gap-1.5 text-xs text-zinc-400">

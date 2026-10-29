@@ -3,6 +3,7 @@ import { EyeOff, Play, Sparkles, Sliders, Trash2, Undo2, Plus, ScanFace } from '
 import { ToolLayout } from '@/components/layout/ToolLayout';
 import { ProcessingResultPanel } from '@/components/common/ProcessingResultPanel';
 import { ImageAsset } from '@/types';
+import { faceDetectionService } from '@/services/image-processing/faceDetectionService';
 import { toast } from 'sonner';
 
 interface BlurRegion {
@@ -192,36 +193,26 @@ export const FaceBlurPage: React.FC = () => {
     setDetectingFaces(true);
 
     try {
-      // Check for browser-native FaceDetector API
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      if ('FaceDetector' in window && typeof (window as any).FaceDetector === 'function') {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const faceDetector = new (window as any).FaceDetector({ fastMode: true, maxDetectedFaces: 10 });
-        const faces = await faceDetector.detect(imageObjRef.current);
+      const faces = await faceDetectionService.detectFaces(imageObjRef.current);
 
-        if (faces && faces.length > 0) {
-          const detectedRegions: BlurRegion[] = faces.map(
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (f: any) => ({
-              id: crypto.randomUUID(),
-              x: Math.round(f.boundingBox.x),
-              y: Math.round(f.boundingBox.y),
-              width: Math.round(f.boundingBox.width),
-              height: Math.round(f.boundingBox.height),
-            })
-          );
-          setRegions((prev) => [...prev, ...detectedRegions]);
-          toast.success(`Detected ${faces.length} face(s)`);
-        } else {
-          toast.info('No distinct faces detected automatically. Use manual selection.');
-        }
+      if (faces && faces.length > 0) {
+        const detectedRegions: BlurRegion[] = faces.map((f) => ({
+          id: f.id,
+          x: f.x,
+          y: f.y,
+          width: f.width,
+          height: f.height,
+        }));
+        setRegions((prev) => [...prev, ...detectedRegions]);
+        setActiveRegionId(detectedRegions[0]?.id || null);
+        toast.success(`Automatically detected ${faces.length} face region(s)`);
       } else {
-        // Heuristic fallback: create central face region
         handleAddDefaultRegion(asset);
-        toast.info('Added manual face region (native hardware detector not active on this browser)');
+        toast.info('Created central portrait region. You can drag or resize to fit.');
       }
     } catch {
       handleAddDefaultRegion(asset);
+      toast.info('Added focus region. You can adjust it freely.');
     } finally {
       setDetectingFaces(false);
     }

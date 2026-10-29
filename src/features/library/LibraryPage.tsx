@@ -13,12 +13,16 @@ import {
   List,
   Filter,
   CheckSquare,
-  Square
+  Square,
+  Sparkles,
 } from 'lucide-react';
 import { useAssetStore } from '@/stores/assetStore';
 import { useProjectStore } from '@/stores/projectStore';
 import { useUIStore } from '@/stores/uiStore';
 import { ImageAsset, AssetSortOption } from '@/types';
+import { SmartCollection } from '@/types/smartCollection';
+import { smartCollectionService } from '@/services/storage/smartCollectionService';
+import { SmartCollectionsBar } from '@/components/smart-collections/SmartCollectionsBar';
 
 export const LibraryPage: React.FC = () => {
   const { assets, filter, setFilter, fetchAssets, selectedIds, selectAll, clearSelection } = useAssetStore();
@@ -26,11 +30,16 @@ export const LibraryPage: React.FC = () => {
   const { viewMode, setViewMode, setActiveUploadModal } = useUIStore();
 
   const [previewAsset, setPreviewAsset] = useState<ImageAsset | null>(null);
+  const [selectedCollection, setSelectedCollection] = useState<SmartCollection | null>(null);
 
   useEffect(() => {
     fetchAssets({ isTrash: false });
     fetchProjects();
   }, [fetchAssets, fetchProjects]);
+
+  const displayedAssets = selectedCollection
+    ? smartCollectionService.filterAssets(assets, selectedCollection)
+    : assets;
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilter({ search: e.target.value });
@@ -50,13 +59,13 @@ export const LibraryPage: React.FC = () => {
     setFilter({ mimeType: val === 'all' ? undefined : val });
   };
 
-  const allSelected = assets.length > 0 && selectedIds.length === assets.length;
+  const allSelected = displayedAssets.length > 0 && selectedIds.length === displayedAssets.length;
 
   const handleToggleSelectAll = () => {
     if (allSelected) {
       clearSelection();
     } else {
-      selectAll(assets.map((a) => a.id));
+      selectAll(displayedAssets.map((a) => a.id));
     }
   };
 
@@ -76,6 +85,13 @@ export const LibraryPage: React.FC = () => {
         }
       />
 
+      {/* Dynamic Smart Asset Collections Bar */}
+      <SmartCollectionsBar
+        assets={assets}
+        selectedCollectionId={selectedCollection?.id || null}
+        onSelectCollection={setSelectedCollection}
+      />
+
       {/* Filter & Controls Toolbar */}
       <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-3 p-3 rounded-xl bg-[#121216] border border-[#23232c]">
         {/* Search Input */}
@@ -93,7 +109,7 @@ export const LibraryPage: React.FC = () => {
         {/* Filter Dropdowns & View Mode */}
         <div className="flex flex-wrap items-center gap-2">
           {/* Select All Checkbox Button */}
-          {assets.length > 0 && (
+          {displayedAssets.length > 0 && (
             <button
               onClick={handleToggleSelectAll}
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-[#0e0e12] border border-[#242430] text-xs font-medium text-zinc-300 hover:text-zinc-100 transition-colors"
@@ -184,30 +200,44 @@ export const LibraryPage: React.FC = () => {
       </div>
 
       {/* Asset Content: Grid or List */}
-      {assets.length === 0 ? (
+      {displayedAssets.length === 0 ? (
         <EmptyState
           icon={Images}
-          title={filter.search ? "No images match your search" : "Your library is empty"}
+          title={
+            selectedCollection
+              ? `No images match "${selectedCollection.name}"`
+              : filter.search
+              ? "No images match your search"
+              : "Your library is empty"
+          }
           description={
-            filter.search
+            selectedCollection
+              ? "This smart collection rule currently has no matching assets. Any new matching image added to your library will appear here automatically."
+              : filter.search
               ? `No images found matching "${filter.search}". Try clearing your filters.`
               : "Drag and drop image files anywhere or click Upload to populate your workspace."
           }
           action={{
-            label: filter.search ? "Clear Search" : "Upload Image",
+            label: selectedCollection
+              ? "Clear Smart Filter"
+              : filter.search
+              ? "Clear Search"
+              : "Upload Image",
             onClick: () => {
-              if (filter.search) {
+              if (selectedCollection) {
+                setSelectedCollection(null);
+              } else if (filter.search) {
                 setFilter({ search: '' });
               } else {
                 setActiveUploadModal(true);
               }
             },
-            icon: filter.search ? Filter : UploadCloud,
+            icon: selectedCollection ? Sparkles : filter.search ? Filter : UploadCloud,
           }}
         />
       ) : viewMode === 'grid' ? (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3.5 sm:gap-4">
-          {assets.map((asset) => (
+          {displayedAssets.map((asset) => (
             <AssetCard key={asset.id} asset={asset} onOpenPreview={setPreviewAsset} />
           ))}
         </div>
@@ -226,7 +256,7 @@ export const LibraryPage: React.FC = () => {
               </tr>
             </thead>
             <tbody>
-              {assets.map((asset) => (
+              {displayedAssets.map((asset) => (
                 <AssetListRow key={asset.id} asset={asset} onOpenPreview={setPreviewAsset} />
               ))}
             </tbody>

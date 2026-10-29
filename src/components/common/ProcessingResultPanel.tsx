@@ -28,6 +28,8 @@ interface ProcessingResultPanelProps {
   outputHeight: number;
   variantType: VariantType;
   metadata?: Record<string, unknown>;
+  operationNote?: string;
+  toolId?: string;
   onClose: () => void;
   onSaved?: (newAsset: ImageAsset) => void;
 }
@@ -39,6 +41,8 @@ export const ProcessingResultPanel: React.FC<ProcessingResultPanelProps> = ({
   outputHeight,
   variantType,
   metadata = {},
+  operationNote,
+  toolId,
   onClose,
   onSaved,
 }) => {
@@ -81,7 +85,10 @@ export const ProcessingResultPanel: React.FC<ProcessingResultPanelProps> = ({
         resultBlob,
         variantType,
         metadata,
-        targetProjectId || null
+        targetProjectId || null,
+        undefined,
+        operationNote,
+        toolId
       );
       setSavedAsset(newAsset);
       await fetchAssets();
@@ -111,7 +118,10 @@ export const ProcessingResultPanel: React.FC<ProcessingResultPanelProps> = ({
           resultBlob,
           variantType,
           metadata,
-          targetProjectId || null
+          targetProjectId || null,
+          undefined,
+          operationNote,
+          toolId
         )
         .then(async (newAsset) => {
           await fetchAssets();

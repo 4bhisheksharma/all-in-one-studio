@@ -27,6 +27,10 @@ export interface ImageAsset {
   isTrash: boolean;
   deletedAt: number | null;
   originalAssetId: string | null; // null for originals, parent id for derived
+  rootAssetId?: string | null; // ID of the root original asset
+  version?: number; // 1 for original, 2, 3... for derived transformations
+  operationNote?: string; // e.g. "Resized to 1200x800", "Compressed with WebP 80%"
+  toolId?: string; // identifier of the tool or recipe that created this version
   variantType: VariantType | null;
   variantMeta: Record<string, unknown> | null;
   thumbnailBlobId: string | null;

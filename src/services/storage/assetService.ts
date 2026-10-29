@@ -53,6 +53,10 @@ export const assetService = {
       isTrash: false,
       deletedAt: null,
       originalAssetId: null,
+      rootAssetId: id,
+      version: 1,
+      operationNote: 'Original image uploaded',
+      toolId: 'upload',
       variantType: null,
       variantMeta: null,
       thumbnailBlobId: id,
@@ -273,7 +277,9 @@ export const assetService = {
     variantType: VariantType,
     meta: Record<string, unknown> = {},
     projectId: string | null = null,
-    customFilename?: string
+    customFilename?: string,
+    operationNote?: string,
+    toolId?: string
   ): Promise<ImageAsset> {
     const id = crypto.randomUUID();
     const now = Date.now();
@@ -291,6 +297,30 @@ export const assetService = {
 
     const { width, height, thumbnailBlob } = await generateThumbnail(blob);
 
+    const rootAssetId = parent ? (parent.rootAssetId || parent.originalAssetId || parent.id) : id;
+    const version = parent ? ((parent.version || 1) + 1) : 1;
+
+    let defaultNote = operationNote;
+    if (!defaultNote) {
+      if (variantType === 'compressed') {
+        defaultNote = `Compressed with quality ${meta?.quality ?? 'auto'}`;
+      } else if (variantType === 'resized') {
+        defaultNote = `Resized to ${width}×${height}px`;
+      } else if (variantType === 'cropped') {
+        defaultNote = `Cropped to ${width}×${height}px`;
+      } else if (variantType === 'bg-removed') {
+        defaultNote = 'Neural AI background removed';
+      } else if (variantType === 'watermarked') {
+        defaultNote = 'Applied watermark signature';
+      } else if (variantType === 'blurred') {
+        defaultNote = 'Applied blur privacy protection';
+      } else if (variantType === 'converted') {
+        defaultNote = `Converted to ${blob.type.replace('image/', '').toUpperCase()}`;
+      } else {
+        defaultNote = `Applied ${variantType} transformation`;
+      }
+    }
+
     const asset: ImageAsset = {
       id,
       filename,
@@ -303,11 +333,15 @@ export const assetService = {
       updatedAt: now,
       projectId: projectId !== undefined ? projectId : (parent ? parent.projectId : null),
       folderId: parent ? parent.folderId : null,
-      tags: parent ? [...parent.tags, variantType] : [variantType],
+      tags: parent ? Array.from(new Set([...parent.tags, variantType])) : [variantType],
       isFavorite: false,
       isTrash: false,
       deletedAt: null,
       originalAssetId: derivedFromId,
+      rootAssetId,
+      version,
+      operationNote: defaultNote,
+      toolId: toolId || variantType,
       variantType,
       variantMeta: meta,
       thumbnailBlobId: id,
@@ -315,10 +349,63 @@ export const assetService = {
 
     await db.transaction('rw', [db.assets, db.assetBlobs, db.thumbnailBlobs], async () => {
       await db.assets.add(asset);
-      await db.assetBlobs.add({ id, blob, mimeType: asset.mimeType });
+      await db.assetBlobs.add({ id, blob: blob, mimeType: asset.mimeType });
       await db.thumbnailBlobs.add({ id, blob: thumbnailBlob });
     });
 
     return asset;
   },
+
+  /**
+   * Retrieve full lineage / version history of an asset (original + all derived transformations).
+   */
+  async getAssetHistory(assetId: string): Promise<ImageAsset[]> {
+    const current = await db.assets.get(assetId);
+    if (!current) return [];
+
+    const rootId = current.rootAssetId || current.originalAssetId || current.id;
+
+    // Fetch all assets that belong to this lineage
+    const all = await db.assets
+      .filter((a) => !a.isTrash && (a.id === rootId || a.rootAssetId === rootId || a.originalAssetId === rootId))
+      .toArray();
+
+    // Sort chronologically
+    all.sort((a, b) => (a.version ?? 1) - (b.version ?? 1) || a.createdAt - b.createdAt);
+
+    // If current was somehow not included, include it
+    if (!all.some((a) => a.id === current.id)) {
+      all.push(current);
+    }
+
+    return all;
+  },
+
+  /**
+   * Restore an earlier version as a new head in the lineage.
+   */
+  async restoreAssetVersion(targetVersionId: string): Promise<ImageAsset> {
+    const target = await db.assets.get(targetVersionId);
+    if (!target) {
+      throw new Error('Version asset not found');
+    }
+
+    const blob = await this.getAssetBlob(targetVersionId);
+    if (!blob) {
+      throw new Error('Asset binary data not found');
+    }
+
+    const note = `Restored from v${target.version ?? 1} (${target.filename})`;
+    return this.saveProcessedImage(
+      targetVersionId,
+      blob,
+      target.variantType || 'other',
+      { restoredFromVersion: target.version ?? 1, restoredFromId: targetVersionId },
+      target.projectId,
+      undefined,
+      note,
+      'restore'
+    );
+  },
 };
+

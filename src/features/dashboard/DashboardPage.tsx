@@ -5,7 +5,6 @@ import {
   FolderPlus,
   Minimize2,
   Maximize2,
-  Crop,
   Layers,
   Sparkles,
   EyeOff,
@@ -13,6 +12,7 @@ import {
   Images,
   ArrowRight,
   Wand2,
+  Smartphone,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useUIStore } from '@/stores/uiStore';
@@ -37,14 +37,14 @@ export const DashboardPage: React.FC = () => {
   }, [fetchAssets, fetchProjects]);
 
   const quickTools = [
-    { title: 'Smart Recipes', desc: 'Batch apply multi-step sequences to 50+ images', to: '/recipes', icon: Wand2, color: 'text-lime-400' },
+    { title: 'Batch Queue', desc: 'Process entire collections with skip rules & retry', to: '/batch-queue', icon: Layers, color: 'text-lime-400' },
+    { title: 'App Asset Generator', desc: 'Android, iOS Xcode & Favicon production bundles', to: '/tools/app-icons', icon: Smartphone, color: 'text-cyan-400' },
+    { title: 'Smart Recipes', desc: 'Batch apply multi-step sequences to 50+ images', to: '/recipes', icon: Wand2, color: 'text-purple-400' },
     { title: 'Studio Canvas', desc: 'Freeform multi-layer composition & editing canvas', to: '/tools/canvas', icon: Layers, color: 'text-sky-400' },
     { title: 'Compressor', desc: 'Reduce file size while preserving quality', to: '/tools/compress', icon: Minimize2, color: 'text-emerald-400' },
-    { title: 'Resizer', desc: 'Precise dimensions & social presets', to: '/tools/resize', icon: Maximize2, color: 'text-cyan-400' },
-    { title: 'Cropper', desc: 'Crop, rotate & flip aspect ratios', to: '/tools/crop', icon: Crop, color: 'text-amber-400' },
-    { title: 'Collage Maker', desc: 'Arrange multiple images into grid layouts', to: '/tools/collage', icon: Layers, color: 'text-pink-400' },
-    { title: 'Remove BG', desc: 'On-device client AI segmentation', to: '/tools/background-remove', icon: Sparkles, color: 'text-purple-400' },
-    { title: 'Face & Blur', desc: 'Conceal faces and sensitive regions', to: '/tools/face-blur', icon: EyeOff, color: 'text-blue-400' },
+    { title: 'Remove BG', desc: 'Neural AI foreground segmentation', to: '/tools/background-remove', icon: Sparkles, color: 'text-pink-400' },
+    { title: 'Resizer', desc: 'Precise dimensions & social presets', to: '/tools/resize', icon: Maximize2, color: 'text-amber-400' },
+    { title: 'Face & Blur', desc: 'Auto-detect faces & blur sensitive regions', to: '/tools/face-blur', icon: EyeOff, color: 'text-blue-400' },
   ];
 
   const recentAssets = assets.slice(0, 6);

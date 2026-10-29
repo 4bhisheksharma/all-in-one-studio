@@ -21,6 +21,8 @@ import { UtilitiesPage } from '@/features/utilities/UtilitiesPage';
 import { CanvasStudioPage } from '@/features/canvas-studio/CanvasStudioPage';
 import { RecipesPage } from '@/features/recipes/RecipesPage';
 import { SettingsPage } from '@/features/settings/SettingsPage';
+import { AppIconGeneratorPage } from '@/features/app-icons/AppIconGeneratorPage';
+import { BatchQueuePage } from '@/features/batch-queue/BatchQueuePage';
 
 export const router = createBrowserRouter([
   {
@@ -36,10 +38,12 @@ export const router = createBrowserRouter([
       { path: 'drafts', element: <DraftsPage /> },
       { path: 'trash', element: <TrashPage /> },
 
+      { path: 'batch-queue', element: <BatchQueuePage /> },
       { path: 'recipes', element: <RecipesPage /> },
       { path: 'tools/recipes', element: <RecipesPage /> },
       { path: 'canvas', element: <CanvasStudioPage /> },
       { path: 'tools/canvas', element: <CanvasStudioPage /> },
+      { path: 'tools/app-icons', element: <AppIconGeneratorPage /> },
       { path: 'tools/compress', element: <CompressorPage /> },
       { path: 'tools/resize', element: <ResizerPage /> },
       { path: 'tools/crop', element: <CropperPage /> },

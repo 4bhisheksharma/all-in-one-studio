@@ -17,6 +17,7 @@ import {
   FolderKanban,
   Star,
   ChevronRight,
+  Smartphone,
 } from 'lucide-react';
 
 export const BottomNav: React.FC = () => {
@@ -29,6 +30,8 @@ export const BottomNav: React.FC = () => {
     !location.pathname.includes('/recipes');
 
   const tools = [
+    { title: 'App Icon Generator', to: '/tools/app-icons', icon: Smartphone, color: 'text-cyan-400' },
+    { title: 'Batch Queue', to: '/batch-queue', icon: Layers, color: 'text-lime-400' },
     { title: 'Compressor', to: '/tools/compress', icon: Minimize2, color: 'text-emerald-400' },
     { title: 'Resizer', to: '/tools/resize', icon: Maximize2, color: 'text-sky-400' },
     { title: 'Cropper', to: '/tools/crop', icon: Crop, color: 'text-cyan-400' },

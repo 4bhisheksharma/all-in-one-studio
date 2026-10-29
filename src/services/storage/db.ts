@@ -1,5 +1,5 @@
 import Dexie, { type EntityTable, type Table } from 'dexie';
-import { ImageAsset, Project, Folder, EditorDraft, UserPreferences } from '@/types';
+import { ImageAsset, Project, Folder, EditorDraft, UserPreferences, SmartCollection } from '@/types';
 import { ImageRecipe } from '@/features/recipes/types';
 
 export interface AssetBlobRecord {
@@ -22,6 +22,7 @@ export class ImagoDatabase extends Dexie {
   drafts!: EntityTable<EditorDraft, 'id'>;
   preferences!: EntityTable<UserPreferences, 'id'>;
   recipes!: Table<ImageRecipe, string>;
+  smartCollections!: Table<SmartCollection, string>;
 
   constructor() {
     super('imago_workspace_db');
@@ -38,6 +39,11 @@ export class ImagoDatabase extends Dexie {
 
     this.version(2).stores({
       recipes: 'id, name, category, createdAt, updatedAt',
+    });
+
+    this.version(3).stores({
+      assets: 'id, projectId, folderId, isTrash, isFavorite, createdAt, updatedAt, mimeType, filename, originalAssetId, rootAssetId, variantType',
+      smartCollections: 'id, name, createdAt, updatedAt',
     });
   }
 }

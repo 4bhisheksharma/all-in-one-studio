@@ -25,8 +25,8 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   X,
-  Palette,
   Wand2,
+  Smartphone,
 } from 'lucide-react';
 import { useUIStore } from '@/stores/uiStore';
 import { cn, formatBytes } from '@/utils/cn';
@@ -99,15 +99,15 @@ export const Sidebar: React.FC<{ isMobile?: boolean }> = ({ isMobile }) => {
       {/* Brand Header */}
       <div className={cn('flex items-center px-4 h-16 border-b border-[#22222a]', collapsed ? 'justify-center' : 'justify-between')}>
         <NavLink to="/" onClick={handleLinkClick} className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-lime-400 flex items-center justify-center text-black font-bold shadow-[0_0_12px_rgba(163,230,53,0.35)] transition-transform group-hover:scale-105">
-            <Palette className="w-5 h-5 text-black" />
+          <div className="w-8 h-8 rounded-lg overflow-hidden border border-zinc-800 shadow-[0_0_12px_rgba(163,230,53,0.2)] transition-transform group-hover:scale-105 shrink-0 bg-[#0a0a0c]">
+            <img src={`${import.meta.env.BASE_URL}imago-logo.png`} alt="Imago Logo" className="w-full h-full object-cover" />
           </div>
           {!collapsed && (
             <div className="flex flex-col">
               <span className="font-bold text-sm tracking-wide text-zinc-100 flex items-center gap-1.5">
-                IMAGO <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.2 rounded bg-lime-400/20 text-lime-400 font-mono">Studio</span>
+                IMAGO <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.2 rounded bg-lime-400/15 text-lime-400 font-mono">Studio</span>
               </span>
-              <span className="text-[10px] text-zinc-500">Image Workspace</span>
+              <span className="text-[10px] text-zinc-500 font-medium">Minimal Image Suite</span>
             </div>
           )}
         </NavLink>
@@ -166,6 +166,7 @@ export const Sidebar: React.FC<{ isMobile?: boolean }> = ({ isMobile }) => {
         <div className="space-y-1">
           <NavItem to="/" icon={LayoutDashboard} label="Dashboard" collapsed={collapsed} onClick={handleLinkClick} />
           <NavItem to="/library" icon={Images} label="All Images" collapsed={collapsed} onClick={handleLinkClick} />
+          <NavItem to="/batch-queue" icon={Layers} label="Batch Queue" badge="QUEUE" collapsed={collapsed} onClick={handleLinkClick} />
           <NavItem to="/projects" icon={FolderKanban} label="Projects" collapsed={collapsed} onClick={handleLinkClick} />
           <NavItem to="/recent" icon={Clock} label="Recent Files" collapsed={collapsed} onClick={handleLinkClick} />
           <NavItem to="/favorites" icon={Star} label="Favorites" collapsed={collapsed} onClick={handleLinkClick} />
@@ -192,6 +193,7 @@ export const Sidebar: React.FC<{ isMobile?: boolean }> = ({ isMobile }) => {
 
           {(toolsOpen || collapsed) && (
             <div className="space-y-1 pl-1">
+              <NavItem to="/tools/app-icons" icon={Smartphone} label="App Icon Generator" badge="PRO" collapsed={collapsed} onClick={handleLinkClick} />
               <NavItem to="/recipes" icon={Wand2} label="Smart Recipes" badge="AUTO" collapsed={collapsed} onClick={handleLinkClick} />
               <NavItem to="/tools/canvas" icon={Layers} label="Studio Canvas" badge="PRO" collapsed={collapsed} onClick={handleLinkClick} />
               <NavItem to="/tools/compress" icon={Minimize2} label="Compressor" collapsed={collapsed} onClick={handleLinkClick} />
