@@ -9,9 +9,12 @@ import { useUIStore } from '@/stores/uiStore';
 
 import { BottomNav } from './BottomNav';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
+import { useDynamicDocumentTitle } from '@/hooks/useDynamicDocumentTitle';
 
 export const AppShell: React.FC = () => {
   const { mobileDrawerOpen, setMobileDrawerOpen, theme, initTheme } = useUIStore();
+
+  useDynamicDocumentTitle();
 
   useEffect(() => {
     initTheme();

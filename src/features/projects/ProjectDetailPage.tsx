@@ -10,6 +10,7 @@ import { ArrowLeft, UploadCloud, Trash2, Images } from 'lucide-react';
 import { useAssetStore } from '@/stores/assetStore';
 import { useProjectStore } from '@/stores/projectStore';
 import { ImageAsset, Project } from '@/types';
+import { useDynamicDocumentTitle } from '@/hooks/useDynamicDocumentTitle';
 
 export const ProjectDetailPage: React.FC = () => {
   const { id } = useParams<{ id: string }>();
@@ -21,6 +22,8 @@ export const ProjectDetailPage: React.FC = () => {
   const [project, setProject] = useState<Project | null>(null);
   const [showUploadZone, setShowUploadZone] = useState(false);
   const [previewAsset, setPreviewAsset] = useState<ImageAsset | null>(null);
+
+  useDynamicDocumentTitle(project ? `${project.name}` : undefined);
 
   useEffect(() => {
     fetchProjects();
