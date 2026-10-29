@@ -116,7 +116,7 @@ html.dark ::-webkit-scrollbar-thumb:hover {
   animation: scaleIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-/* Minimal Interactive Card States (Clean Linear/Vercel Aesthetic) */
+/* Minimal Interactive Card States */
 .interactive-card {
   transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
@@ -139,43 +139,67 @@ html.dark .interactive-card:hover {
   opacity: 0.9;
 }
 
-/* White Theme / Light Mode Comprehensive Layer */
+/* =========================================================
+   COMPREHENSIVE WHITE THEME / LIGHT MODE STYLES
+   ========================================================= */
 html:not(.dark) {
   color-scheme: light;
 }
 
+/* Page, Body & Canvas Layouts */
 html:not(.dark) body,
+html:not(.dark) .bg-\[\#09090c\],
 html:not(.dark) .bg-\[\#0a0a0c\],
+html:not(.dark) .bg-\[\#0a0a0d\],
 html:not(.dark) .bg-\[\#0e0e11\],
 html:not(.dark) .bg-\[\#0e0e12\],
 html:not(.dark) .bg-\[\#0e0e13\],
-html:not(.dark) .bg-\[\#0e0e13\]\/92 {
+html:not(.dark) .bg-\[\#0e0e13\]\/92,
+html:not(.dark) .bg-\[\#0f0f13\],
+html:not(.dark) .bg-\[\#0f0f14\] {
   background-color: #f8fafc !important;
   color: #09090b !important;
 }
 
+/* Surface, Cards, Headers, Drawers & Modals */
+html:not(.dark) .bg-\[\#101014\],
 html:not(.dark) .bg-\[\#111115\],
 html:not(.dark) .bg-\[\#111115\]\/80,
+html:not(.dark) .bg-\[\#111116\],
 html:not(.dark) .bg-\[\#121216\],
 html:not(.dark) .bg-\[\#121217\],
 html:not(.dark) .bg-\[\#131317\],
 html:not(.dark) .bg-\[\#131318\],
 html:not(.dark) .bg-\[\#141418\],
 html:not(.dark) .bg-\[\#141419\],
+html:not(.dark) .bg-\[\#141419\]\/95,
+html:not(.dark) .bg-\[\#14141a\],
+html:not(.dark) .bg-\[\#15151c\],
 html:not(.dark) .bg-\[\#16161b\],
+html:not(.dark) .bg-\[\#16161c\],
+html:not(.dark) .bg-\[\#16161d\],
+html:not(.dark) .bg-\[\#18181f\],
 html:not(.dark) .bg-\[\#181820\],
-html:not(.dark) .bg-\[\#181822\] {
+html:not(.dark) .bg-\[\#181822\],
+html:not(.dark) .bg-\[\#1b1b22\],
+html:not(.dark) .bg-\[\#22222a\] {
   background-color: #ffffff !important;
 }
 
+/* Inset Wells, Image Viewports & Secondary Cards */
+html:not(.dark) .bg-\[\#0c0c0e\],
+html:not(.dark) .bg-\[\#0c0c10\],
+html:not(.dark) .bg-\[\#0d0d10\],
+html:not(.dark) .bg-\[\#0d0d11\],
 html:not(.dark) .bg-zinc-950,
 html:not(.dark) .bg-zinc-900 {
   background-color: #f1f5f9 !important;
 }
 
 html:not(.dark) .bg-zinc-900\/80,
+html:not(.dark) .bg-zinc-900\/60,
 html:not(.dark) .bg-zinc-900\/50,
-html:not(.dark) .bg-zinc-900\/60 {
+html:not(.dark) .bg-zinc-900\/40 {
   background-color: #f8fafc !important;
 }
 
@@ -187,22 +211,54 @@ html:not(.dark) .bg-zinc-800\/40 {
   background-color: #e2e8f0 !important;
 }
 
-html:not(.dark) .border-\[\#22222a\],
-html:not(.dark) .border-\[\#23232c\],
-html:not(.dark) .border-\[\#262632\],
-html:not(.dark) .border-\[\#2a2a36\],
+/* Hover States in Light Mode */
+html:not(.dark) .hover\:bg-zinc-800:hover,
+html:not(.dark) .hover\:bg-zinc-900:hover,
+html:not(.dark) .hover\:bg-\[\#16161d\]:hover,
+html:not(.dark) .hover\:bg-\[\#181820\]:hover {
+  background-color: #f1f5f9 !important;
+}
+
+/* All Hex & Zinc Borders in Light Mode */
+html:not(.dark) .border-\[\#1c1c24\],
 html:not(.dark) .border-\[\#1e1e26\],
+html:not(.dark) .border-\[\#1e1e28\],
+html:not(.dark) .border-\[\#20202a\],
+html:not(.dark) .border-\[\#22222a\],
+html:not(.dark) .border-\[\#22222c\],
+html:not(.dark) .border-\[\#22222d\],
+html:not(.dark) .border-\[\#23232c\],
+html:not(.dark) .border-\[\#23232d\],
+html:not(.dark) .border-\[\#242430\],
+html:not(.dark) .border-\[\#252530\],
+html:not(.dark) .border-\[\#252532\],
+html:not(.dark) .border-\[\#262630\],
+html:not(.dark) .border-\[\#262632\],
+html:not(.dark) .border-\[\#262634\],
+html:not(.dark) .border-\[\#272736\],
+html:not(.dark) .border-\[\#282834\],
+html:not(.dark) .border-\[\#282836\],
+html:not(.dark) .border-\[\#2a2a36\],
+html:not(.dark) .border-\[\#2b2b38\],
+html:not(.dark) .border-\[\#2b2b3a\],
+html:not(.dark) .border-\[\#2c2c38\],
+html:not(.dark) .border-\[\#2d2d3a\],
+html:not(.dark) .border-\[\#2e2e3c\],
 html:not(.dark) .border-zinc-800,
-html:not(.dark) .border-zinc-800\/80 {
+html:not(.dark) .border-zinc-800\/80,
+html:not(.dark) .border-zinc-800\/50 {
   border-color: #e2e8f0 !important;
 }
 
 html:not(.dark) .border-zinc-700,
+html:not(.dark) .border-zinc-700\/60,
 html:not(.dark) .border-zinc-700\/50,
-html:not(.dark) .border-zinc-700\/60 {
+html:not(.dark) .border-zinc-700\/40,
+html:not(.dark) .hover\:border-zinc-700:hover {
   border-color: #cbd5e1 !important;
 }
 
+/* Typography & Contrast in Light Mode */
 html:not(.dark) .text-zinc-100,
 html:not(.dark) .text-zinc-200 {
   color: #09090b !important;
@@ -221,14 +277,40 @@ html:not(.dark) .text-zinc-600 {
   color: #94a3b8 !important;
 }
 
-html:not(.dark) select,
+/* Form Controls & Inputs in Light Mode */
 html:not(.dark) input[type="text"],
 html:not(.dark) input[type="number"],
+html:not(.dark) input[type="search"],
+html:not(.dark) select,
 html:not(.dark) textarea {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
   color: #09090b !important;
 }
 
-/* Restrained, Minimalist Button & Accent System (Non-Vibe-Coded) */
+html:not(.dark) input::placeholder,
+html:not(.dark) textarea::placeholder {
+  color: #94a3b8 !important;
+}
+
+/* Sliders / Range Inputs in Light Mode */
+html:not(.dark) input[type="range"] {
+  accent-color: #09090b !important;
+}
+
+/* Shadows on Modals & Menus in Light Mode */
+html:not(.dark) .shadow-2xl,
+html:not(.dark) .shadow-xl {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04) !important;
+}
+
+/* Canvas Studio Background & Dot Grid in Light Mode */
+html:not(.dark) .bg-\[radial-gradient\(\#1c1c24_1px\,transparent_1px\)\] {
+  background-image: radial-gradient(#cbd5e1 1px, transparent 1px) !important;
+  background-color: #f1f5f9 !important;
+}
+
+/* Clean Button System (High-Contrast Monochrome in both themes) */
 .bg-lime-400 {
   background-color: #f4f4f5 !important;
   color: #09090b !important;
@@ -237,6 +319,22 @@ html:not(.dark) textarea {
 html:not(.dark) .bg-lime-400 {
   background-color: #09090b !important;
   color: #ffffff !important;
+}
+
+html:not(.dark) .bg-lime-400 * {
+  color: #ffffff !important;
+}
+
+html:not(.dark) .bg-lime-400 svg {
+  stroke: #ffffff !important;
+}
+
+html.dark .bg-lime-400 * {
+  color: #09090b !important;
+}
+
+html.dark .bg-lime-400 svg {
+  stroke: #09090b !important;
 }
 
 .hover\:bg-lime-300:hover {
@@ -258,34 +356,34 @@ html:not(.dark) .text-lime-300 {
 }
 
 .border-lime-400,
-.border-lime-400\/30,
-.border-lime-400\/40,
+.border-lime-400\/60,
 .border-lime-400\/50,
-.border-lime-400\/60 {
+.border-lime-400\/40,
+.border-lime-400\/30 {
   border-color: #3f3f46 !important;
 }
 
 html:not(.dark) .border-lime-400,
-html:not(.dark) .border-lime-400\/30,
-html:not(.dark) .border-lime-400\/40,
+html:not(.dark) .border-lime-400\/60,
 html:not(.dark) .border-lime-400\/50,
-html:not(.dark) .border-lime-400\/60 {
+html:not(.dark) .border-lime-400\/40,
+html:not(.dark) .border-lime-400\/30 {
   border-color: #cbd5e1 !important;
 }
 
-.bg-lime-400\/5,
-.bg-lime-400\/10,
-.bg-lime-400\/15,
+.bg-lime-400\/30,
 .bg-lime-400\/20,
-.bg-lime-400\/30 {
+.bg-lime-400\/15,
+.bg-lime-400\/10,
+.bg-lime-400\/5 {
   background-color: rgba(255, 255, 255, 0.08) !important;
 }
 
-html:not(.dark) .bg-lime-400\/5,
-html:not(.dark) .bg-lime-400\/10,
-html:not(.dark) .bg-lime-400\/15,
+html:not(.dark) .bg-lime-400\/30,
 html:not(.dark) .bg-lime-400\/20,
-html:not(.dark) .bg-lime-400\/30 {
+html:not(.dark) .bg-lime-400\/15,
+html:not(.dark) .bg-lime-400\/10,
+html:not(.dark) .bg-lime-400\/5 {
   background-color: rgba(0, 0, 0, 0.05) !important;
 }
 
@@ -298,4 +396,3 @@ html:not(.dark) .bg-lime-400\/30 {
     height: 100dvh;
   }
 }
-

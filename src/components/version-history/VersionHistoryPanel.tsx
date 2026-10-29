@@ -183,7 +183,7 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
               <button
                 onClick={() => setCompareMode('side-by-side')}
                 className={`flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium transition-colors ${
-                  compareMode === 'side-by-side' ? 'bg-zinc-800 text-lime-400 shadow' : 'text-zinc-400 hover:text-zinc-200'
+                  compareMode === 'side-by-side' ? 'bg-zinc-800 text-zinc-100 shadow' : 'text-zinc-400 hover:text-zinc-200'
                 }`}
               >
                 <Columns className="w-3 h-3" />
@@ -195,7 +195,7 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
           <button
             onClick={() => handleRestore(selectedVersionA)}
             disabled={restoring}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-lime-400 hover:bg-lime-300 text-black font-semibold text-xs transition-all shadow-sm active:scale-95 disabled:opacity-50"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-white text-zinc-900 font-semibold text-xs transition-all shadow-sm active:scale-95 disabled:opacity-50 cursor-pointer"
             title="Restore this version as newest library asset"
           >
             <RotateCcw className={`w-3.5 h-3.5 ${restoring ? 'animate-spin' : ''}`} />
@@ -242,16 +242,16 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
 
               {/* Divider Line */}
               <div
-                className="absolute top-4 bottom-4 w-0.5 bg-lime-400 shadow-[0_0_12px_rgba(163,230,53,0.8)] pointer-events-none z-20"
+                className="absolute top-4 bottom-4 w-0.5 bg-zinc-200 dark:bg-zinc-300 shadow-md pointer-events-none z-20"
                 style={{ left: `${sliderPosition}%` }}
               >
-                <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-7 h-7 rounded-full bg-black border-2 border-lime-400 flex items-center justify-center shadow-lg text-lime-400">
-                  <Columns className="w-3.5 h-3.5 rotate-90" />
+                <div className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-6 h-6 rounded-full bg-zinc-900 border-2 border-zinc-200 flex items-center justify-center shadow-md text-zinc-100">
+                  <Columns className="w-3 h-3 rotate-90" />
                 </div>
               </div>
 
               {/* Badges Overlay */}
-              <div className="absolute top-6 left-6 z-10 px-2.5 py-1 rounded bg-black/80 backdrop-blur border border-zinc-800 text-[11px] text-lime-400 font-mono">
+              <div className="absolute top-6 left-6 z-10 px-2.5 py-1 rounded bg-black/80 backdrop-blur border border-zinc-800 text-[11px] text-zinc-200 font-mono">
                 v{selectedVersionA.version ?? 1} (Left)
               </div>
               <div className="absolute top-6 right-6 z-10 px-2.5 py-1 rounded bg-black/80 backdrop-blur border border-zinc-800 text-[11px] text-cyan-400 font-mono">
@@ -348,9 +348,9 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
                   key={item.id}
                   className={`p-3 rounded-xl border transition-all cursor-pointer relative ${
                     isSelectedA
-                      ? 'bg-lime-400/10 border-lime-400/60 shadow-[0_0_15px_rgba(163,230,53,0.1)]'
+                      ? 'bg-zinc-800/80 border-zinc-500 shadow-sm'
                       : isSelectedB
-                      ? 'bg-cyan-400/10 border-cyan-400/60'
+                      ? 'bg-zinc-800/50 border-zinc-600'
                       : 'bg-[#18181f] border-[#262634] hover:border-zinc-700'
                   }`}
                   onClick={() => {
@@ -363,7 +363,7 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2">
                       <span className={`text-[11px] font-mono font-bold px-1.5 py-0.5 rounded ${
-                        isRoot ? 'bg-zinc-800 text-zinc-300' : 'bg-lime-400/20 text-lime-400'
+                        isRoot ? 'bg-zinc-800 text-zinc-300' : 'bg-zinc-800 text-zinc-300 font-mono'
                       }`}>
                         v{item.version ?? (index + 1)}
                       </span>
@@ -374,12 +374,12 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
 
                     <div className="flex items-center gap-1">
                       {isSelectedA && (
-                        <span className="text-[10px] bg-lime-400 text-black px-1.5 py-0.2 rounded font-bold">
+                        <span className="text-[10px] bg-zinc-100 text-zinc-900 px-1.5 py-0.5 rounded font-bold">
                           Active
                         </span>
                       )}
                       {isSelectedB && !isSelectedA && (
-                        <span className="text-[10px] bg-cyan-400 text-black px-1.5 py-0.2 rounded font-bold">
+                        <span className="text-[10px] bg-zinc-700 text-zinc-200 px-1.5 py-0.5 rounded font-bold">
                           Compare
                         </span>
                       )}
