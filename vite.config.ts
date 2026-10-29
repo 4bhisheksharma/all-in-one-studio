@@ -5,7 +5,7 @@ import { defineConfig } from 'vite'
 
 // https://vite.dev/config/
 export default defineConfig({
-  base: process.env.BASE_PATH || (process.env.GITHUB_ACTIONS ? '/all-in-one-studio/' : '/'),
+  base: process.env.BASE_PATH || '/',
   plugins: [
     react(),
     tailwindcss(),
