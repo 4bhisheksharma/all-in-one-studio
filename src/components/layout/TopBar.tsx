@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import { Menu, UploadCloud, ChevronRight, Home, ShieldCheck } from 'lucide-react';
+import { Menu, UploadCloud, ChevronRight, Home, ShieldCheck, Sun, Moon } from 'lucide-react';
 import { useUIStore } from '@/stores/uiStore';
 
 const ROUTE_LABELS: Record<string, string> = {
@@ -26,7 +26,7 @@ const ROUTE_LABELS: Record<string, string> = {
 };
 
 export const TopBar: React.FC = () => {
-  const { setMobileDrawerOpen, setActiveUploadModal } = useUIStore();
+  const { setMobileDrawerOpen, setActiveUploadModal, theme, toggleTheme } = useUIStore();
   const location = useLocation();
 
   const pathSegments = location.pathname.split('/').filter(Boolean);
@@ -83,17 +83,27 @@ export const TopBar: React.FC = () => {
       </div>
 
       {/* Right Actions */}
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2.5">
         {/* Privacy badge */}
         <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-900 border border-zinc-800 text-[11px] text-zinc-400">
-          <ShieldCheck className="w-3.5 h-3.5 text-lime-400" />
+          <ShieldCheck className="w-3.5 h-3.5 text-zinc-400" />
           <span>Local Client Processing</span>
         </div>
+
+        {/* Theme Switcher Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="p-2 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 transition-colors cursor-pointer border border-transparent hover:border-zinc-700/50"
+          title={theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'}
+          aria-label="Toggle theme"
+        >
+          {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+        </button>
 
         {/* Global Upload Button */}
         <button
           onClick={() => setActiveUploadModal(true)}
-          className="flex items-center gap-2 px-3 py-1.5 bg-lime-400 hover:bg-lime-300 text-black font-semibold text-xs rounded-lg shadow-sm transition-all duration-150 active:scale-95"
+          className="flex items-center gap-2 px-3.5 py-1.5 bg-zinc-100 hover:bg-white text-zinc-900 font-semibold text-xs rounded-lg shadow-sm transition-all duration-150 active:scale-95 cursor-pointer"
         >
           <UploadCloud className="w-4 h-4" />
           <span className="hidden sm:inline">Upload Images</span>

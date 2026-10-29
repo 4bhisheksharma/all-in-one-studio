@@ -2,7 +2,7 @@ export type ViewMode = 'grid' | 'list';
 
 export interface UserPreferences {
   id: string; // 'user_preferences'
-  theme: 'dark';
+  theme: 'dark' | 'light' | 'system';
   defaultFormat: 'image/webp' | 'image/jpeg' | 'image/png';
   defaultQuality: number;
   sidebarCollapsed: boolean;

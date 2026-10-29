@@ -37,14 +37,14 @@ export const DashboardPage: React.FC = () => {
   }, [fetchAssets, fetchProjects]);
 
   const quickTools = [
-    { title: 'Batch Queue', desc: 'Process entire collections with skip rules & retry', to: '/batch-queue', icon: Layers, color: 'text-lime-400' },
-    { title: 'App Asset Generator', desc: 'Android, iOS Xcode & Favicon production bundles', to: '/tools/app-icons', icon: Smartphone, color: 'text-cyan-400' },
-    { title: 'Smart Recipes', desc: 'Batch apply multi-step sequences to 50+ images', to: '/recipes', icon: Wand2, color: 'text-purple-400' },
-    { title: 'Studio Canvas', desc: 'Freeform multi-layer composition & editing canvas', to: '/tools/canvas', icon: Layers, color: 'text-sky-400' },
-    { title: 'Compressor', desc: 'Reduce file size while preserving quality', to: '/tools/compress', icon: Minimize2, color: 'text-emerald-400' },
-    { title: 'Remove BG', desc: 'Neural AI foreground segmentation', to: '/tools/background-remove', icon: Sparkles, color: 'text-pink-400' },
-    { title: 'Resizer', desc: 'Precise dimensions & social presets', to: '/tools/resize', icon: Maximize2, color: 'text-amber-400' },
-    { title: 'Face & Blur', desc: 'Auto-detect faces & blur sensitive regions', to: '/tools/face-blur', icon: EyeOff, color: 'text-blue-400' },
+    { title: 'Batch Queue', desc: 'Process entire collections with skip rules & retry', to: '/batch-queue', icon: Layers },
+    { title: 'App Asset Generator', desc: 'Android, iOS Xcode & Favicon production bundles', to: '/tools/app-icons', icon: Smartphone },
+    { title: 'Smart Recipes', desc: 'Batch apply multi-step sequences to 50+ images', to: '/recipes', icon: Wand2 },
+    { title: 'Studio Canvas', desc: 'Freeform multi-layer composition & editing canvas', to: '/tools/canvas', icon: Layers },
+    { title: 'Compressor', desc: 'Reduce file size while preserving quality', to: '/tools/compress', icon: Minimize2 },
+    { title: 'Remove BG', desc: 'Neural AI foreground segmentation', to: '/tools/background-remove', icon: Sparkles },
+    { title: 'Resizer', desc: 'Precise dimensions & social presets', to: '/tools/resize', icon: Maximize2 },
+    { title: 'Face & Blur', desc: 'Auto-detect faces & blur sensitive regions', to: '/tools/face-blur', icon: EyeOff },
   ];
 
   const recentAssets = assets.slice(0, 6);
@@ -65,7 +65,7 @@ export const DashboardPage: React.FC = () => {
             </button>
             <button
               onClick={() => setActiveUploadModal(true)}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-lime-400 hover:bg-lime-300 text-black text-xs font-semibold shadow-sm transition-all"
+              className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-zinc-100 hover:bg-white text-zinc-900 text-xs font-semibold shadow-sm transition-all"
             >
               <UploadCloud className="w-4 h-4" />
               <span>Upload Images</span>
@@ -76,72 +76,72 @@ export const DashboardPage: React.FC = () => {
 
       {/* Live Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-in">
-        <div className="interactive-card p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-xs text-zinc-400">Total Images</span>
             <p className="text-2xl font-bold text-zinc-100 font-mono">{assets.length}</p>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-zinc-800/80 flex items-center justify-center text-lime-400">
+          <div className="w-10 h-10 rounded-lg bg-zinc-800/80 flex items-center justify-center text-zinc-300">
             <Images className="w-5 h-5" />
           </div>
         </div>
 
-        <div className="interactive-card p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-xs text-zinc-400">Active Projects</span>
             <p className="text-2xl font-bold text-zinc-100 font-mono">{projects.length}</p>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-zinc-800/80 flex items-center justify-center text-cyan-400">
+          <div className="w-10 h-10 rounded-lg bg-zinc-800/80 flex items-center justify-center text-zinc-300">
             <FolderPlus className="w-5 h-5" />
           </div>
         </div>
 
-        <div className="interactive-card p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-xs text-zinc-400">Storage Used</span>
             <p className="text-2xl font-bold text-zinc-100 font-mono">{formatBytes(storageUsed)}</p>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-zinc-800/80 flex items-center justify-center text-amber-400">
+          <div className="w-10 h-10 rounded-lg bg-zinc-800/80 flex items-center justify-center text-zinc-300">
             <HardDrive className="w-5 h-5" />
           </div>
         </div>
 
-        <div className="interactive-card p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
+        <div className="p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-xs text-zinc-400">Privacy Mode</span>
-            <p className="text-sm font-semibold text-lime-400">100% Client-Side</p>
+            <p className="text-sm font-semibold text-zinc-200">100% Client-Side</p>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-lime-400/10 flex items-center justify-center text-lime-400">
+          <div className="w-10 h-10 rounded-lg bg-zinc-800/80 flex items-center justify-center text-zinc-300">
             <Sparkles className="w-5 h-5" />
           </div>
         </div>
       </div>
 
-      {/* Featured Recipe Banner: Smart Image Recipes (Top Pick) */}
-      <div className="interactive-card p-5 rounded-2xl bg-gradient-to-r from-lime-950/40 via-[#181820] to-[#121217] border border-lime-400/30 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-[0_0_30px_rgba(163,230,53,0.05)]">
+      {/* Featured Recipe Banner: Smart Image Recipes */}
+      <div className="p-5 rounded-2xl bg-[#141418] border border-[#23232c] flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-start sm:items-center gap-3.5">
-          <div className="w-12 h-12 rounded-xl bg-lime-400/20 border border-lime-400/30 flex items-center justify-center text-lime-400 text-2xl shrink-0">
-            🛍️
+          <div className="w-11 h-11 rounded-xl bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-zinc-100 shrink-0">
+            <Wand2 className="w-5 h-5 text-zinc-200" />
           </div>
           <div className="space-y-1">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded bg-lime-400 text-black">
-                TOP PICK
+              <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700/60">
+                Automation
               </span>
-              <h3 className="text-sm font-bold text-zinc-100">Smart Image Recipes</h3>
-              <span className="text-xs text-zinc-400">• Automation Pipeline</span>
+              <h3 className="text-sm font-semibold text-zinc-100">Smart Image Recipes</h3>
+              <span className="text-xs text-zinc-400">• Pipeline Execution</span>
             </div>
-            <p className="text-xs text-zinc-300 max-w-2xl">
-              Save a complete sequence of operations (e.g. <strong>Website Product Image</strong>: resize 1200×1200, rounded corners, convert to WebP, compress &lt;150KB) and batch apply to 50+ images at once.
+            <p className="text-xs text-zinc-400 max-w-2xl leading-relaxed">
+              Chain multi-step transformations (e.g. Website Product Image: resize 1200×1200, rounded corners, convert to WebP, compress under 150KB) and batch apply to library assets in one click.
             </p>
           </div>
         </div>
 
         <Link
           to="/recipes"
-          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs shadow-md transition-all shrink-0 cursor-pointer interactive-press"
+          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-100 hover:bg-white text-zinc-900 font-semibold text-xs shadow-sm transition-all shrink-0 cursor-pointer"
         >
-          <Wand2 className="w-4 h-4 fill-black" />
+          <Wand2 className="w-4 h-4 text-zinc-900" />
           <span>Open Smart Recipes</span>
         </Link>
       </div>
@@ -161,7 +161,7 @@ export const DashboardPage: React.FC = () => {
                 className="interactive-card group p-4 rounded-xl bg-[#131317] border border-[#22222a] hover:border-zinc-700 hover:bg-[#181820] transition-all flex flex-col justify-between h-36"
               >
                 <div className="flex items-center justify-between">
-                  <div className={`w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center ${tool.color}`}>
+                  <div className="w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 group-hover:text-zinc-100 transition-colors">
                     <Icon className="w-4 h-4" />
                   </div>
                   <ArrowRight className="w-4 h-4 text-zinc-600 group-hover:text-zinc-300 group-hover:translate-x-0.5 transition-all" />

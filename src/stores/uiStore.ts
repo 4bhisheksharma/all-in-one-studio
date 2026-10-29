@@ -1,7 +1,10 @@
 import { create } from 'zustand';
 import { ViewMode } from '@/types';
 
+export type AppTheme = 'dark' | 'light' | 'system';
+
 interface UIState {
+  theme: AppTheme;
   sidebarCollapsed: boolean;
   mobileDrawerOpen: boolean;
   viewMode: ViewMode;
@@ -9,6 +12,9 @@ interface UIState {
   storageQuota: number;
   activeUploadModal: boolean;
   activeCreateProjectModal: boolean;
+  setTheme: (theme: AppTheme) => void;
+  toggleTheme: () => void;
+  initTheme: () => void;
   toggleSidebar: () => void;
   setSidebarCollapsed: (collapsed: boolean) => void;
   setMobileDrawerOpen: (open: boolean) => void;
@@ -19,7 +25,32 @@ interface UIState {
   setActiveCreateProjectModal: (open: boolean) => void;
 }
 
-export const useUIStore = create<UIState>((set) => ({
+const applyThemeToDOM = (theme: AppTheme) => {
+  if (typeof window === 'undefined') return;
+  const isDark =
+    theme === 'dark' ||
+    (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+  if (isDark) {
+    document.documentElement.classList.add('dark');
+    document.documentElement.setAttribute('data-theme', 'dark');
+  } else {
+    document.documentElement.classList.remove('dark');
+    document.documentElement.setAttribute('data-theme', 'light');
+  }
+};
+
+const getStoredTheme = (): AppTheme => {
+  if (typeof window === 'undefined') return 'dark';
+  const saved = localStorage.getItem('imago_theme') as AppTheme | null;
+  if (saved && (saved === 'dark' || saved === 'light' || saved === 'system')) {
+    return saved;
+  }
+  return 'dark';
+};
+
+export const useUIStore = create<UIState>((set, get) => ({
+  theme: getStoredTheme(),
   sidebarCollapsed: false,
   mobileDrawerOpen: false,
   viewMode: 'grid',
@@ -27,6 +58,34 @@ export const useUIStore = create<UIState>((set) => ({
   storageQuota: 0,
   activeUploadModal: false,
   activeCreateProjectModal: false,
+
+  setTheme: (theme: AppTheme) => {
+    localStorage.setItem('imago_theme', theme);
+    applyThemeToDOM(theme);
+    set({ theme });
+  },
+
+  toggleTheme: () => {
+    const current = get().theme;
+    const next: AppTheme = current === 'dark' ? 'light' : 'dark';
+    get().setTheme(next);
+  },
+
+  initTheme: () => {
+    const theme = getStoredTheme();
+    applyThemeToDOM(theme);
+    set({ theme });
+
+    if (typeof window !== 'undefined') {
+      const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+      mediaQuery.addEventListener('change', () => {
+        if (get().theme === 'system') {
+          applyThemeToDOM('system');
+        }
+      });
+    }
+  },
+
   toggleSidebar: () => set((state) => ({ sidebarCollapsed: !state.sidebarCollapsed })),
   setSidebarCollapsed: (collapsed) => set({ sidebarCollapsed: collapsed }),
   setMobileDrawerOpen: (open) => set({ mobileDrawerOpen: open }),

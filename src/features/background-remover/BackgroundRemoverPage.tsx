@@ -673,7 +673,7 @@ export const BackgroundRemoverPage: React.FC = () => {
                   className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-lime-400 hover:bg-lime-300 disabled:opacity-50 text-black font-bold text-xs rounded-lg shadow-sm transition-all interactive-press cursor-pointer"
                 >
                   <Sparkles className={`w-4 h-4 ${isAiRunning ? 'animate-spin' : ''}`} />
-                  <span>{isAiRunning ? 'Removing Background...' : '✨ Run AI Cutout'}</span>
+                  <span>{isAiRunning ? 'Removing Background...' : 'Remove Background with AI'}</span>
                 </button>
               </div>
             )}

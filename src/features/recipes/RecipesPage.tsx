@@ -16,6 +16,7 @@ import { projectService } from '@/services/storage/projectService';
 import { Project } from '@/types';
 import { RecipeBuilderModal } from './RecipeBuilderModal';
 import { BatchExecutionModal } from './BatchExecutionModal';
+import { RecipeIcon } from './RecipeIcon';
 import { toast } from 'sonner';
 
 export const RecipesPage: React.FC = () => {
@@ -128,18 +129,18 @@ export const RecipesPage: React.FC = () => {
         <Filter className="w-3.5 h-3.5 text-zinc-500 mr-1 shrink-0" />
         {[
           { id: 'all', label: 'All Recipes' },
-          { id: 'ecommerce', label: '🛍️ E-Commerce' },
-          { id: 'social', label: '📱 Social Media' },
-          { id: 'web', label: '⚡ Web Performance' },
-          { id: 'branding', label: '🛡️ Branding' },
-          { id: 'custom', label: '✨ My Custom Recipes' },
+          { id: 'ecommerce', label: 'E-Commerce' },
+          { id: 'social', label: 'Social Media' },
+          { id: 'web', label: 'Web Performance' },
+          { id: 'branding', label: 'Branding' },
+          { id: 'custom', label: 'Custom Recipes' },
         ].map((cat) => (
           <button
             key={cat.id}
             onClick={() => setActiveCategory(cat.id)}
             className={`px-3 py-1.5 rounded-lg font-medium transition-all shrink-0 cursor-pointer ${
               activeCategory === cat.id
-                ? 'bg-zinc-800 text-lime-400 border border-zinc-700 shadow-sm'
+                ? 'bg-zinc-800 text-zinc-100 border border-zinc-700 shadow-sm'
                 : 'text-zinc-400 hover:text-zinc-200 hover:bg-zinc-900'
             }`}
           >
@@ -156,7 +157,7 @@ export const RecipesPage: React.FC = () => {
           <p className="text-sm font-semibold text-zinc-300">No recipes found in this category</p>
           <button
             onClick={handleCreateRecipe}
-            className="px-3.5 py-1.5 bg-lime-400 text-black font-semibold text-xs rounded-lg cursor-pointer"
+            className="px-3.5 py-1.5 bg-zinc-100 text-zinc-900 font-semibold text-xs rounded-lg cursor-pointer hover:bg-white"
           >
             Create Your First Custom Recipe
           </button>
@@ -165,30 +166,26 @@ export const RecipesPage: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
           {filteredRecipes.map((recipe) => {
             const targetProject = projects.find((p) => p.id === recipe.targetProjectId);
-            const isTopPick = recipe.id === 'starter-product-image';
+            const isFeatured = recipe.id === 'starter-product-image';
 
             return (
               <div
                 key={recipe.id}
-                className={`flex flex-col justify-between p-5 rounded-2xl border transition-all ${
-                  isTopPick
-                    ? 'bg-gradient-to-b from-[#181822] to-[#121217] border-lime-400/40 shadow-[0_0_25px_rgba(163,230,53,0.06)]'
-                    : 'bg-[#141419] border-[#262632] hover:border-zinc-700'
-                }`}
+                className="flex flex-col justify-between p-5 rounded-2xl border transition-all bg-[#141419] border-[#262632] hover:border-zinc-700"
               >
                 {/* Card Top Section */}
                 <div className="space-y-4">
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2.5">
-                      <span className="text-2xl p-2 rounded-xl bg-zinc-900 border border-zinc-800">
-                        {recipe.icon}
-                      </span>
+                      <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-zinc-300 flex items-center justify-center shrink-0">
+                        <RecipeIcon name={recipe.icon} className="w-5 h-5 text-zinc-200" />
+                      </div>
                       <div>
                         <div className="flex items-center gap-1.5 flex-wrap">
                           <h3 className="font-bold text-sm text-zinc-100">{recipe.name}</h3>
-                          {isTopPick && (
-                            <span className="text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded bg-lime-400 text-black">
-                              TOP PICK
+                          {isFeatured && (
+                            <span className="text-[10px] font-mono uppercase px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 border border-zinc-700/50">
+                              Featured
                             </span>
                           )}
                         </div>

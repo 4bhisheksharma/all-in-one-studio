@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { UploadCloud, Loader2, Image as ImageIcon } from 'lucide-react';
+import { UploadCloud, Loader2, Image as ImageIcon, ShieldCheck } from 'lucide-react';
 import { useUpload } from '@/hooks/useUpload';
 import { cn } from '@/utils/cn';
 
@@ -116,7 +116,8 @@ export const UploadDropzone: React.FC<UploadDropzoneProps> = ({
           </div>
 
           <div className="mt-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/80 border border-zinc-800 text-[11px] text-zinc-400">
-            <span>⚡ Stored 100% locally in IndexedDB</span>
+            <ShieldCheck className="w-3.5 h-3.5 text-zinc-400" />
+            <span>Stored 100% locally in IndexedDB</span>
           </div>
         </>
       )}

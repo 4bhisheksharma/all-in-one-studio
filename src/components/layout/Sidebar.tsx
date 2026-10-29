@@ -48,18 +48,18 @@ const NavItem: React.FC<NavItemProps> = ({ to, icon: Icon, label, badge, collaps
       title={collapsed ? label : undefined}
       className={({ isActive }) =>
         cn(
-          'group relative flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150',
+          'group relative flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-150',
           isActive
-            ? 'bg-lime-400/10 text-lime-400 font-semibold border-l-2 border-lime-400'
-            : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/50',
+            ? 'bg-zinc-800 text-zinc-100 font-medium'
+            : 'text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800/40',
           collapsed && 'justify-center px-2 py-2.5'
         )
       }
     >
-      <Icon className={cn('w-4 h-4 shrink-0 transition-transform duration-150 group-hover:scale-105')} />
+      <Icon className={cn('w-4 h-4 shrink-0 transition-transform duration-150')} />
       {!collapsed && <span className="truncate">{label}</span>}
       {!collapsed && badge !== undefined && (
-        <span className="ml-auto text-xs px-1.5 py-0.5 rounded-full bg-zinc-800 text-zinc-300 font-mono">
+        <span className="ml-auto text-[10px] px-1.5 py-0.5 rounded bg-zinc-800 text-zinc-400 font-mono border border-zinc-700/40">
           {badge}
         </span>
       )}
@@ -99,13 +99,13 @@ export const Sidebar: React.FC<{ isMobile?: boolean }> = ({ isMobile }) => {
       {/* Brand Header */}
       <div className={cn('flex items-center px-4 h-16 border-b border-[#22222a]', collapsed ? 'justify-center' : 'justify-between')}>
         <NavLink to="/" onClick={handleLinkClick} className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg overflow-hidden border border-zinc-800 shadow-[0_0_12px_rgba(163,230,53,0.2)] transition-transform group-hover:scale-105 shrink-0 bg-[#0a0a0c]">
+          <div className="w-8 h-8 rounded-lg overflow-hidden border border-zinc-800 transition-transform group-hover:scale-105 shrink-0 bg-[#0a0a0c]">
             <img src={`${import.meta.env.BASE_URL}imago-logo.png`} alt="Imago Logo" className="w-full h-full object-cover" />
           </div>
           {!collapsed && (
             <div className="flex flex-col">
               <span className="font-bold text-sm tracking-wide text-zinc-100 flex items-center gap-1.5">
-                IMAGO <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.2 rounded bg-lime-400/15 text-lime-400 font-mono">Studio</span>
+                IMAGO <span className="text-[10px] uppercase tracking-wider px-1.5 py-0.2 rounded bg-zinc-800 text-zinc-400 font-mono border border-zinc-700/40">Studio</span>
               </span>
               <span className="text-[10px] text-zinc-500 font-medium">Minimal Image Suite</span>
             </div>
@@ -140,7 +140,7 @@ export const Sidebar: React.FC<{ isMobile?: boolean }> = ({ isMobile }) => {
               setActiveCreateProjectModal(true);
               handleLinkClick();
             }}
-            className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-lime-400 hover:bg-lime-300 text-black font-semibold text-xs rounded-lg shadow-sm transition-all duration-150 active:scale-[0.98]"
+            className="w-full flex items-center justify-center gap-2 px-3 py-2 bg-zinc-100 hover:bg-white text-zinc-900 font-semibold text-xs rounded-lg shadow-sm transition-all duration-150 active:scale-[0.98]"
           >
             <Plus className="w-4 h-4" />
             <span>New Project</span>
@@ -153,7 +153,7 @@ export const Sidebar: React.FC<{ isMobile?: boolean }> = ({ isMobile }) => {
               setActiveCreateProjectModal(true);
             }}
             title="New Project"
-            className="w-10 h-10 flex items-center justify-center bg-lime-400 hover:bg-lime-300 text-black rounded-lg shadow-sm"
+            className="w-10 h-10 flex items-center justify-center bg-zinc-100 hover:bg-white text-zinc-900 rounded-lg shadow-sm"
           >
             <Plus className="w-5 h-5" />
           </button>

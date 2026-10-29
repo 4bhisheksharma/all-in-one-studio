@@ -30,18 +30,18 @@ export const BottomNav: React.FC = () => {
     !location.pathname.includes('/recipes');
 
   const tools = [
-    { title: 'App Icon Generator', to: '/tools/app-icons', icon: Smartphone, color: 'text-cyan-400' },
-    { title: 'Batch Queue', to: '/batch-queue', icon: Layers, color: 'text-lime-400' },
-    { title: 'Compressor', to: '/tools/compress', icon: Minimize2, color: 'text-emerald-400' },
-    { title: 'Resizer', to: '/tools/resize', icon: Maximize2, color: 'text-sky-400' },
-    { title: 'Cropper', to: '/tools/crop', icon: Crop, color: 'text-cyan-400' },
-    { title: 'Collage Maker', to: '/tools/collage', icon: Layers, color: 'text-amber-400' },
-    { title: 'Remove BG', to: '/tools/background-remove', icon: Sparkles, color: 'text-pink-400' },
-    { title: 'Face & Blur', to: '/tools/face-blur', icon: EyeOff, color: 'text-purple-400' },
-    { title: 'Converter', to: '/tools/convert', icon: RefreshCw, color: 'text-blue-400' },
-    { title: 'Utilities Suite', to: '/tools/utilities', icon: Sliders, color: 'text-zinc-400' },
-    { title: 'Projects', to: '/projects', icon: FolderKanban, color: 'text-lime-400' },
-    { title: 'Favorites', to: '/favorites', icon: Star, color: 'text-amber-300' },
+    { title: 'App Icon Generator', to: '/tools/app-icons', icon: Smartphone },
+    { title: 'Batch Queue', to: '/batch-queue', icon: Layers },
+    { title: 'Compressor', to: '/tools/compress', icon: Minimize2 },
+    { title: 'Resizer', to: '/tools/resize', icon: Maximize2 },
+    { title: 'Cropper', to: '/tools/crop', icon: Crop },
+    { title: 'Collage Maker', to: '/tools/collage', icon: Layers },
+    { title: 'Remove BG', to: '/tools/background-remove', icon: Sparkles },
+    { title: 'Face & Blur', to: '/tools/face-blur', icon: EyeOff },
+    { title: 'Converter', to: '/tools/convert', icon: RefreshCw },
+    { title: 'Utilities Suite', to: '/tools/utilities', icon: Sliders },
+    { title: 'Projects', to: '/projects', icon: FolderKanban },
+    { title: 'Favorites', to: '/favorites', icon: Star },
   ];
 
   return (
@@ -193,12 +193,12 @@ export const BottomNav: React.FC = () => {
                     onClick={() => setToolsSheetOpen(false)}
                     className={`flex items-center justify-between p-3 rounded-xl border text-xs font-semibold transition-all interactive-press ${
                       isSelected
-                        ? 'bg-lime-400/15 border-lime-400 text-lime-300'
+                        ? 'bg-zinc-800 border-zinc-600 text-zinc-100'
                         : 'bg-[#181820] border-zinc-800 text-zinc-300 hover:bg-zinc-800'
                     }`}
                   >
                     <div className="flex items-center gap-2.5 truncate">
-                      <Icon className={`w-4 h-4 shrink-0 ${tool.color}`} />
+                      <Icon className="w-4 h-4 shrink-0 text-zinc-300" />
                       <span className="truncate">{tool.title}</span>
                     </div>
                     <ChevronRight className="w-3.5 h-3.5 text-zinc-500 shrink-0" />

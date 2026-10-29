@@ -16,6 +16,8 @@ import {
 import { ImageRecipe, RecipeStep, RecipeStepType } from './types';
 import { Project } from '@/types';
 
+import { RecipeIcon } from './RecipeIcon';
+
 interface RecipeBuilderModalProps {
   open: boolean;
   recipe: ImageRecipe | null;
@@ -36,7 +38,7 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
   const [category, setCategory] = useState<'ecommerce' | 'social' | 'web' | 'branding' | 'custom'>(
     recipe?.category || 'custom'
   );
-  const [icon, setIcon] = useState(recipe?.icon || '⚡');
+  const [icon, setIcon] = useState(recipe?.icon || 'zap');
   const [targetProjectId, setTargetProjectId] = useState<string | undefined>(
     recipe?.targetProjectId || undefined
   );
@@ -213,13 +215,26 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
             <div className="sm:col-span-2 space-y-1">
               <label className="text-zinc-400 font-medium">Icon</label>
-              <input
-                type="text"
-                value={icon}
-                onChange={(e) => setIcon(e.target.value)}
-                className="w-full px-2.5 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-center text-lg focus:outline-none focus:border-lime-400"
-                maxLength={2}
-              />
+              <div className="flex items-center gap-1.5">
+                <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center shrink-0">
+                  <RecipeIcon name={icon} className="w-4 h-4 text-zinc-200" />
+                </div>
+                <select
+                  value={icon}
+                  onChange={(e) => setIcon(e.target.value)}
+                  className="w-full px-2 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-zinc-200 focus:outline-none focus:border-zinc-500"
+                >
+                  <option value="zap">Fast</option>
+                  <option value="shopping-bag">Commerce</option>
+                  <option value="smartphone">Mobile</option>
+                  <option value="user">Avatar</option>
+                  <option value="shield">Proof</option>
+                  <option value="sparkles">AI</option>
+                  <option value="layers">Layers</option>
+                  <option value="crop">Crop</option>
+                  <option value="sliders">Custom</option>
+                </select>
+              </div>
             </div>
 
             <div className="sm:col-span-6 space-y-1">

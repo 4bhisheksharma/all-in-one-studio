@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { Sidebar } from './Sidebar';
@@ -11,7 +11,11 @@ import { BottomNav } from './BottomNav';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 
 export const AppShell: React.FC = () => {
-  const { mobileDrawerOpen, setMobileDrawerOpen } = useUIStore();
+  const { mobileDrawerOpen, setMobileDrawerOpen, theme, initTheme } = useUIStore();
+
+  useEffect(() => {
+    initTheme();
+  }, [initTheme]);
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-[#0a0a0c] text-zinc-100 font-sans">
@@ -56,14 +60,7 @@ export const AppShell: React.FC = () => {
       {/* Toast Notifications */}
       <Toaster
         position="bottom-right"
-        theme="dark"
-        toastOptions={{
-          style: {
-            background: '#16161b',
-            border: '1px solid #2a2a36',
-            color: '#f4f4f6',
-          },
-        }}
+        theme={theme === 'dark' ? 'dark' : theme === 'light' ? 'light' : 'system'}
       />
     </div>
   );
