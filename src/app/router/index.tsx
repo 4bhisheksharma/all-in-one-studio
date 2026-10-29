@@ -19,6 +19,7 @@ import { FaceBlurPage } from '@/features/face-blur/FaceBlurPage';
 import { ConverterPage } from '@/features/converter/ConverterPage';
 import { UtilitiesPage } from '@/features/utilities/UtilitiesPage';
 import { CanvasStudioPage } from '@/features/canvas-studio/CanvasStudioPage';
+import { RecipesPage } from '@/features/recipes/RecipesPage';
 import { SettingsPage } from '@/features/settings/SettingsPage';
 
 export const router = createBrowserRouter([
@@ -35,6 +36,8 @@ export const router = createBrowserRouter([
       { path: 'drafts', element: <DraftsPage /> },
       { path: 'trash', element: <TrashPage /> },
 
+      { path: 'recipes', element: <RecipesPage /> },
+      { path: 'tools/recipes', element: <RecipesPage /> },
       { path: 'canvas', element: <CanvasStudioPage /> },
       { path: 'tools/canvas', element: <CanvasStudioPage /> },
       { path: 'tools/compress', element: <CompressorPage /> },

@@ -25,7 +25,8 @@ import {
   PanelLeftClose,
   PanelLeftOpen,
   X,
-  Palette
+  Palette,
+  Wand2,
 } from 'lucide-react';
 import { useUIStore } from '@/stores/uiStore';
 import { cn, formatBytes } from '@/utils/cn';
@@ -191,6 +192,7 @@ export const Sidebar: React.FC<{ isMobile?: boolean }> = ({ isMobile }) => {
 
           {(toolsOpen || collapsed) && (
             <div className="space-y-1 pl-1">
+              <NavItem to="/recipes" icon={Wand2} label="Smart Recipes" badge="AUTO" collapsed={collapsed} onClick={handleLinkClick} />
               <NavItem to="/tools/canvas" icon={Layers} label="Studio Canvas" badge="PRO" collapsed={collapsed} onClick={handleLinkClick} />
               <NavItem to="/tools/compress" icon={Minimize2} label="Compressor" collapsed={collapsed} onClick={handleLinkClick} />
               <NavItem to="/tools/resize" icon={Maximize2} label="Resizer" collapsed={collapsed} onClick={handleLinkClick} />

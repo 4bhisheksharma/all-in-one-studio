@@ -9,10 +9,10 @@ import {
   Layers,
   Sparkles,
   EyeOff,
-  RefreshCw,
   HardDrive,
   Images,
   ArrowRight,
+  Wand2,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useUIStore } from '@/stores/uiStore';
@@ -37,14 +37,14 @@ export const DashboardPage: React.FC = () => {
   }, [fetchAssets, fetchProjects]);
 
   const quickTools = [
-    { title: 'Studio Canvas', desc: 'Freeform multi-layer composition & editing canvas', to: '/tools/canvas', icon: Layers, color: 'text-lime-400' },
+    { title: 'Smart Recipes', desc: 'Batch apply multi-step sequences to 50+ images', to: '/recipes', icon: Wand2, color: 'text-lime-400' },
+    { title: 'Studio Canvas', desc: 'Freeform multi-layer composition & editing canvas', to: '/tools/canvas', icon: Layers, color: 'text-sky-400' },
     { title: 'Compressor', desc: 'Reduce file size while preserving quality', to: '/tools/compress', icon: Minimize2, color: 'text-emerald-400' },
-    { title: 'Resizer', desc: 'Precise dimensions & social presets', to: '/tools/resize', icon: Maximize2, color: 'text-sky-400' },
-    { title: 'Cropper', desc: 'Crop, rotate & flip aspect ratios', to: '/tools/crop', icon: Crop, color: 'text-cyan-400' },
-    { title: 'Collage Maker', desc: 'Arrange multiple images into grid layouts', to: '/tools/collage', icon: Layers, color: 'text-amber-400' },
-    { title: 'Remove BG', desc: 'On-device client AI segmentation', to: '/tools/background-remove', icon: Sparkles, color: 'text-pink-400' },
-    { title: 'Face & Blur', desc: 'Conceal faces and sensitive regions', to: '/tools/face-blur', icon: EyeOff, color: 'text-purple-400' },
-    { title: 'Converter', desc: 'Format conversion (WebP, PNG, JPEG)', to: '/tools/convert', icon: RefreshCw, color: 'text-blue-400' },
+    { title: 'Resizer', desc: 'Precise dimensions & social presets', to: '/tools/resize', icon: Maximize2, color: 'text-cyan-400' },
+    { title: 'Cropper', desc: 'Crop, rotate & flip aspect ratios', to: '/tools/crop', icon: Crop, color: 'text-amber-400' },
+    { title: 'Collage Maker', desc: 'Arrange multiple images into grid layouts', to: '/tools/collage', icon: Layers, color: 'text-pink-400' },
+    { title: 'Remove BG', desc: 'On-device client AI segmentation', to: '/tools/background-remove', icon: Sparkles, color: 'text-purple-400' },
+    { title: 'Face & Blur', desc: 'Conceal faces and sensitive regions', to: '/tools/face-blur', icon: EyeOff, color: 'text-blue-400' },
   ];
 
   const recentAssets = assets.slice(0, 6);
@@ -115,6 +115,35 @@ export const DashboardPage: React.FC = () => {
             <Sparkles className="w-5 h-5" />
           </div>
         </div>
+      </div>
+
+      {/* Featured Recipe Banner: Smart Image Recipes (Top Pick) */}
+      <div className="p-5 rounded-2xl bg-gradient-to-r from-lime-950/40 via-[#181820] to-[#121217] border border-lime-400/30 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-[0_0_30px_rgba(163,230,53,0.05)]">
+        <div className="flex items-start sm:items-center gap-3.5">
+          <div className="w-12 h-12 rounded-xl bg-lime-400/20 border border-lime-400/30 flex items-center justify-center text-lime-400 text-2xl shrink-0">
+            🛍️
+          </div>
+          <div className="space-y-1">
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="text-xs font-extrabold uppercase px-2 py-0.5 rounded bg-lime-400 text-black">
+                TOP PICK
+              </span>
+              <h3 className="text-sm font-bold text-zinc-100">Smart Image Recipes</h3>
+              <span className="text-xs text-zinc-400">• Automation Pipeline</span>
+            </div>
+            <p className="text-xs text-zinc-300 max-w-2xl">
+              Save a complete sequence of operations (e.g. <strong>Website Product Image</strong>: resize 1200×1200, rounded corners, convert to WebP, compress &lt;150KB) and batch apply to 50+ images at once.
+            </p>
+          </div>
+        </div>
+
+        <Link
+          to="/recipes"
+          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs shadow-md transition-all shrink-0 cursor-pointer"
+        >
+          <Wand2 className="w-4 h-4 fill-black" />
+          <span>Open Smart Recipes</span>
+        </Link>
       </div>
 
       {/* Quick Launchpad */}
