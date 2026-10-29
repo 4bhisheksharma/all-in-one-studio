@@ -191,6 +191,7 @@ export const Sidebar: React.FC<{ isMobile?: boolean }> = ({ isMobile }) => {
 
           {(toolsOpen || collapsed) && (
             <div className="space-y-1 pl-1">
+              <NavItem to="/tools/canvas" icon={Layers} label="Studio Canvas" badge="PRO" collapsed={collapsed} onClick={handleLinkClick} />
               <NavItem to="/tools/compress" icon={Minimize2} label="Compressor" collapsed={collapsed} onClick={handleLinkClick} />
               <NavItem to="/tools/resize" icon={Maximize2} label="Resizer" collapsed={collapsed} onClick={handleLinkClick} />
               <NavItem to="/tools/crop" icon={Crop} label="Cropper" collapsed={collapsed} onClick={handleLinkClick} />

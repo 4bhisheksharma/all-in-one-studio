@@ -11,6 +11,7 @@ const ROUTE_LABELS: Record<string, string> = {
   'favorites': 'Favorites',
   'drafts': 'Drafts',
   'trash': 'Trash',
+  'canvas': 'Studio Canvas',
   'tools': 'Tools',
   'compress': 'Compressor',
   'resize': 'Resizer',

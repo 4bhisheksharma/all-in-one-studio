@@ -18,6 +18,7 @@ import { BackgroundRemoverPage } from '@/features/background-remover/BackgroundR
 import { FaceBlurPage } from '@/features/face-blur/FaceBlurPage';
 import { ConverterPage } from '@/features/converter/ConverterPage';
 import { UtilitiesPage } from '@/features/utilities/UtilitiesPage';
+import { CanvasStudioPage } from '@/features/canvas-studio/CanvasStudioPage';
 import { SettingsPage } from '@/features/settings/SettingsPage';
 
 export const router = createBrowserRouter([
@@ -34,6 +35,8 @@ export const router = createBrowserRouter([
       { path: 'drafts', element: <DraftsPage /> },
       { path: 'trash', element: <TrashPage /> },
 
+      { path: 'canvas', element: <CanvasStudioPage /> },
+      { path: 'tools/canvas', element: <CanvasStudioPage /> },
       { path: 'tools/compress', element: <CompressorPage /> },
       { path: 'tools/resize', element: <ResizerPage /> },
       { path: 'tools/crop', element: <CropperPage /> },

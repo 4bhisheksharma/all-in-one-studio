@@ -1,5 +1,18 @@
-import React, { useState, useRef } from 'react';
-import { Crop, RotateCw, RotateCcw, FlipHorizontal, FlipVertical, RefreshCw, Play, Sparkles, Sliders } from 'lucide-react';
+import React, { useState, useRef, useEffect, useCallback } from 'react';
+import {
+  Crop,
+  RotateCw,
+  RotateCcw,
+  FlipHorizontal,
+  FlipVertical,
+  RefreshCw,
+  Play,
+  Sparkles,
+  Sliders,
+  Maximize2,
+  ZoomIn,
+  ZoomOut,
+} from 'lucide-react';
 import { ToolLayout } from '@/components/layout/ToolLayout';
 import { ProcessingResultPanel } from '@/components/common/ProcessingResultPanel';
 import { canvasProcessor } from '@/services/image-processing/canvasProcessor';
@@ -7,6 +20,7 @@ import { ImageAsset } from '@/types';
 import { toast } from 'sonner';
 
 type AspectPreset = 'free' | '1:1' | '16:9' | '4:3' | '3:2' | '9:16' | '5:4';
+type DragHandle = 'nw' | 'ne' | 'se' | 'sw' | 'n' | 's' | 'e' | 'w' | 'move';
 
 export const CropperPage: React.FC = () => {
   const [aspect, setAspect] = useState<AspectPreset>('free');
@@ -14,8 +28,25 @@ export const CropperPage: React.FC = () => {
   const [flipH, setFlipH] = useState<boolean>(false);
   const [flipV, setFlipV] = useState<boolean>(false);
 
-  // Normalized crop rectangle (0 to 1 scale)
-  const [crop, setCrop] = useState({ x: 0.1, y: 0.1, w: 0.8, h: 0.8 });
+  // Normalized crop rectangle: 0 to 1 relative to displayed image bounds
+  const [crop, setCrop] = useState<{ x: number; y: number; w: number; h: number }>({
+    x: 0.1,
+    y: 0.1,
+    w: 0.8,
+    h: 0.8,
+  });
+
+  // Memoized stable object URL for the image
+  const [blobUrl, setBlobUrl] = useState<string | null>(null);
+
+  // Active dragging state
+  const [isDragging, setIsDragging] = useState(false);
+  const [activeHandle, setActiveHandle] = useState<DragHandle | null>(null);
+  const [dragStart, setDragStart] = useState<{ x: number; y: number } | null>(null);
+  const [initialCrop, setInitialCrop] = useState<{ x: number; y: number; w: number; h: number } | null>(null);
+
+  // Zoom / Viewport
+  const [zoom, setZoom] = useState<number>(100);
 
   const [processing, setProcessing] = useState(false);
   const [result, setResult] = useState<{
@@ -24,6 +55,8 @@ export const CropperPage: React.FC = () => {
     height: number;
   } | null>(null);
 
+  const imageRef = useRef<HTMLImageElement | null>(null);
+  const cropBoxRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
   const handleAssetLoaded = (asset: ImageAsset | null) => {
@@ -50,16 +83,124 @@ export const CropperPage: React.FC = () => {
     const [num, den] = preset.split(':').map(Number);
     const targetRatio = num / den;
 
-    const w = 0.8;
-    const h = (w * asset.width) / (asset.height * targetRatio);
+    // Maintain aspect ratio relative to natural pixel dimensions
+    const isSideways = Math.abs(rotation % 180) === 90;
+    const imgW = isSideways ? asset.height : asset.width;
+    const imgH = isSideways ? asset.width : asset.height;
+    const imgRatio = imgW / imgH;
+
+    let newW = 0.8;
+    let newH = (newW * imgRatio) / targetRatio;
+
+    if (newH > 0.85) {
+      newH = 0.85;
+      newW = (newH * targetRatio) / imgRatio;
+    }
+
     setCrop({
-      x: Math.max(0, (1 - w) / 2),
-      y: Math.max(0, (1 - Math.min(0.9, h)) / 2),
-      w: w,
-      h: Math.min(0.9, h),
+      x: Math.max(0, (1 - newW) / 2),
+      y: Math.max(0, (1 - newH) / 2),
+      w: Math.min(1, newW),
+      h: Math.min(1, newH),
     });
   };
 
+  // Start dragging a handle or the box
+  const handleMouseDownHandle = (e: React.MouseEvent, handle: DragHandle) => {
+    e.stopPropagation();
+    e.preventDefault();
+    setIsDragging(true);
+    setActiveHandle(handle);
+    setDragStart({ x: e.clientX, y: e.clientY });
+    setInitialCrop({ ...crop });
+  };
+
+  // Mouse move handler attached to window for smooth dragging
+  const handleMouseMove = useCallback(
+    (e: MouseEvent) => {
+      if (!isDragging || !activeHandle || !dragStart || !initialCrop || !imageRef.current) return;
+
+      const imgRect = imageRef.current.getBoundingClientRect();
+      if (imgRect.width <= 0 || imgRect.height <= 0) return;
+
+      // Delta in normalized 0..1 scale
+      const dx = (e.clientX - dragStart.x) / imgRect.width;
+      const dy = (e.clientY - dragStart.y) / imgRect.height;
+
+      let { x, y, w, h } = initialCrop;
+      const minSize = 0.05;
+
+      if (activeHandle === 'move') {
+        x = Math.max(0, Math.min(1 - w, initialCrop.x + dx));
+        y = Math.max(0, Math.min(1 - h, initialCrop.y + dy));
+      } else {
+        // Handle directional resizing
+        if (activeHandle.includes('e')) {
+          w = Math.max(minSize, Math.min(1 - initialCrop.x, initialCrop.w + dx));
+        }
+        if (activeHandle.includes('w')) {
+          const maxLeftMove = initialCrop.w - minSize;
+          const deltaLeft = Math.max(-initialCrop.x, Math.min(maxLeftMove, dx));
+          x = initialCrop.x + deltaLeft;
+          w = initialCrop.w - deltaLeft;
+        }
+        if (activeHandle.includes('s')) {
+          h = Math.max(minSize, Math.min(1 - initialCrop.y, initialCrop.h + dy));
+        }
+        if (activeHandle.includes('n')) {
+          const maxTopMove = initialCrop.h - minSize;
+          const deltaTop = Math.max(-initialCrop.y, Math.min(maxTopMove, dy));
+          y = initialCrop.y + deltaTop;
+          h = initialCrop.h - deltaTop;
+        }
+
+        // Apply aspect ratio lock if active
+        if (aspect !== 'free') {
+          const [num, den] = aspect.split(':').map(Number);
+          const targetRatio = num / den;
+          const imgRatio = imgRect.width / imgRect.height;
+          
+          if (activeHandle === 'n' || activeHandle === 's') {
+            // Adjust width from height
+            const reqW = (h * targetRatio) / imgRatio;
+            w = Math.max(minSize, Math.min(1 - x, reqW));
+          } else {
+            // Adjust height from width
+            const reqH = (w * imgRatio) / targetRatio;
+            h = Math.max(minSize, Math.min(1 - y, reqH));
+          }
+        }
+      }
+
+      setCrop({
+        x: Math.max(0, Math.min(1 - minSize, x)),
+        y: Math.max(0, Math.min(1 - minSize, y)),
+        w: Math.max(minSize, Math.min(1 - x, w)),
+        h: Math.max(minSize, Math.min(1 - y, h)),
+      });
+    },
+    [isDragging, activeHandle, dragStart, initialCrop, aspect]
+  );
+
+  const handleMouseUp = useCallback(() => {
+    setIsDragging(false);
+    setActiveHandle(null);
+    setDragStart(null);
+    setInitialCrop(null);
+  }, []);
+
+  useEffect(() => {
+    if (isDragging) {
+      window.addEventListener('mousemove', handleMouseMove);
+      window.addEventListener('mouseup', handleMouseUp);
+      return () => {
+        window.removeEventListener('mousemove', handleMouseMove);
+        window.removeEventListener('mouseup', handleMouseUp);
+      };
+    }
+  }, [isDragging, handleMouseMove, handleMouseUp]);
+
+  // Execute processing
   const handleProcess = async (asset: ImageAsset | null, blob: Blob | null) => {
     if (!asset || !blob) {
       toast.error('Please select an image first');
@@ -96,53 +237,206 @@ export const CropperPage: React.FC = () => {
     }
   };
 
+  // Manage stable object URL for the image
+  useEffect(() => {
+    return () => {
+      if (blobUrl) {
+        URL.revokeObjectURL(blobUrl);
+      }
+    };
+  }, [blobUrl]);
+
   return (
     <ToolLayout
       title="Image Cropper & Rotate"
-      description="Crop to freeform or locked aspect ratios, rotate by degrees, and flip horizontally or vertically."
+      description="Interactive freeform or locked aspect ratio cropping, rotation, and flipping with live handles."
       icon={Crop}
       onAssetChange={handleAssetLoaded}
       onClear={() => setResult(null)}
       previewContent={(selectedAsset, blob) => {
         if (!selectedAsset || !blob) return null;
+
+        // Keep stable blob URL
+        if (!blobUrl) {
+          const url = URL.createObjectURL(blob);
+          setBlobUrl(url);
+        }
+
+        const isSideways = Math.abs(rotation % 180) === 90;
+        const currentNaturalW = isSideways ? selectedAsset.height : selectedAsset.width;
+        const currentNaturalH = isSideways ? selectedAsset.width : selectedAsset.height;
+
+        const cropPixelW = Math.round(crop.w * currentNaturalW);
+        const cropPixelH = Math.round(crop.h * currentNaturalH);
+
         return (
           <div
             ref={containerRef}
-            className="w-full h-full flex items-center justify-center relative p-4 select-none overflow-hidden"
+            className="w-full h-full flex flex-col justify-between items-center relative select-none overflow-hidden"
           >
-            {/* Transformed Image Preview */}
-            <div
-              className="relative max-h-[460px] max-w-full flex items-center justify-center transition-transform duration-200"
-              style={{
-                transform: `rotate(${rotation}deg) scaleX(${flipH ? -1 : 1}) scaleY(${flipV ? -1 : 1})`,
-              }}
-            >
-              <img
-                src={URL.createObjectURL(blob)}
-                alt="Source preview"
-                className="max-h-[440px] max-w-full object-contain rounded-lg shadow-lg pointer-events-none"
-              />
-            </div>
+            {/* Viewport Top Bar */}
+            <div className="w-full flex items-center justify-between px-4 py-2 bg-zinc-900/80 backdrop-blur-md border-b border-zinc-800 z-20 text-xs">
+              <div className="flex items-center gap-2 text-zinc-400">
+                <Crop className="w-3.5 h-3.5 text-lime-400" />
+                <span>
+                  Crop Area: <strong className="font-mono text-lime-300 font-bold">{cropPixelW} × {cropPixelH} px</strong>
+                </span>
+                <span>•</span>
+                <span className="uppercase text-zinc-300">{aspect}</span>
+              </div>
 
-            {/* Visual Crop Overlay Guidelines */}
-            <div className="absolute inset-4 pointer-events-none border border-lime-400/60 rounded-lg shadow-[0_0_0_9999px_rgba(0,0,0,0.4)]">
-              <div className="w-full h-full grid grid-cols-3 grid-rows-3 opacity-30">
-                <div className="border-r border-b border-lime-400" />
-                <div className="border-r border-b border-lime-400" />
-                <div className="border-b border-lime-400" />
-                <div className="border-r border-b border-lime-400" />
-                <div className="border-r border-b border-lime-400" />
-                <div className="border-b border-lime-400" />
-                <div className="border-r border-lime-400" />
-                <div className="border-r border-lime-400" />
-                <div />
+              <div className="flex items-center gap-1.5">
+                <button
+                  type="button"
+                  onClick={() => setZoom((z) => Math.max(40, z - 20))}
+                  className="p-1 rounded hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200"
+                  title="Zoom Out"
+                >
+                  <ZoomOut className="w-3.5 h-3.5" />
+                </button>
+                <span className="font-mono text-[11px] text-zinc-400 min-w-10 text-center">
+                  {zoom}%
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setZoom((z) => Math.min(250, z + 20))}
+                  className="p-1 rounded hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200"
+                  title="Zoom In"
+                >
+                  <ZoomIn className="w-3.5 h-3.5" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setZoom(100)}
+                  className="p-1 rounded hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200"
+                  title="Reset Zoom"
+                >
+                  <Maximize2 className="w-3.5 h-3.5" />
+                </button>
               </div>
             </div>
 
-            {/* Specs Overlay */}
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-3 py-2 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 text-xs font-mono">
-              <span className="text-zinc-400">Aspect Ratio: {aspect.toUpperCase()}</span>
-              <span className="text-lime-400 font-bold">{rotation}° / {flipH ? 'Flipped H' : 'Standard'}</span>
+            {/* Interactive Image & Crop Area */}
+            <div className="flex-1 w-full flex items-center justify-center p-4 sm:p-6 overflow-auto relative">
+              <div
+                className="relative inline-block transition-transform duration-75"
+                style={{
+                  transform: `scale(${zoom / 100}) rotate(${rotation}deg) scaleX(${flipH ? -1 : 1}) scaleY(${flipV ? -1 : 1})`,
+                  transformOrigin: 'center center',
+                }}
+              >
+                {/* Target Image */}
+                <img
+                  ref={imageRef}
+                  src={blobUrl || URL.createObjectURL(blob)}
+                  alt="Crop Target"
+                  className="max-h-[640px] max-w-full object-contain block rounded shadow-2xl pointer-events-none"
+                />
+
+                {/* Interactive Crop Boundary Box */}
+                <div
+                  ref={cropBoxRef}
+                  className="absolute border-2 border-lime-400 z-10"
+                  style={{
+                    left: `${crop.x * 100}%`,
+                    top: `${crop.y * 100}%`,
+                    width: `${crop.w * 100}%`,
+                    height: `${crop.h * 100}%`,
+                    boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.65)',
+                  }}
+                >
+                  {/* Center Reposition Grab Area */}
+                  <div
+                    onMouseDown={(e) => handleMouseDownHandle(e, 'move')}
+                    className="absolute inset-2 cursor-move z-10"
+                    title="Drag to reposition crop area"
+                  />
+
+                  {/* Rule of Thirds Grid Guidelines */}
+                  <div className="w-full h-full grid grid-cols-3 grid-rows-3 pointer-events-none opacity-40">
+                    <div className="border-r border-b border-lime-300" />
+                    <div className="border-r border-b border-lime-300" />
+                    <div className="border-b border-lime-300" />
+                    <div className="border-r border-b border-lime-300" />
+                    <div className="border-r border-b border-lime-300" />
+                    <div className="border-b border-lime-300" />
+                    <div className="border-r border-lime-300" />
+                    <div className="border-r border-lime-300" />
+                    <div />
+                  </div>
+
+                  {/* Top Edge Sliding Zone */}
+                  <div
+                    onMouseDown={(e) => handleMouseDownHandle(e, 'n')}
+                    className="absolute -top-3 left-3 right-3 h-6 cursor-ns-resize z-20 flex items-center justify-center group"
+                    title="Drag top edge"
+                  >
+                    <div className="w-10 h-1.5 bg-lime-400 rounded-full border border-black shadow group-hover:scale-110 transition-transform" />
+                  </div>
+
+                  {/* Bottom Edge Sliding Zone */}
+                  <div
+                    onMouseDown={(e) => handleMouseDownHandle(e, 's')}
+                    className="absolute -bottom-3 left-3 right-3 h-6 cursor-ns-resize z-20 flex items-center justify-center group"
+                    title="Drag bottom edge"
+                  >
+                    <div className="w-10 h-1.5 bg-lime-400 rounded-full border border-black shadow group-hover:scale-110 transition-transform" />
+                  </div>
+
+                  {/* Left Edge Sliding Zone */}
+                  <div
+                    onMouseDown={(e) => handleMouseDownHandle(e, 'w')}
+                    className="absolute -left-3 top-3 bottom-3 w-6 cursor-ew-resize z-20 flex items-center justify-center group"
+                    title="Drag left edge"
+                  >
+                    <div className="w-1.5 h-10 bg-lime-400 rounded-full border border-black shadow group-hover:scale-110 transition-transform" />
+                  </div>
+
+                  {/* Right Edge Sliding Zone */}
+                  <div
+                    onMouseDown={(e) => handleMouseDownHandle(e, 'e')}
+                    className="absolute -right-3 top-3 bottom-3 w-6 cursor-ew-resize z-20 flex items-center justify-center group"
+                    title="Drag right edge"
+                  >
+                    <div className="w-1.5 h-10 bg-lime-400 rounded-full border border-black shadow group-hover:scale-110 transition-transform" />
+                  </div>
+
+                  {/* 4 Corner Handles */}
+                  <div
+                    onMouseDown={(e) => handleMouseDownHandle(e, 'nw')}
+                    className="absolute -top-3 -left-3 w-6 h-6 flex items-center justify-center cursor-nwse-resize z-30"
+                    title="Resize top-left"
+                  >
+                    <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
+                  </div>
+                  <div
+                    onMouseDown={(e) => handleMouseDownHandle(e, 'ne')}
+                    className="absolute -top-3 -right-3 w-6 h-6 flex items-center justify-center cursor-nesw-resize z-30"
+                    title="Resize top-right"
+                  >
+                    <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
+                  </div>
+                  <div
+                    onMouseDown={(e) => handleMouseDownHandle(e, 'se')}
+                    className="absolute -bottom-3 -right-3 w-6 h-6 flex items-center justify-center cursor-nwse-resize z-30"
+                    title="Resize bottom-right"
+                  >
+                    <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
+                  </div>
+                  <div
+                    onMouseDown={(e) => handleMouseDownHandle(e, 'sw')}
+                    className="absolute -bottom-3 -left-3 w-6 h-6 flex items-center justify-center cursor-nesw-resize z-30"
+                    title="Resize bottom-left"
+                  >
+                    <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Bottom Tip Bar */}
+            <div className="py-1.5 px-3 rounded-full bg-black/80 backdrop-blur-md border border-zinc-800 text-[11px] text-zinc-400 mb-2">
+              Drag edge bars to slide sides. Drag corners to scale. Drag inside box to reposition.
             </div>
           </div>
         );
@@ -244,7 +538,7 @@ export const CropperPage: React.FC = () => {
           <button
             disabled={!selectedAsset || processing}
             onClick={() => handleProcess(selectedAsset, blob)}
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs shadow-md transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs shadow-md transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
           >
             {processing ? (
               <>

@@ -132,6 +132,8 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
     if (onAssetChange) onAssetChange(null);
   };
 
+  const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <div className="space-y-6 pb-16">
       {/* Draft Recovery Banner */}
@@ -228,12 +230,26 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
       {/* Tool Two-Panel Workspace */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Column: Tool Controls */}
-        <div className="lg:col-span-5 xl:col-span-4 space-y-4">
+        <div className={`${isExpanded ? 'lg:col-span-4' : 'lg:col-span-5 xl:col-span-4'} space-y-4`}>
           {children(selectedAsset, originalBlob)}
         </div>
 
         {/* Right Column: Viewport / Interactive Preview */}
-        <div className="lg:col-span-7 xl:col-span-8 min-h-[420px] rounded-2xl bg-[#0e0e12] border border-[#23232c] overflow-hidden flex flex-col justify-center items-center relative p-4">
+        <div
+          className={`${
+            isExpanded ? 'lg:col-span-8' : 'lg:col-span-7 xl:col-span-8'
+          } min-h-[640px] lg:min-h-[740px] xl:min-h-[820px] rounded-2xl bg-[#0e0e12] border border-[#23232c] overflow-hidden flex flex-col justify-center items-center relative p-4 transition-all`}
+        >
+          {/* Maximize / Spacious toggle button */}
+          <button
+            type="button"
+            onClick={() => setIsExpanded(!isExpanded)}
+            className="absolute top-3 right-3 z-30 px-2 py-1 bg-zinc-900/90 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 text-[11px] rounded-lg border border-zinc-800 shadow backdrop-blur transition-colors"
+            title={isExpanded ? 'Normal workspace' : 'Expand workspace'}
+          >
+            {isExpanded ? 'Compact' : 'Expand Workspace'}
+          </button>
+
           {previewContent ? (
             previewContent(selectedAsset, originalBlob)
           ) : selectedAsset && originalBlob ? (
@@ -241,7 +257,7 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
               <img
                 src={URL.createObjectURL(originalBlob)}
                 alt="Selected"
-                className="max-h-[500px] max-w-full object-contain rounded-lg shadow-md"
+                className="max-h-[640px] max-w-full object-contain rounded-lg shadow-md"
               />
             </div>
           ) : (
