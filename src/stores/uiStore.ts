@@ -14,6 +14,7 @@ interface UIState {
   setMobileDrawerOpen: (open: boolean) => void;
   setViewMode: (mode: ViewMode) => void;
   setStorageStats: (used: number, quota: number) => void;
+  updateStorageUsage: () => Promise<void>;
   setActiveUploadModal: (open: boolean) => void;
   setActiveCreateProjectModal: (open: boolean) => void;
 }
@@ -31,6 +32,19 @@ export const useUIStore = create<UIState>((set) => ({
   setMobileDrawerOpen: (open) => set({ mobileDrawerOpen: open }),
   setViewMode: (mode) => set({ viewMode: mode }),
   setStorageStats: (used, quota) => set({ storageUsed: used, storageQuota: quota }),
+  updateStorageUsage: async () => {
+    if (typeof navigator !== 'undefined' && navigator.storage && navigator.storage.estimate) {
+      try {
+        const est = await navigator.storage.estimate();
+        set({
+          storageUsed: est.usage || 0,
+          storageQuota: est.quota || 0,
+        });
+      } catch (err) {
+        console.warn('Storage estimate failed:', err);
+      }
+    }
+  },
   setActiveUploadModal: (open) => set({ activeUploadModal: open }),
   setActiveCreateProjectModal: (open) => set({ activeCreateProjectModal: open }),
 }));

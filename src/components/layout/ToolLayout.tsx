@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
-import { FolderOpen, X, RefreshCw } from 'lucide-react';
-import { ImageAsset } from '@/types';
+import { FolderOpen, X, RefreshCw, FileEdit } from 'lucide-react';
+import { ImageAsset, ToolType, EditorDraft } from '@/types';
 import { assetService } from '@/services/storage/assetService';
+import { draftService } from '@/services/storage/draftService';
 import { AssetPickerDialog } from '@/components/image-picker/AssetPickerDialog';
 import { AssetThumbnail } from '@/components/asset-grid/AssetThumbnail';
 import { formatBytes } from '@/utils/cn';
@@ -32,7 +33,37 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
   const [selectedAsset, setSelectedAsset] = useState<ImageAsset | null>(null);
   const [originalBlob, setOriginalBlob] = useState<Blob | null>(null);
   const [pickerOpen, setPickerOpen] = useState(false);
+  const [savedDraft, setSavedDraft] = useState<EditorDraft | null>(null);
 
+  const toolType = useMemo<ToolType | null>(() => {
+    const p = location.pathname;
+    if (p.includes('/compress')) return 'compress';
+    if (p.includes('/resize')) return 'resize';
+    if (p.includes('/crop')) return 'crop';
+    if (p.includes('/collage')) return 'collage';
+    if (p.includes('/background-remove')) return 'bg-remove';
+    if (p.includes('/face-blur')) return 'face-blur';
+    if (p.includes('/convert')) return 'convert';
+    if (p.includes('/utilities')) return 'utilities';
+    return null;
+  }, [location.pathname]);
+
+  // Check for unfinished draft session
+  useEffect(() => {
+    let active = true;
+    if (toolType && !selectedAsset && !preselectedId) {
+      draftService.getDraft(toolType).then((draft) => {
+        if (active && draft && draft.sourceAssetIds.length > 0) {
+          setSavedDraft(draft);
+        }
+      });
+    }
+    return () => {
+      active = false;
+    };
+  }, [toolType, selectedAsset, preselectedId]);
+
+  // Preselected Asset loader
   useEffect(() => {
     let active = true;
     if (preselectedId) {
@@ -50,25 +81,84 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
     };
   }, [preselectedId, onAssetChange]);
 
+  // Autosave draft on asset selection
+  useEffect(() => {
+    if (selectedAsset && toolType) {
+      draftService.saveDraft(
+        toolType,
+        [selectedAsset.id],
+        { filename: selectedAsset.filename },
+        selectedAsset.projectId
+      );
+    }
+  }, [selectedAsset, toolType]);
+
   const handleSelectAsset = async (assets: ImageAsset[]) => {
     if (assets.length > 0) {
       const asset = assets[0];
       setSelectedAsset(asset);
+      setSavedDraft(null);
       if (onAssetChange) onAssetChange(asset);
       const blob = await assetService.getAssetBlob(asset.id);
       setOriginalBlob(blob || null);
     }
   };
 
+  const handleResumeDraft = async () => {
+    if (!savedDraft || savedDraft.sourceAssetIds.length === 0) return;
+    const assetId = savedDraft.sourceAssetIds[0];
+    const asset = await assetService.getAsset(assetId);
+    if (asset) {
+      setSelectedAsset(asset);
+      if (onAssetChange) onAssetChange(asset);
+      const blob = await assetService.getAssetBlob(asset.id);
+      if (blob) setOriginalBlob(blob);
+      setSavedDraft(null);
+    }
+  };
+
+  const handleDiscardDraft = async () => {
+    if (toolType) {
+      await draftService.deleteDraftByTool(toolType);
+      setSavedDraft(null);
+    }
+  };
+
   const handleClear = () => {
     setSelectedAsset(null);
     setOriginalBlob(null);
+    if (toolType) draftService.deleteDraftByTool(toolType);
     if (onClear) onClear();
     if (onAssetChange) onAssetChange(null);
   };
 
   return (
     <div className="space-y-6 pb-16">
+      {/* Draft Recovery Banner */}
+      {savedDraft && !selectedAsset && (
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-amber-400/10 border border-amber-400/30 text-xs animate-in fade-in">
+          <div className="flex items-center gap-2.5">
+            <FileEdit className="w-4 h-4 text-amber-400 shrink-0" />
+            <span className="text-zinc-200">
+              You have an unfinished editing session saved in your browser.
+            </span>
+          </div>
+          <div className="flex items-center gap-2 self-end sm:self-auto">
+            <button
+              onClick={handleResumeDraft}
+              className="px-3 py-1 bg-amber-400 hover:bg-amber-300 text-black font-semibold rounded-lg transition-colors cursor-pointer"
+            >
+              Resume Session
+            </button>
+            <button
+              onClick={handleDiscardDraft}
+              className="px-2.5 py-1 text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+            >
+              Discard
+            </button>
+          </div>
+        </div>
+      )}
       {/* Tool Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[#22222a]">
         <div className="flex items-center gap-3">

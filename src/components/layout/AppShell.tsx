@@ -7,6 +7,8 @@ import { UploadModal } from '@/components/dialogs/UploadModal';
 import { CreateProjectModal } from '@/components/dialogs/CreateProjectModal';
 import { useUIStore } from '@/stores/uiStore';
 
+import { ErrorBoundary } from '@/components/common/ErrorBoundary';
+
 export const AppShell: React.FC = () => {
   const { mobileDrawerOpen, setMobileDrawerOpen } = useUIStore();
 
@@ -36,7 +38,9 @@ export const AppShell: React.FC = () => {
 
         <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-6 lg:p-8 bg-[#0a0a0c]">
           <div className="max-w-7xl mx-auto w-full">
-            <Outlet />
+            <ErrorBoundary>
+              <Outlet />
+            </ErrorBoundary>
           </div>
         </main>
       </div>
