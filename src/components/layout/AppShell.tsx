@@ -3,6 +3,8 @@ import { Outlet } from 'react-router-dom';
 import { Toaster } from 'sonner';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
+import { UploadModal } from '@/components/dialogs/UploadModal';
+import { CreateProjectModal } from '@/components/dialogs/CreateProjectModal';
 import { useUIStore } from '@/stores/uiStore';
 
 export const AppShell: React.FC = () => {
@@ -38,6 +40,10 @@ export const AppShell: React.FC = () => {
           </div>
         </main>
       </div>
+
+      {/* Global Modals */}
+      <UploadModal />
+      <CreateProjectModal />
 
       {/* Toast Notifications */}
       <Toaster
