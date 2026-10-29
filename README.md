@@ -1,4 +1,4 @@
-# 🎨 Imago — All-in-One Image Workspace
+# 🎨 Imago - All-in-One Image Workspace
 
 **Imago** is a unified, privacy-first web application designed for organizing, editing, and transforming images all in one place.
 
