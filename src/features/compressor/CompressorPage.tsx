@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Minimize2, AlertTriangle, Play, Sparkles, Sliders, Target } from 'lucide-react';
+import { Minimize2, AlertTriangle, Download, Sparkles, Sliders, Target } from 'lucide-react';
 import { ToolLayout } from '@/components/layout/ToolLayout';
 import { ProcessingResultPanel } from '@/components/common/ProcessingResultPanel';
-import { canvasProcessor } from '@/services/image-processing/canvasProcessor';
+import { canvasProcessor, ProcessedOutput } from '@/services/image-processing/canvasProcessor';
+import { QualityInspector } from './QualityInspector';
 import { ImageAsset } from '@/types';
-import { formatBytes } from '@/utils/cn';
 import { toast } from 'sonner';
 
 export const CompressorPage: React.FC = () => {
@@ -14,6 +14,7 @@ export const CompressorPage: React.FC = () => {
   const [targetKB, setTargetKB] = useState<number>(300);
 
   const [processing, setProcessing] = useState(false);
+  const [liveOutput, setLiveOutput] = useState<ProcessedOutput | null>(null);
   const [result, setResult] = useState<{
     blob: Blob;
     width: number;
@@ -28,14 +29,18 @@ export const CompressorPage: React.FC = () => {
 
     setProcessing(true);
     try {
-      let output;
-      if (mode === 'target' && (format === 'image/jpeg' || format === 'image/webp')) {
-        output = await canvasProcessor.approximateTargetSize(blob, targetKB, format);
+      if (liveOutput) {
+        setResult(liveOutput);
       } else {
-        output = await canvasProcessor.compressImage(blob, format, quality / 100);
+        let output;
+        if (mode === 'target' && (format === 'image/jpeg' || format === 'image/webp')) {
+          output = await canvasProcessor.approximateTargetSize(blob, targetKB, format);
+        } else {
+          output = await canvasProcessor.compressImage(blob, format, quality / 100);
+        }
+        setResult(output);
       }
-      setResult(output);
-      toast.success('Compression complete');
+      toast.success('Ready to save or export');
     } catch (err) {
       toast.error(err instanceof Error ? err.message : 'Compression failed');
     } finally {
@@ -49,26 +54,27 @@ export const CompressorPage: React.FC = () => {
 
   return (
     <ToolLayout
-      title="Image Compressor"
-      description="Reduce file size significantly while preserving optimal visual sharpness and fidelity."
+      title="Image Compressor & Quality Inspector"
+      description="Inspect compression artifacts, zoom into fine details, compare before & after, and balance file size with visual quality."
       icon={Minimize2}
-      onClear={() => setResult(null)}
+      onClear={() => {
+        setResult(null);
+        setLiveOutput(null);
+      }}
       previewContent={(selectedAsset, blob) => {
         if (!selectedAsset || !blob) return null;
         return (
-          <div className="w-full h-full flex flex-col items-center justify-center relative p-2">
-            <div className="relative max-h-[460px] max-w-full flex items-center justify-center">
-              <img
-                src={URL.createObjectURL(blob)}
-                alt="Source preview"
-                className="max-h-[440px] max-w-full object-contain rounded-lg shadow-lg"
-              />
-            </div>
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-3 py-2 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 text-xs font-mono">
-              <span className="text-zinc-400">Original Resolution: {selectedAsset.width} × {selectedAsset.height}</span>
-              <span className="text-zinc-200 font-bold">{formatBytes(selectedAsset.currentSize)}</span>
-            </div>
-          </div>
+          <QualityInspector
+            originalBlob={blob}
+            sourceAsset={selectedAsset}
+            format={format}
+            quality={quality}
+            mode={mode}
+            targetKB={targetKB}
+            onQualityChange={(newQ) => setQuality(newQ)}
+            onFormatChange={(newFmt) => setFormat(newFmt)}
+            onProcessedUpdate={(out) => setLiveOutput(out)}
+          />
         );
       }}
     >
@@ -198,12 +204,12 @@ export const CompressorPage: React.FC = () => {
             {processing ? (
               <>
                 <Sparkles className="w-4 h-4 animate-spin text-black" />
-                <span>Compressing Image...</span>
+                <span>Preparing Output...</span>
               </>
             ) : (
               <>
-                <Play className="w-4 h-4 fill-black" />
-                <span>Compress & Preview</span>
+                <Download className="w-4 h-4" />
+                <span>Save & Export Inspected Image</span>
               </>
             )}
           </button>
