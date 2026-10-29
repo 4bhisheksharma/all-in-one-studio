@@ -45,7 +45,7 @@ export const AssetCard: React.FC<AssetCardProps> = ({ asset, onOpenPreview, isTr
         onContextMenu={handleContextMenu}
         onClick={() => onOpenPreview(asset)}
         className={cn(
-          'group relative flex flex-col rounded-xl bg-[#131317] border transition-all duration-200 cursor-pointer overflow-hidden select-none hover:shadow-lg',
+          'interactive-card group relative flex flex-col rounded-xl bg-[#131317] border transition-all duration-200 cursor-pointer overflow-hidden select-none hover:shadow-lg',
           isSelected
             ? 'border-lime-400 ring-1 ring-lime-400 shadow-[0_0_12px_rgba(163,230,53,0.15)]'
             : 'border-[#22222a] hover:border-zinc-700 hover:bg-[#16161d]'
@@ -60,10 +60,10 @@ export const AssetCard: React.FC<AssetCardProps> = ({ asset, onOpenPreview, isTr
             <button
               onClick={handleSelectClick}
               className={cn(
-                'w-5 h-5 rounded-md flex items-center justify-center transition-all',
+                'w-6 h-6 sm:w-5 sm:h-5 rounded-md flex items-center justify-center transition-all interactive-press',
                 isSelected
-                  ? 'bg-lime-400 text-black shadow-sm'
-                  : 'bg-black/60 text-transparent hover:text-white/60 hover:bg-black/80 opacity-0 group-hover:opacity-100 border border-white/20'
+                  ? 'bg-lime-400 text-black shadow-sm opacity-100'
+                  : 'bg-black/60 text-white/40 hover:text-white/80 hover:bg-black/80 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 border border-white/20'
               )}
               title={isSelected ? 'Deselect' : 'Select'}
             >
@@ -76,10 +76,10 @@ export const AssetCard: React.FC<AssetCardProps> = ({ asset, onOpenPreview, isTr
               <button
                 onClick={handleFavoriteClick}
                 className={cn(
-                  'w-6 h-6 rounded-md flex items-center justify-center transition-all',
+                  'w-6 h-6 rounded-md flex items-center justify-center transition-all interactive-press',
                   asset.isFavorite
-                    ? 'text-yellow-400 bg-black/60 shadow-sm'
-                    : 'text-white/70 hover:text-yellow-400 bg-black/50 hover:bg-black/80 opacity-0 group-hover:opacity-100'
+                    ? 'text-yellow-400 bg-black/60 shadow-sm opacity-100'
+                    : 'text-white/70 hover:text-yellow-400 bg-black/50 hover:bg-black/80 opacity-80 sm:opacity-0 sm:group-hover:opacity-100'
                 )}
                 title={asset.isFavorite ? 'Remove Favorite' : 'Favorite'}
               >
@@ -89,7 +89,7 @@ export const AssetCard: React.FC<AssetCardProps> = ({ asset, onOpenPreview, isTr
 
             <button
               onClick={handleDotsClick}
-              className="w-6 h-6 rounded-md flex items-center justify-center text-white/70 hover:text-white bg-black/50 hover:bg-black/80 opacity-0 group-hover:opacity-100 transition-all"
+              className="w-6 h-6 rounded-md flex items-center justify-center text-white/70 hover:text-white bg-black/50 hover:bg-black/80 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-all interactive-press"
               title="More actions"
             >
               <MoreVertical className="w-3.5 h-3.5" />

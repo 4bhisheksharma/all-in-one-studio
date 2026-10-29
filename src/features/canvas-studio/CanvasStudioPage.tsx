@@ -23,6 +23,7 @@ import {
   Unlink,
   Crop,
   RotateCw,
+  X,
 } from 'lucide-react';
 import { AssetPickerDialog } from '@/components/image-picker/AssetPickerDialog';
 import { ProcessingResultPanel } from '@/components/common/ProcessingResultPanel';
@@ -54,6 +55,7 @@ export const CanvasStudioPage: React.FC = () => {
   // Layers state
   const [layers, setLayers] = useState<CanvasLayer[]>([]);
   const [selectedLayerId, setSelectedLayerId] = useState<string | null>(null);
+  const [mobilePanel, setMobilePanel] = useState<'none' | 'layers' | 'inspector'>('none');
 
   // Inspector active tab
   const [inspectorTab, setInspectorTab] = useState<'adjust' | 'transform' | 'style'>('adjust');
@@ -411,9 +413,11 @@ export const CanvasStudioPage: React.FC = () => {
   };
 
   // Start Interactive Transform (Move, Resize Corners, Resize Edges, Rotate)
-  const handleStartTransform = (e: React.MouseEvent, mode: TransformMode) => {
+  const handleStartTransform = (
+    e: React.MouseEvent | React.PointerEvent,
+    mode: TransformMode
+  ) => {
     e.stopPropagation();
-    e.preventDefault();
     if (!selectedLayer || selectedLayer.locked) return;
 
     setTransformMode(mode);
@@ -421,9 +425,9 @@ export const CanvasStudioPage: React.FC = () => {
     setInitialLayerState({ ...selectedLayer });
   };
 
-  // Handle Window Mouse Move for Transforming Selected Layer
+  // Handle Window Move for Transforming Selected Layer (mouse + touch)
   const handleTransformMove = useCallback(
-    (e: MouseEvent) => {
+    (e: MouseEvent | PointerEvent) => {
       if (!transformMode || !transformStart || !initialLayerState) return;
 
       const dx = (e.clientX - transformStart.x) / zoom;
@@ -512,9 +516,13 @@ export const CanvasStudioPage: React.FC = () => {
 
   useEffect(() => {
     if (transformMode) {
+      window.addEventListener('pointermove', handleTransformMove);
+      window.addEventListener('pointerup', handleTransformUp);
       window.addEventListener('mousemove', handleTransformMove);
       window.addEventListener('mouseup', handleTransformUp);
       return () => {
+        window.removeEventListener('pointermove', handleTransformMove);
+        window.removeEventListener('pointerup', handleTransformUp);
         window.removeEventListener('mousemove', handleTransformMove);
         window.removeEventListener('mouseup', handleTransformUp);
       };
@@ -923,10 +931,38 @@ export const CanvasStudioPage: React.FC = () => {
             </button>
           </div>
 
+          {/* Mobile Panel Toggles (visible only on small screens) */}
+          <button
+            onClick={() => setMobilePanel((p) => (p === 'layers' ? 'none' : 'layers'))}
+            className={`lg:hidden flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all interactive-press ${
+              mobilePanel === 'layers'
+                ? 'bg-lime-400 text-black border-lime-400'
+                : 'bg-zinc-800 text-zinc-300 border-zinc-700'
+            }`}
+            title="Toggle Layers"
+          >
+            <Layers className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Layers</span>
+            <span className="px-1 rounded bg-zinc-700/60 text-[10px]">{layers.length}</span>
+          </button>
+
+          <button
+            onClick={() => setMobilePanel((p) => (p === 'inspector' ? 'none' : 'inspector'))}
+            className={`lg:hidden flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all interactive-press ${
+              mobilePanel === 'inspector'
+                ? 'bg-lime-400 text-black border-lime-400'
+                : 'bg-zinc-800 text-zinc-300 border-zinc-700'
+            }`}
+            title="Toggle Inspector"
+          >
+            <Sliders className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Inspector</span>
+          </button>
+
           <button
             onClick={handleExportComposition}
             disabled={exporting || layers.length === 0}
-            className="flex items-center gap-2 px-3.5 py-1.5 bg-lime-400 hover:bg-lime-300 disabled:opacity-50 text-black font-bold text-xs rounded-lg shadow-sm transition-all cursor-pointer"
+            className="flex items-center gap-2 px-3.5 py-1.5 bg-lime-400 hover:bg-lime-300 disabled:opacity-50 text-black font-bold text-xs rounded-lg shadow-sm transition-all cursor-pointer interactive-press"
           >
             <Download className="w-4 h-4 fill-black" />
             <span>{exporting ? 'Exporting...' : 'Export'}</span>
@@ -935,14 +971,35 @@ export const CanvasStudioPage: React.FC = () => {
       </header>
 
       {/* Main Studio Body: 3-column Layout */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex overflow-hidden relative">
+        {/* Mobile Backdrop Overlay */}
+        {mobilePanel !== 'none' && (
+          <div
+            onClick={() => setMobilePanel('none')}
+            className="lg:hidden fixed inset-0 z-30 bg-black/75 backdrop-blur-sm animate-fade-in"
+          />
+        )}
+
         {/* LEFT COLUMN: Layers Panel */}
-        <aside className="w-64 border-r border-[#22222a] bg-[#111115] flex flex-col shrink-0">
+        <aside
+          className={`border-r border-[#22222a] bg-[#111115] flex-col shrink-0 transition-all ${
+            mobilePanel === 'layers'
+              ? 'fixed inset-y-0 left-0 z-40 w-72 shadow-2xl animate-slide-up flex'
+              : 'hidden lg:flex lg:w-64'
+          }`}
+        >
           <div className="p-3 border-b border-[#22222a] flex items-center justify-between">
             <span className="text-xs font-semibold text-zinc-200 uppercase tracking-wider flex items-center gap-1.5">
               <Layers className="w-3.5 h-3.5 text-lime-400" />
               Layers ({layers.length})
             </span>
+            <button
+              onClick={() => setMobilePanel('none')}
+              className="lg:hidden p-1 rounded-md text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
+              title="Close panel"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
 
           <div className="flex-1 overflow-y-auto p-2 space-y-1.5">
@@ -1130,15 +1187,17 @@ export const CanvasStudioPage: React.FC = () => {
 
                 {/* Center translation / move area */}
                 <div
+                  onPointerDown={(e) => handleStartTransform(e, 'move')}
                   onMouseDown={(e) => handleStartTransform(e, 'move')}
-                  className="absolute inset-2 pointer-events-auto cursor-grab active:cursor-grabbing"
+                  className="absolute inset-2 pointer-events-auto cursor-grab active:cursor-grabbing touch-none"
                   title="Drag to reposition layer"
                 />
 
                 {/* Rotation Stalk & Handle */}
                 <div
+                  onPointerDown={(e) => handleStartTransform(e, 'rot')}
                   onMouseDown={(e) => handleStartTransform(e, 'rot')}
-                  className="absolute left-1/2 -top-8 -translate-x-1/2 flex flex-col items-center pointer-events-auto cursor-grab active:cursor-grabbing group z-40"
+                  className="absolute left-1/2 -top-8 -translate-x-1/2 flex flex-col items-center pointer-events-auto cursor-grab active:cursor-grabbing group z-40 touch-none"
                   title="Drag to rotate layer"
                 >
                   <div className="w-4 h-4 rounded-full bg-lime-400 border-2 border-black shadow group-hover:scale-125 transition-transform" />
@@ -1147,45 +1206,53 @@ export const CanvasStudioPage: React.FC = () => {
 
                 {/* 4 Corner Resize Handles */}
                 <div
+                  onPointerDown={(e) => handleStartTransform(e, 'nw')}
                   onMouseDown={(e) => handleStartTransform(e, 'nw')}
-                  className="absolute -top-2.5 -left-2.5 w-5 h-5 rounded-sm bg-lime-400 border-2 border-black shadow cursor-nwse-resize pointer-events-auto hover:scale-125 transition-transform z-40"
+                  className="absolute -top-2.5 -left-2.5 w-5 h-5 rounded-sm bg-lime-400 border-2 border-black shadow cursor-nwse-resize pointer-events-auto hover:scale-125 transition-transform z-40 touch-none"
                   title="Resize top-left"
                 />
                 <div
+                  onPointerDown={(e) => handleStartTransform(e, 'ne')}
                   onMouseDown={(e) => handleStartTransform(e, 'ne')}
-                  className="absolute -top-2.5 -right-2.5 w-5 h-5 rounded-sm bg-lime-400 border-2 border-black shadow cursor-nesw-resize pointer-events-auto hover:scale-125 transition-transform z-40"
+                  className="absolute -top-2.5 -right-2.5 w-5 h-5 rounded-sm bg-lime-400 border-2 border-black shadow cursor-nesw-resize pointer-events-auto hover:scale-125 transition-transform z-40 touch-none"
                   title="Resize top-right"
                 />
                 <div
+                  onPointerDown={(e) => handleStartTransform(e, 'se')}
                   onMouseDown={(e) => handleStartTransform(e, 'se')}
-                  className="absolute -bottom-2.5 -right-2.5 w-5 h-5 rounded-sm bg-lime-400 border-2 border-black shadow cursor-nwse-resize pointer-events-auto hover:scale-125 transition-transform z-40"
+                  className="absolute -bottom-2.5 -right-2.5 w-5 h-5 rounded-sm bg-lime-400 border-2 border-black shadow cursor-nwse-resize pointer-events-auto hover:scale-125 transition-transform z-40 touch-none"
                   title="Resize bottom-right"
                 />
                 <div
+                  onPointerDown={(e) => handleStartTransform(e, 'sw')}
                   onMouseDown={(e) => handleStartTransform(e, 'sw')}
-                  className="absolute -bottom-2.5 -left-2.5 w-5 h-5 rounded-sm bg-lime-400 border-2 border-black shadow cursor-nesw-resize pointer-events-auto hover:scale-125 transition-transform z-40"
+                  className="absolute -bottom-2.5 -left-2.5 w-5 h-5 rounded-sm bg-lime-400 border-2 border-black shadow cursor-nesw-resize pointer-events-auto hover:scale-125 transition-transform z-40 touch-none"
                   title="Resize bottom-left"
                 />
 
                 {/* 4 Edge Handles */}
                 <div
+                  onPointerDown={(e) => handleStartTransform(e, 'n')}
                   onMouseDown={(e) => handleStartTransform(e, 'n')}
-                  className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-8 h-3 rounded-full bg-lime-400 border border-black shadow cursor-ns-resize pointer-events-auto hover:scale-110 transition-transform z-40"
+                  className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-8 h-3 rounded-full bg-lime-400 border border-black shadow cursor-ns-resize pointer-events-auto hover:scale-110 transition-transform z-40 touch-none"
                   title="Resize top edge"
                 />
                 <div
+                  onPointerDown={(e) => handleStartTransform(e, 's')}
                   onMouseDown={(e) => handleStartTransform(e, 's')}
-                  className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-8 h-3 rounded-full bg-lime-400 border border-black shadow cursor-ns-resize pointer-events-auto hover:scale-110 transition-transform z-40"
+                  className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-8 h-3 rounded-full bg-lime-400 border border-black shadow cursor-ns-resize pointer-events-auto hover:scale-110 transition-transform z-40 touch-none"
                   title="Resize bottom edge"
                 />
                 <div
+                  onPointerDown={(e) => handleStartTransform(e, 'w')}
                   onMouseDown={(e) => handleStartTransform(e, 'w')}
-                  className="absolute top-1/2 -left-1.5 -translate-y-1/2 w-3 h-8 rounded-full bg-lime-400 border border-black shadow cursor-ew-resize pointer-events-auto hover:scale-110 transition-transform z-40"
+                  className="absolute top-1/2 -left-1.5 -translate-y-1/2 w-3 h-8 rounded-full bg-lime-400 border border-black shadow cursor-ew-resize pointer-events-auto hover:scale-110 transition-transform z-40 touch-none"
                   title="Resize left edge"
                 />
                 <div
+                  onPointerDown={(e) => handleStartTransform(e, 'e')}
                   onMouseDown={(e) => handleStartTransform(e, 'e')}
-                  className="absolute top-1/2 -right-1.5 -translate-y-1/2 w-3 h-8 rounded-full bg-lime-400 border border-black shadow cursor-ew-resize pointer-events-auto hover:scale-110 transition-transform z-40"
+                  className="absolute top-1/2 -right-1.5 -translate-y-1/2 w-3 h-8 rounded-full bg-lime-400 border border-black shadow cursor-ew-resize pointer-events-auto hover:scale-110 transition-transform z-40 touch-none"
                   title="Resize right edge"
                 />
               </div>
@@ -1194,21 +1261,36 @@ export const CanvasStudioPage: React.FC = () => {
         </div>
 
         {/* RIGHT COLUMN: Layer Tools & Adjustments Inspector */}
-        <aside className="w-80 border-l border-[#22222a] bg-[#111115] flex flex-col shrink-0">
+        <aside
+          className={`border-l border-[#22222a] bg-[#111115] flex-col shrink-0 transition-all ${
+            mobilePanel === 'inspector'
+              ? 'fixed inset-y-0 right-0 z-40 w-80 shadow-2xl animate-slide-up flex'
+              : 'hidden lg:flex lg:w-80'
+          }`}
+        >
           {selectedLayer ? (
             <div className="flex flex-col h-full overflow-hidden">
               {/* Header */}
               <div className="p-3 border-b border-[#22222a] flex items-center justify-between">
-                <span className="text-xs font-bold text-zinc-100 truncate max-w-[200px]">
+                <span className="text-xs font-bold text-zinc-100 truncate max-w-[160px]">
                   {selectedLayer.name}
                 </span>
-                <button
-                  onClick={() => deleteLayer()}
-                  className="p-1 rounded text-zinc-500 hover:text-red-400 transition-colors"
-                  title="Remove layer (Del)"
-                >
-                  <Trash2 className="w-4 h-4" />
-                </button>
+                <div className="flex items-center gap-1">
+                  <button
+                    onClick={() => deleteLayer()}
+                    className="p-1 rounded text-zinc-500 hover:text-red-400 transition-colors"
+                    title="Remove layer (Del)"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                  </button>
+                  <button
+                    onClick={() => setMobilePanel('none')}
+                    className="lg:hidden p-1 rounded-md text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
+                    title="Close inspector"
+                  >
+                    <X className="w-4 h-4" />
+                  </button>
+                </div>
               </div>
 
               {/* Inspector Navigation Tabs */}

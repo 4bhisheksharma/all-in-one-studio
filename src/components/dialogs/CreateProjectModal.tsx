@@ -47,7 +47,7 @@ export const CreateProjectModal: React.FC = () => {
       />
 
       {/* Modal Dialog */}
-      <div className="relative z-10 w-full max-w-md rounded-2xl bg-[#141418] border border-[#2a2a36] shadow-2xl overflow-hidden p-6 space-y-5">
+      <div className="relative z-10 w-full max-w-md rounded-2xl bg-[#141418] border border-[#2a2a36] shadow-2xl overflow-hidden p-6 space-y-5 animate-scale-in">
         <div className="flex items-center justify-between pb-3 border-b border-[#23232c]">
           <div className="flex items-center gap-2.5">
             <div className="w-8 h-8 rounded-lg bg-lime-400/10 flex items-center justify-center text-lime-400">

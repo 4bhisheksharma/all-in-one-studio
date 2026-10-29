@@ -105,19 +105,21 @@ export const CropperPage: React.FC = () => {
     });
   };
 
-  // Start dragging a handle or the box
-  const handleMouseDownHandle = (e: React.MouseEvent, handle: DragHandle) => {
+  // Start dragging a handle or the box (touch + mouse compatible)
+  const handlePointerDownHandle = (
+    e: React.MouseEvent | React.PointerEvent,
+    handle: DragHandle
+  ) => {
     e.stopPropagation();
-    e.preventDefault();
     setIsDragging(true);
     setActiveHandle(handle);
     setDragStart({ x: e.clientX, y: e.clientY });
     setInitialCrop({ ...crop });
   };
 
-  // Mouse move handler attached to window for smooth dragging
-  const handleMouseMove = useCallback(
-    (e: MouseEvent) => {
+  // Move handler attached to window for smooth dragging
+  const handleMove = useCallback(
+    (e: MouseEvent | PointerEvent) => {
       if (!isDragging || !activeHandle || !dragStart || !initialCrop || !imageRef.current) return;
 
       const imgRect = imageRef.current.getBoundingClientRect();
@@ -182,7 +184,7 @@ export const CropperPage: React.FC = () => {
     [isDragging, activeHandle, dragStart, initialCrop, aspect]
   );
 
-  const handleMouseUp = useCallback(() => {
+  const handlePointerUp = useCallback(() => {
     setIsDragging(false);
     setActiveHandle(null);
     setDragStart(null);
@@ -191,14 +193,18 @@ export const CropperPage: React.FC = () => {
 
   useEffect(() => {
     if (isDragging) {
-      window.addEventListener('mousemove', handleMouseMove);
-      window.addEventListener('mouseup', handleMouseUp);
+      window.addEventListener('pointermove', handleMove);
+      window.addEventListener('pointerup', handlePointerUp);
+      window.addEventListener('mousemove', handleMove);
+      window.addEventListener('mouseup', handlePointerUp);
       return () => {
-        window.removeEventListener('mousemove', handleMouseMove);
-        window.removeEventListener('mouseup', handleMouseUp);
+        window.removeEventListener('pointermove', handleMove);
+        window.removeEventListener('pointerup', handlePointerUp);
+        window.removeEventListener('mousemove', handleMove);
+        window.removeEventListener('mouseup', handlePointerUp);
       };
     }
-  }, [isDragging, handleMouseMove, handleMouseUp]);
+  }, [isDragging, handleMove, handlePointerUp]);
 
   // Execute processing
   const handleProcess = async (asset: ImageAsset | null, blob: Blob | null) => {
@@ -347,8 +353,9 @@ export const CropperPage: React.FC = () => {
                 >
                   {/* Center Reposition Grab Area */}
                   <div
-                    onMouseDown={(e) => handleMouseDownHandle(e, 'move')}
-                    className="absolute inset-2 cursor-move z-10"
+                    onPointerDown={(e) => handlePointerDownHandle(e, 'move')}
+                    onMouseDown={(e) => handlePointerDownHandle(e, 'move')}
+                    className="absolute inset-2 cursor-move z-10 touch-none"
                     title="Drag to reposition crop area"
                   />
 
@@ -367,8 +374,9 @@ export const CropperPage: React.FC = () => {
 
                   {/* Top Edge Sliding Zone */}
                   <div
-                    onMouseDown={(e) => handleMouseDownHandle(e, 'n')}
-                    className="absolute -top-3 left-3 right-3 h-6 cursor-ns-resize z-20 flex items-center justify-center group"
+                    onPointerDown={(e) => handlePointerDownHandle(e, 'n')}
+                    onMouseDown={(e) => handlePointerDownHandle(e, 'n')}
+                    className="absolute -top-3 left-3 right-3 h-6 cursor-ns-resize z-20 flex items-center justify-center group touch-none"
                     title="Drag top edge"
                   >
                     <div className="w-10 h-1.5 bg-lime-400 rounded-full border border-black shadow group-hover:scale-110 transition-transform" />
@@ -376,8 +384,9 @@ export const CropperPage: React.FC = () => {
 
                   {/* Bottom Edge Sliding Zone */}
                   <div
-                    onMouseDown={(e) => handleMouseDownHandle(e, 's')}
-                    className="absolute -bottom-3 left-3 right-3 h-6 cursor-ns-resize z-20 flex items-center justify-center group"
+                    onPointerDown={(e) => handlePointerDownHandle(e, 's')}
+                    onMouseDown={(e) => handlePointerDownHandle(e, 's')}
+                    className="absolute -bottom-3 left-3 right-3 h-6 cursor-ns-resize z-20 flex items-center justify-center group touch-none"
                     title="Drag bottom edge"
                   >
                     <div className="w-10 h-1.5 bg-lime-400 rounded-full border border-black shadow group-hover:scale-110 transition-transform" />
@@ -385,8 +394,9 @@ export const CropperPage: React.FC = () => {
 
                   {/* Left Edge Sliding Zone */}
                   <div
-                    onMouseDown={(e) => handleMouseDownHandle(e, 'w')}
-                    className="absolute -left-3 top-3 bottom-3 w-6 cursor-ew-resize z-20 flex items-center justify-center group"
+                    onPointerDown={(e) => handlePointerDownHandle(e, 'w')}
+                    onMouseDown={(e) => handlePointerDownHandle(e, 'w')}
+                    className="absolute -left-3 top-3 bottom-3 w-6 cursor-ew-resize z-20 flex items-center justify-center group touch-none"
                     title="Drag left edge"
                   >
                     <div className="w-1.5 h-10 bg-lime-400 rounded-full border border-black shadow group-hover:scale-110 transition-transform" />
@@ -394,8 +404,9 @@ export const CropperPage: React.FC = () => {
 
                   {/* Right Edge Sliding Zone */}
                   <div
-                    onMouseDown={(e) => handleMouseDownHandle(e, 'e')}
-                    className="absolute -right-3 top-3 bottom-3 w-6 cursor-ew-resize z-20 flex items-center justify-center group"
+                    onPointerDown={(e) => handlePointerDownHandle(e, 'e')}
+                    onMouseDown={(e) => handlePointerDownHandle(e, 'e')}
+                    className="absolute -right-3 top-3 bottom-3 w-6 cursor-ew-resize z-20 flex items-center justify-center group touch-none"
                     title="Drag right edge"
                   >
                     <div className="w-1.5 h-10 bg-lime-400 rounded-full border border-black shadow group-hover:scale-110 transition-transform" />
@@ -403,29 +414,33 @@ export const CropperPage: React.FC = () => {
 
                   {/* 4 Corner Handles */}
                   <div
-                    onMouseDown={(e) => handleMouseDownHandle(e, 'nw')}
-                    className="absolute -top-3 -left-3 w-6 h-6 flex items-center justify-center cursor-nwse-resize z-30"
+                    onPointerDown={(e) => handlePointerDownHandle(e, 'nw')}
+                    onMouseDown={(e) => handlePointerDownHandle(e, 'nw')}
+                    className="absolute -top-3 -left-3 w-6 h-6 flex items-center justify-center cursor-nwse-resize z-30 touch-none"
                     title="Resize top-left"
                   >
                     <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
                   </div>
                   <div
-                    onMouseDown={(e) => handleMouseDownHandle(e, 'ne')}
-                    className="absolute -top-3 -right-3 w-6 h-6 flex items-center justify-center cursor-nesw-resize z-30"
+                    onPointerDown={(e) => handlePointerDownHandle(e, 'ne')}
+                    onMouseDown={(e) => handlePointerDownHandle(e, 'ne')}
+                    className="absolute -top-3 -right-3 w-6 h-6 flex items-center justify-center cursor-nesw-resize z-30 touch-none"
                     title="Resize top-right"
                   >
                     <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
                   </div>
                   <div
-                    onMouseDown={(e) => handleMouseDownHandle(e, 'se')}
-                    className="absolute -bottom-3 -right-3 w-6 h-6 flex items-center justify-center cursor-nwse-resize z-30"
+                    onPointerDown={(e) => handlePointerDownHandle(e, 'se')}
+                    onMouseDown={(e) => handlePointerDownHandle(e, 'se')}
+                    className="absolute -bottom-3 -right-3 w-6 h-6 flex items-center justify-center cursor-nwse-resize z-30 touch-none"
                     title="Resize bottom-right"
                   >
                     <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
                   </div>
                   <div
-                    onMouseDown={(e) => handleMouseDownHandle(e, 'sw')}
-                    className="absolute -bottom-3 -left-3 w-6 h-6 flex items-center justify-center cursor-nesw-resize z-30"
+                    onPointerDown={(e) => handlePointerDownHandle(e, 'sw')}
+                    onMouseDown={(e) => handlePointerDownHandle(e, 'sw')}
+                    className="absolute -bottom-3 -left-3 w-6 h-6 flex items-center justify-center cursor-nesw-resize z-30 touch-none"
                     title="Resize bottom-left"
                   >
                     <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />

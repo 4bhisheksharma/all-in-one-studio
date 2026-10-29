@@ -177,7 +177,7 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
           {selectedAsset && (
             <button
               onClick={() => setPickerOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold transition-colors interactive-press"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Change Image</span>
@@ -187,7 +187,7 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
           {!selectedAsset && (
             <button
               onClick={() => setPickerOpen(true)}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-lime-400 hover:bg-lime-300 text-black text-xs font-semibold shadow-sm transition-all"
+              className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-lime-400 hover:bg-lime-300 text-black text-xs font-semibold shadow-sm transition-all interactive-press"
             >
               <FolderOpen className="w-4 h-4" />
               <span>Select from Library</span>
@@ -198,7 +198,7 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
 
       {/* Selected Asset Header Chip */}
       {selectedAsset && (
-        <div className="flex items-center justify-between p-3 rounded-xl bg-[#141419] border border-[#262632] shadow-sm">
+        <div className="flex items-center justify-between p-3 rounded-xl bg-[#141419] border border-[#262632] shadow-sm animate-fade-in">
           <div className="flex items-center gap-3 min-w-0">
             <div className="w-10 h-10 rounded-lg overflow-hidden bg-zinc-900 border border-zinc-800 shrink-0">
               <AssetThumbnail assetId={selectedAsset.id} alt={selectedAsset.filename} />
@@ -219,7 +219,7 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
 
           <button
             onClick={handleClear}
-            className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+            className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors interactive-press"
             title="Deselect image"
           >
             <X className="w-4 h-4" />
@@ -238,13 +238,13 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
         <div
           className={`${
             isExpanded ? 'lg:col-span-8' : 'lg:col-span-7 xl:col-span-8'
-          } min-h-[640px] lg:min-h-[740px] xl:min-h-[820px] rounded-2xl bg-[#0e0e12] border border-[#23232c] overflow-hidden flex flex-col justify-center items-center relative p-4 transition-all`}
+          } min-h-[380px] sm:min-h-[500px] lg:min-h-[740px] xl:min-h-[820px] rounded-2xl bg-[#0e0e12] border border-[#23232c] overflow-hidden flex flex-col justify-center items-center relative p-3 sm:p-4 transition-all`}
         >
-          {/* Maximize / Spacious toggle button */}
+          {/* Maximize / Spacious toggle button (Desktop only) */}
           <button
             type="button"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="absolute top-3 right-3 z-30 px-2 py-1 bg-zinc-900/90 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 text-[11px] rounded-lg border border-zinc-800 shadow backdrop-blur transition-colors"
+            className="hidden lg:block absolute top-3 right-3 z-30 px-2 py-1 bg-zinc-900/90 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 text-[11px] rounded-lg border border-zinc-800 shadow backdrop-blur transition-colors interactive-press"
             title={isExpanded ? 'Normal workspace' : 'Expand workspace'}
           >
             {isExpanded ? 'Compact' : 'Expand Workspace'}

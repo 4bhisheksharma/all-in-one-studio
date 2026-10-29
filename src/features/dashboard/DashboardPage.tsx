@@ -75,8 +75,8 @@ export const DashboardPage: React.FC = () => {
       />
 
       {/* Live Metrics Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-in">
+        <div className="interactive-card p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-xs text-zinc-400">Total Images</span>
             <p className="text-2xl font-bold text-zinc-100 font-mono">{assets.length}</p>
@@ -86,7 +86,7 @@ export const DashboardPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
+        <div className="interactive-card p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-xs text-zinc-400">Active Projects</span>
             <p className="text-2xl font-bold text-zinc-100 font-mono">{projects.length}</p>
@@ -96,7 +96,7 @@ export const DashboardPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
+        <div className="interactive-card p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-xs text-zinc-400">Storage Used</span>
             <p className="text-2xl font-bold text-zinc-100 font-mono">{formatBytes(storageUsed)}</p>
@@ -106,7 +106,7 @@ export const DashboardPage: React.FC = () => {
           </div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
+        <div className="interactive-card p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
           <div className="space-y-1">
             <span className="text-xs text-zinc-400">Privacy Mode</span>
             <p className="text-sm font-semibold text-lime-400">100% Client-Side</p>
@@ -118,7 +118,7 @@ export const DashboardPage: React.FC = () => {
       </div>
 
       {/* Featured Recipe Banner: Smart Image Recipes (Top Pick) */}
-      <div className="p-5 rounded-2xl bg-gradient-to-r from-lime-950/40 via-[#181820] to-[#121217] border border-lime-400/30 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-[0_0_30px_rgba(163,230,53,0.05)]">
+      <div className="interactive-card p-5 rounded-2xl bg-gradient-to-r from-lime-950/40 via-[#181820] to-[#121217] border border-lime-400/30 flex flex-col md:flex-row md:items-center justify-between gap-4 shadow-[0_0_30px_rgba(163,230,53,0.05)]">
         <div className="flex items-start sm:items-center gap-3.5">
           <div className="w-12 h-12 rounded-xl bg-lime-400/20 border border-lime-400/30 flex items-center justify-center text-lime-400 text-2xl shrink-0">
             🛍️
@@ -139,7 +139,7 @@ export const DashboardPage: React.FC = () => {
 
         <Link
           to="/recipes"
-          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs shadow-md transition-all shrink-0 cursor-pointer"
+          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs shadow-md transition-all shrink-0 cursor-pointer interactive-press"
         >
           <Wand2 className="w-4 h-4 fill-black" />
           <span>Open Smart Recipes</span>
@@ -158,7 +158,7 @@ export const DashboardPage: React.FC = () => {
               <Link
                 key={tool.to}
                 to={tool.to}
-                className="group p-4 rounded-xl bg-[#131317] border border-[#22222a] hover:border-zinc-700 hover:bg-[#181820] transition-all flex flex-col justify-between h-36"
+                className="interactive-card group p-4 rounded-xl bg-[#131317] border border-[#22222a] hover:border-zinc-700 hover:bg-[#181820] transition-all flex flex-col justify-between h-36"
               >
                 <div className="flex items-center justify-between">
                   <div className={`w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center ${tool.color}`}>

@@ -63,7 +63,7 @@ export const AssetPreviewModal: React.FC<AssetPreviewModalProps> = ({ asset, onC
       />
 
       {/* Modal Dialog */}
-      <div className="relative z-10 w-full max-w-5xl h-[88vh] rounded-2xl bg-[#131317] border border-[#2a2a36] shadow-2xl overflow-hidden flex flex-col md:flex-row">
+      <div className="relative z-10 w-full max-w-5xl h-[88vh] rounded-2xl bg-[#131317] border border-[#2a2a36] shadow-2xl overflow-hidden flex flex-col md:flex-row animate-scale-in">
         {/* Left: Image Viewport */}
         <div className="flex-1 bg-[#0a0a0c] flex items-center justify-center p-4 relative overflow-hidden group">
           {fullUrl ? (

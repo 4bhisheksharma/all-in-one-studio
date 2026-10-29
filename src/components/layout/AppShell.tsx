@@ -7,6 +7,7 @@ import { UploadModal } from '@/components/dialogs/UploadModal';
 import { CreateProjectModal } from '@/components/dialogs/CreateProjectModal';
 import { useUIStore } from '@/stores/uiStore';
 
+import { BottomNav } from './BottomNav';
 import { ErrorBoundary } from '@/components/common/ErrorBoundary';
 
 export const AppShell: React.FC = () => {
@@ -36,7 +37,7 @@ export const AppShell: React.FC = () => {
       <div className="flex-1 flex flex-col h-full min-w-0 overflow-hidden">
         <TopBar />
 
-        <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 md:p-6 lg:p-8 bg-[#0a0a0c]">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 pb-24 md:p-6 md:pb-6 lg:p-8 bg-[#0a0a0c]">
           <div className="max-w-7xl mx-auto w-full">
             <ErrorBoundary>
               <Outlet />
@@ -44,6 +45,9 @@ export const AppShell: React.FC = () => {
           </div>
         </main>
       </div>
+
+      {/* Mobile Bottom Navigation Bar */}
+      <BottomNav />
 
       {/* Global Modals */}
       <UploadModal />

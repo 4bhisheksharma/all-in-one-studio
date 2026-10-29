@@ -35,18 +35,18 @@ export const BatchActionBar: React.FC = () => {
 
   return (
     <>
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-3 px-4 py-2.5 rounded-2xl bg-[#141419]/95 backdrop-blur-lg border border-[#2e2e3c] shadow-[0_8px_30px_rgb(0,0,0,0.5)] animate-in fade-in slide-in-from-bottom-4 duration-200">
-        <div className="flex items-center gap-2 pl-1 pr-3 border-r border-[#2a2a36] text-xs font-semibold text-zinc-100">
+      <div className="fixed bottom-20 md:bottom-6 left-1/2 -translate-x-1/2 z-40 flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl bg-[#141419]/95 backdrop-blur-lg border border-[#2e2e3c] shadow-[0_8px_30px_rgb(0,0,0,0.5)] animate-slide-up max-w-[calc(100vw-20px)] overflow-x-auto">
+        <div className="flex items-center gap-1.5 sm:gap-2 pl-1 pr-2 sm:pr-3 border-r border-[#2a2a36] text-xs font-semibold text-zinc-100 shrink-0">
           <span className="w-5 h-5 rounded-full bg-lime-400 text-black flex items-center justify-center font-mono text-[11px] font-bold">
             {selectedIds.length}
           </span>
-          <span>Selected</span>
+          <span className="hidden xs:inline">Selected</span>
         </div>
 
-        <div className="flex items-center gap-1.5">
+        <div className="flex items-center gap-1.5 shrink-0">
           <button
             onClick={handleBulkDownload}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium transition-colors"
+            className="flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium transition-colors interactive-press"
           >
             <Download className="w-3.5 h-3.5 text-lime-400" />
             <span>Download ZIP</span>

@@ -20,7 +20,7 @@ export const UploadModal: React.FC = () => {
       />
 
       {/* Modal Dialog */}
-      <div className="relative z-10 w-full max-w-xl rounded-2xl bg-[#141418] border border-[#2a2a36] shadow-2xl overflow-hidden p-6 space-y-6">
+      <div className="relative z-10 w-full max-w-xl rounded-2xl bg-[#141418] border border-[#2a2a36] shadow-2xl overflow-hidden p-6 space-y-6 animate-scale-in">
         <div className="flex items-center justify-between pb-4 border-b border-[#23232c]">
           <div>
             <h3 className="text-lg font-bold text-zinc-100">Upload Images</h3>
