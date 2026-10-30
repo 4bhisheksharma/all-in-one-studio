@@ -70,9 +70,19 @@ export const ProcessingResultPanel: React.FC<ProcessingResultPanelProps> = ({
     : 0;
 
   const handleDownload = () => {
-    const ext = resultBlob.type.replace('image/', '') || 'png';
+    let ext = 'png';
+    if (resultBlob.type === 'application/pdf') ext = 'pdf';
+    else if (resultBlob.type === 'image/x-icon') ext = 'ico';
+    else if (resultBlob.type === 'image/bmp') ext = 'bmp';
+    else if (resultBlob.type === 'image/avif') ext = 'avif';
+    else if (resultBlob.type === 'image/webp') ext = 'webp';
+    else if (resultBlob.type === 'image/jpeg') ext = 'jpg';
+    else {
+      ext = resultBlob.type.replace('image/', '') || 'png';
+      if (ext === 'jpeg') ext = 'jpg';
+    }
     const base = sourceAsset ? sourceAsset.filename.replace(/\.[^/.]+$/, '') : 'processed';
-    const filename = `${base}-${variantType}.${ext === 'jpeg' ? 'jpg' : ext}`;
+    const filename = `${base}-${variantType}.${ext}`;
     downloadService.downloadBlob(resultBlob, filename);
     toast.success('Download started');
   };
@@ -145,11 +155,21 @@ export const ProcessingResultPanel: React.FC<ProcessingResultPanelProps> = ({
         {/* Left Viewport: Result Preview */}
         <div className="flex-1 bg-zinc-100/70 dark:bg-[#0c0c0e] p-6 flex flex-col items-center justify-center relative min-h-[300px]">
           {resultUrl && (
-            <img
-              src={resultUrl}
-              alt="Processed output"
-              className="max-h-[420px] max-w-full object-contain rounded-lg shadow-sm"
-            />
+            resultBlob.type === 'application/pdf' ? (
+              <div className="w-full h-[380px] rounded-lg overflow-hidden border border-zinc-200 dark:border-zinc-800 bg-white shadow-sm">
+                <iframe
+                  src={resultUrl}
+                  title="PDF Document Preview"
+                  className="w-full h-full border-none"
+                />
+              </div>
+            ) : (
+              <img
+                src={resultUrl}
+                alt="Processed output"
+                className="max-h-[420px] max-w-full object-contain rounded-lg shadow-sm"
+              />
+            )
           )}
 
           {/* Quick Stats Overlays */}

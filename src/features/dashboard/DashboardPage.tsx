@@ -13,6 +13,12 @@ import {
   ArrowRight,
   Wand2,
   Smartphone,
+  Grid,
+  FileText,
+  Laptop,
+  Terminal,
+  Scan,
+  Film,
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useUIStore } from '@/stores/uiStore';
@@ -43,6 +49,12 @@ export const DashboardPage: React.FC = () => {
     { title: 'Studio Canvas', desc: 'Freeform multi-layer composition & editing canvas', to: '/tools/canvas', icon: Layers },
     { title: 'Compressor', desc: 'Reduce file size while preserving quality', to: '/tools/compress', icon: Minimize2 },
     { title: 'Remove BG', desc: 'Neural AI foreground segmentation', to: '/tools/background-remove', icon: Sparkles },
+    { title: 'Image Splitter', desc: 'Seamless carousel slides & grid slicing with ZIP export', to: '/tools/splitter', icon: Grid },
+    { title: 'Bulk Renamer', desc: 'Dynamic pattern engine, token templates & collision safety', to: '/tools/renamer', icon: FileText },
+    { title: 'Device Mockups', desc: 'Frame screenshots in browser & phone chrome with gradients', to: '/tools/mockups', icon: Laptop },
+    { title: 'Pixel & ASCII Studio', desc: '8-bit retro console palettes & monospace terminal text', to: '/tools/pixel-ascii', icon: Terminal },
+    { title: 'OCR Text Scanner', desc: 'Extract text locally & clean up documents without servers', to: '/tools/ocr', icon: Scan },
+    { title: 'GIF Studio', desc: 'Create animated GIFs & decompose frames with ZIP export', to: '/tools/gif-studio', icon: Film },
     { title: 'Resizer', desc: 'Precise dimensions & social presets', to: '/tools/resize', icon: Maximize2 },
     { title: 'Face & Blur', desc: 'Auto-detect faces & blur sensitive regions', to: '/tools/face-blur', icon: EyeOff },
   ];

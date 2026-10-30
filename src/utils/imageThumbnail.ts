@@ -8,6 +8,26 @@ export interface ImageMeta {
  * Extracts natural image dimensions and renders a lightweight max 240px thumbnail blob.
  */
 export async function generateThumbnail(blob: Blob, maxDim = 240): Promise<ImageMeta> {
+  if (blob.type === 'application/pdf') {
+    const canvas = document.createElement('canvas');
+    canvas.width = 160;
+    canvas.height = 200;
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.fillStyle = '#f3f4f6';
+      ctx.fillRect(0, 0, 160, 200);
+      ctx.fillStyle = '#18181b';
+      ctx.font = 'bold 24px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText('PDF', 80, 100);
+      const thumbBlob = await new Promise<Blob | null>((res) => canvas.toBlob(res, 'image/png'));
+      if (thumbBlob) {
+        return { width: 1200, height: 1600, thumbnailBlob: thumbBlob };
+      }
+    }
+  }
+
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(blob);
     const img = new Image();

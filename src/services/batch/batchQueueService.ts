@@ -155,7 +155,11 @@ export const batchQueueService = {
       case 'convert': {
         onProgress(30, 'Converting image format...');
         variantType = 'converted';
-        const convertRes = await canvasProcessor.compressImage(inputBlob, config.convertConfig.targetFormat, 0.92);
+        const convertRes = await canvasProcessor.convertFormat(
+          inputBlob,
+          config.convertConfig.targetFormat,
+          0.92
+        );
         outputBlob = convertRes.blob;
         outWidth = convertRes.width;
         outHeight = convertRes.height;

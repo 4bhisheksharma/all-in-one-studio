@@ -27,6 +27,12 @@ import {
   X,
   Wand2,
   Smartphone,
+  Grid,
+  FileText,
+  Laptop,
+  Terminal,
+  Scan,
+  Film,
 } from 'lucide-react';
 import { useUIStore } from '@/stores/uiStore';
 import { cn, formatBytes } from '@/utils/cn';
@@ -203,6 +209,12 @@ export const Sidebar: React.FC<{ isMobile?: boolean }> = ({ isMobile }) => {
               <NavItem to="/tools/background-remove" icon={Sparkles} label="Remove Background" collapsed={collapsed} onClick={handleLinkClick} />
               <NavItem to="/tools/face-blur" icon={EyeOff} label="Face & Blur" collapsed={collapsed} onClick={handleLinkClick} />
               <NavItem to="/tools/convert" icon={RefreshCw} label="Converter" collapsed={collapsed} onClick={handleLinkClick} />
+              <NavItem to="/tools/splitter" icon={Grid} label="Image Splitter" collapsed={collapsed} onClick={handleLinkClick} />
+              <NavItem to="/tools/renamer" icon={FileText} label="Bulk Renamer" collapsed={collapsed} onClick={handleLinkClick} />
+              <NavItem to="/tools/mockups" icon={Laptop} label="Device Mockups" collapsed={collapsed} onClick={handleLinkClick} />
+              <NavItem to="/tools/pixel-ascii" icon={Terminal} label="Pixel & ASCII Studio" collapsed={collapsed} onClick={handleLinkClick} />
+              <NavItem to="/tools/ocr" icon={Scan} label="OCR Text Scanner" collapsed={collapsed} onClick={handleLinkClick} />
+              <NavItem to="/tools/gif-studio" icon={Film} label="GIF Studio" collapsed={collapsed} onClick={handleLinkClick} />
               <NavItem to="/tools/utilities" icon={Sliders} label="Utilities Suite" collapsed={collapsed} onClick={handleLinkClick} />
             </div>
           )}

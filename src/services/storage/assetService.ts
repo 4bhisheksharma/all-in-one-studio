@@ -291,6 +291,10 @@ export const assetService = {
       'image/jpeg': '.jpg',
       'image/png': '.png',
       'image/webp': '.webp',
+      'image/avif': '.avif',
+      'image/x-icon': '.ico',
+      'application/pdf': '.pdf',
+      'image/bmp': '.bmp',
     };
     const extension = extMap[blob.type] || '.png';
     const filename = customFilename || `${baseName}-${variantType}${extension}`;

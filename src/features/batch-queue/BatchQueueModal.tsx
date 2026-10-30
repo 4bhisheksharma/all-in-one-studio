@@ -535,8 +535,12 @@ export const BatchQueueModal: React.FC<BatchQueueModalProps> = ({
                     className="w-full sm:w-1/2 px-3 py-2 rounded-lg bg-white dark:bg-[#0e0e12] border border-zinc-200 dark:border-[#2b2b38] text-xs text-zinc-800 dark:text-zinc-200"
                   >
                     <option value="image/webp">WebP (.webp)</option>
+                    <option value="image/avif">AVIF (.avif)</option>
                     <option value="image/png">PNG (.png)</option>
                     <option value="image/jpeg">JPEG (.jpg)</option>
+                    <option value="image/x-icon">ICO Favicon (.ico)</option>
+                    <option value="application/pdf">PDF Document (.pdf)</option>
+                    <option value="image/bmp">BMP Bitmap (.bmp)</option>
                   </select>
                 </div>
               )}

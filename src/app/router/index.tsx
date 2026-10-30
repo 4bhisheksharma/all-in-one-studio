@@ -23,6 +23,12 @@ import { RecipesPage } from '@/features/recipes/RecipesPage';
 import { SettingsPage } from '@/features/settings/SettingsPage';
 import { AppIconGeneratorPage } from '@/features/app-icons/AppIconGeneratorPage';
 import { BatchQueuePage } from '@/features/batch-queue/BatchQueuePage';
+import { SplitterPage } from '@/features/splitter/SplitterPage';
+import { RenamerPage } from '@/features/renamer/RenamerPage';
+import { MockupPage } from '@/features/mockups/MockupPage';
+import { PixelAsciiPage } from '@/features/pixel-ascii/PixelAsciiPage';
+import { OcrPage } from '@/features/ocr/OcrPage';
+import { GifStudioPage } from '@/features/gif-studio/GifStudioPage';
 
 export const router = createBrowserRouter([
   {
@@ -51,6 +57,18 @@ export const router = createBrowserRouter([
       { path: 'tools/background-remove', element: <BackgroundRemoverPage /> },
       { path: 'tools/face-blur', element: <FaceBlurPage /> },
       { path: 'tools/convert', element: <ConverterPage /> },
+      { path: 'tools/splitter', element: <SplitterPage /> },
+      { path: 'tools/split', element: <SplitterPage /> },
+      { path: 'tools/renamer', element: <RenamerPage /> },
+      { path: 'renamer', element: <RenamerPage /> },
+      { path: 'tools/mockups', element: <MockupPage /> },
+      { path: 'mockups', element: <MockupPage /> },
+      { path: 'tools/pixel-ascii', element: <PixelAsciiPage /> },
+      { path: 'pixel-ascii', element: <PixelAsciiPage /> },
+      { path: 'tools/ocr', element: <OcrPage /> },
+      { path: 'ocr', element: <OcrPage /> },
+      { path: 'tools/gif-studio', element: <GifStudioPage /> },
+      { path: 'gif-studio', element: <GifStudioPage /> },
       { path: 'tools/utilities', element: <UtilitiesPage /> },
 
       { path: 'settings', element: <SettingsPage /> },

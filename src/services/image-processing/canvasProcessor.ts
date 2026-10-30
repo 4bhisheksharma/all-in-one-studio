@@ -3,6 +3,13 @@
  * Preserves high resolution, smooth downsampling, alpha transparency, and accurate dimensions.
  */
 
+import {
+  encodeIcoBundle,
+  encodeBmp,
+  encodeSingleImagePdf,
+  checkAvifSupport,
+} from './formatEncoders';
+
 export interface ProcessedOutput {
   blob: Blob;
   width: number;
@@ -193,14 +200,35 @@ export const canvasProcessor = {
   },
 
   /**
-   * Format converter between WebP, PNG, and JPEG.
+   * Format converter between WebP, PNG, JPEG, AVIF, ICO, PDF, and BMP.
    */
   async convertFormat(
     blob: Blob,
     targetMime: string,
     quality = 0.9
   ): Promise<ProcessedOutput> {
-    return this.compressImage(blob, targetMime as 'image/jpeg' | 'image/png' | 'image/webp', quality);
+    if (targetMime === 'image/x-icon') {
+      return encodeIcoBundle(blob);
+    }
+    if (targetMime === 'image/bmp') {
+      return encodeBmp(blob);
+    }
+    if (targetMime === 'application/pdf') {
+      return encodeSingleImagePdf(blob, quality);
+    }
+    if (targetMime === 'image/avif') {
+      const isAvif = await checkAvifSupport();
+      if (!isAvif) {
+        // Fallback to high-efficiency WebP if browser doesn't support direct canvas AVIF export
+        return this.compressImage(blob, 'image/webp', quality);
+      }
+      return this.compressImage(blob, 'image/avif' as any, quality);
+    }
+    return this.compressImage(
+      blob,
+      targetMime as 'image/jpeg' | 'image/png' | 'image/webp',
+      quality
+    );
   },
 
   /**

@@ -22,6 +22,12 @@ const ROUTE_LABELS: Record<string, string> = {
   'background-remove': 'Remove Background',
   'face-blur': 'Face & Region Blur',
   'convert': 'Converter',
+  'splitter': 'Image Splitter & Slicer',
+  'renamer': 'Bulk File Renamer',
+  'mockups': 'Device Frame & Mockup Studio',
+  'pixel-ascii': 'Pixel Art & ASCII Studio',
+  'ocr': 'OCR & Document Scanner',
+  'gif-studio': 'Animated GIF Studio',
   'utilities': 'Utilities Suite',
   'settings': 'Settings',
 };
