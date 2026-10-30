@@ -55,7 +55,7 @@ export const ProjectDetailPage: React.FC = () => {
       <div className="flex items-center gap-2">
         <Link
           to="/projects"
-          className="inline-flex items-center gap-1.5 text-xs font-semibold text-zinc-400 hover:text-zinc-100 transition-colors"
+          className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
           <span>Back to Projects</span>
@@ -66,7 +66,7 @@ export const ProjectDetailPage: React.FC = () => {
         title={project ? project.name : 'Project'}
         description={project?.description || 'Project assets and resources'}
         badge={
-          <span className="px-2 py-0.5 rounded-full bg-lime-400/10 text-lime-400 text-xs font-semibold border border-lime-400/20">
+          <span className="px-2 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-xs font-medium border border-zinc-200 dark:border-zinc-700">
             {projectAssets.length} image{projectAssets.length === 1 ? '' : 's'}
           </span>
         }
@@ -74,14 +74,14 @@ export const ProjectDetailPage: React.FC = () => {
           <div className="flex items-center gap-2">
             <button
               onClick={handleDeleteProject}
-              className="p-2 rounded-lg bg-zinc-800/80 hover:bg-red-500/10 text-zinc-400 hover:text-red-400 border border-zinc-700 transition-colors"
+              className="p-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 text-zinc-500 hover:text-red-500 hover:bg-red-500/10 border border-zinc-200 dark:border-zinc-700 transition-colors"
               title="Delete Project"
             >
               <Trash2 className="w-4 h-4" />
             </button>
             <button
               onClick={() => setShowUploadZone(!showUploadZone)}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-lime-400 hover:bg-lime-300 text-black text-xs font-semibold shadow-sm transition-all"
+              className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 text-xs font-semibold transition-colors"
             >
               <UploadCloud className="w-4 h-4" />
               <span>{showUploadZone ? 'Hide Dropzone' : 'Upload to Project'}</span>

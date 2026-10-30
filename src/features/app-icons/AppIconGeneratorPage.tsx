@@ -193,7 +193,7 @@ export const AppIconGeneratorPage: React.FC = () => {
             <button
               onClick={handleDownloadBundle}
               disabled={isGenerating || !sourceBlob}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-lime-400 hover:bg-lime-300 text-black text-xs font-semibold shadow-sm transition-all active:scale-95 disabled:opacity-50"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 text-xs font-semibold shadow-sm transition-all active:scale-[0.98] disabled:opacity-50"
             >
               <Download className="w-4 h-4" />
               <span>Download Production ZIP</span>
@@ -206,10 +206,10 @@ export const AppIconGeneratorPage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
         {/* Left Config Panel (4 cols) */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="p-4 rounded-2xl bg-[#131317] border border-[#23232d] space-y-4">
-            <div className="flex items-center justify-between pb-2 border-b border-zinc-800/80">
-              <span className="text-xs font-semibold text-zinc-200 uppercase tracking-wider flex items-center gap-1.5">
-                <Sliders className="w-3.5 h-3.5 text-lime-400" />
+          <div className="p-4 rounded-2xl bg-white dark:bg-[#131317] border border-zinc-200 dark:border-[#23232d] space-y-4 shadow-sm">
+            <div className="flex items-center justify-between pb-2 border-b border-zinc-100 dark:border-zinc-800/80">
+              <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 uppercase tracking-wider flex items-center gap-1.5">
+                <Sliders className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
                 Asset Settings
               </span>
               <span className="text-[11px] text-zinc-500 font-mono">Platform Standard</span>
@@ -217,20 +217,20 @@ export const AppIconGeneratorPage: React.FC = () => {
 
             {/* App Name */}
             <div className="space-y-1.5">
-              <label className="text-xs text-zinc-400">Application Name</label>
+              <label className="text-xs font-medium text-zinc-700 dark:text-zinc-400">Application Name</label>
               <input
                 type="text"
                 value={options.appName}
                 onChange={(e) => setOptions((prev) => ({ ...prev, appName: e.target.value }))}
-                className="w-full px-3 py-2 rounded-lg bg-[#0e0e12] border border-[#282836] text-xs text-zinc-100 focus:outline-none focus:border-lime-400"
+                className="w-full px-3 py-2 rounded-lg bg-white dark:bg-[#0e0e12] border border-zinc-200 dark:border-[#282836] text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-zinc-400 dark:focus:ring-zinc-600"
               />
             </div>
 
             {/* Padding / Safe Zone Slider */}
             <div className="space-y-1.5">
               <div className="flex justify-between text-xs">
-                <span className="text-zinc-400">Safe-Zone Inset Padding</span>
-                <span className="font-mono text-lime-400">{options.paddingPercent}%</span>
+                <span className="text-zinc-600 dark:text-zinc-400">Safe-Zone Inset Padding</span>
+                <span className="font-mono font-semibold text-zinc-900 dark:text-zinc-100">{options.paddingPercent}%</span>
               </div>
               <input
                 type="range"
@@ -244,7 +244,7 @@ export const AppIconGeneratorPage: React.FC = () => {
                     paddingPercent: parseInt(e.target.value) || 0,
                   }))
                 }
-                className="w-full accent-lime-400"
+                className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
               />
               <p className="text-[10px] text-zinc-500">
                 Prevents icons from getting cropped by Android squircle or iOS corner radius.
@@ -253,7 +253,7 @@ export const AppIconGeneratorPage: React.FC = () => {
 
             {/* Background Color */}
             <div className="space-y-1.5">
-              <label className="text-xs text-zinc-400">Icon Background Color</label>
+              <label className="text-xs font-medium text-zinc-700 dark:text-zinc-400">Icon Background Color</label>
               <div className="flex items-center gap-2">
                 <input
                   type="color"
@@ -261,7 +261,7 @@ export const AppIconGeneratorPage: React.FC = () => {
                   onChange={(e) =>
                     setOptions((prev) => ({ ...prev, backgroundColor: e.target.value }))
                   }
-                  className="w-8 h-8 rounded-lg cursor-pointer bg-transparent border border-zinc-700"
+                  className="w-8 h-8 rounded-lg cursor-pointer bg-transparent border border-zinc-300 dark:border-zinc-700 p-0"
                 />
                 <input
                   type="text"
@@ -269,14 +269,14 @@ export const AppIconGeneratorPage: React.FC = () => {
                   onChange={(e) =>
                     setOptions((prev) => ({ ...prev, backgroundColor: e.target.value }))
                   }
-                  className="flex-1 px-3 py-1.5 rounded-lg bg-[#0e0e12] border border-[#282836] text-xs text-zinc-200 font-mono"
+                  className="flex-1 px-3 py-1.5 rounded-lg bg-white dark:bg-[#0e0e12] border border-zinc-200 dark:border-[#282836] text-xs text-zinc-900 dark:text-zinc-200 font-mono"
                 />
               </div>
             </div>
 
             {/* Android Options */}
-            <div className="pt-2 border-t border-zinc-800/60">
-              <label className="flex items-center gap-2.5 text-xs text-zinc-300 cursor-pointer">
+            <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800/60">
+              <label className="flex items-center gap-2.5 text-xs text-zinc-700 dark:text-zinc-300 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={options.generateRoundIcons}
@@ -286,7 +286,7 @@ export const AppIconGeneratorPage: React.FC = () => {
                       generateRoundIcons: e.target.checked,
                     }))
                   }
-                  className="accent-lime-400 rounded"
+                  className="accent-zinc-900 dark:accent-zinc-100 rounded"
                 />
                 <span>Generate Android round icons (`ic_launcher_round.png`)</span>
               </label>
@@ -295,26 +295,26 @@ export const AppIconGeneratorPage: React.FC = () => {
             {/* Save Master Button */}
             <button
               onClick={handleSaveToLibrary}
-              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium transition-colors"
+              className="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium transition-colors border border-zinc-200 dark:border-zinc-700"
             >
-              <Sparkles className="w-3.5 h-3.5 text-lime-400" />
+              <Sparkles className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
               <span>Save 512px Master to Library</span>
             </button>
           </div>
 
           {/* HTML Snippet Card */}
-          <div className="p-4 rounded-2xl bg-[#131317] border border-[#23232d] space-y-3">
+          <div className="p-4 rounded-2xl bg-white dark:bg-[#131317] border border-zinc-200 dark:border-[#23232d] space-y-3 shadow-sm">
             <div className="flex items-center justify-between">
-              <span className="text-xs font-semibold text-zinc-300">HTML Web Snippet</span>
+              <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-300">HTML Web Snippet</span>
               <button
                 onClick={handleCopySnippet}
-                className="flex items-center gap-1 text-[11px] text-lime-400 hover:underline"
+                className="flex items-center gap-1 text-[11px] text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 font-medium hover:underline"
               >
                 {copiedCode ? <Check className="w-3 h-3" /> : <Copy className="w-3 h-3" />}
                 <span>{copiedCode ? 'Copied!' : 'Copy Code'}</span>
               </button>
             </div>
-            <pre className="p-2.5 rounded-lg bg-[#0a0a0c] border border-zinc-800/80 font-mono text-[10px] text-zinc-400 overflow-x-auto leading-relaxed">
+            <pre className="p-2.5 rounded-lg bg-zinc-50 dark:bg-[#0a0a0c] border border-zinc-200 dark:border-zinc-800/80 font-mono text-[10px] text-zinc-700 dark:text-zinc-400 overflow-x-auto leading-relaxed">
               {htmlHeadSnippet}
             </pre>
           </div>
@@ -323,14 +323,14 @@ export const AppIconGeneratorPage: React.FC = () => {
         {/* Right Preview Viewport (8 cols) */}
         <div className="lg:col-span-8 flex flex-col space-y-4">
           {/* Tab Navigation */}
-          <div className="flex items-center justify-between p-1.5 rounded-xl bg-[#131317] border border-[#23232d]">
+          <div className="flex items-center justify-between p-1.5 rounded-xl bg-zinc-100 dark:bg-[#131317] border border-zinc-200 dark:border-[#23232d]">
             <div className="flex items-center gap-1">
               <button
                 onClick={() => setActiveMockupTab('ios')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   activeMockupTab === 'ios'
-                    ? 'bg-zinc-800 text-lime-400 shadow-sm'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm font-semibold'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
                 <Smartphone className="w-3.5 h-3.5" />
@@ -341,8 +341,8 @@ export const AppIconGeneratorPage: React.FC = () => {
                 onClick={() => setActiveMockupTab('android')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   activeMockupTab === 'android'
-                    ? 'bg-zinc-800 text-lime-400 shadow-sm'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm font-semibold'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
                 <Smartphone className="w-3.5 h-3.5" />
@@ -353,8 +353,8 @@ export const AppIconGeneratorPage: React.FC = () => {
                 onClick={() => setActiveMockupTab('web')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   activeMockupTab === 'web'
-                    ? 'bg-zinc-800 text-lime-400 shadow-sm'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm font-semibold'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
                 <Globe className="w-3.5 h-3.5" />
@@ -365,8 +365,8 @@ export const AppIconGeneratorPage: React.FC = () => {
                 onClick={() => setActiveMockupTab('specs')}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-colors ${
                   activeMockupTab === 'specs'
-                    ? 'bg-zinc-800 text-lime-400 shadow-sm'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm font-semibold'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
                 <Layers className="w-3.5 h-3.5" />
@@ -507,12 +507,12 @@ export const AppIconGeneratorPage: React.FC = () => {
             {activeMockupTab === 'specs' && (
               <div className="w-full h-full overflow-y-auto space-y-4 p-2 text-xs">
                 <div>
-                  <h4 className="font-semibold text-lime-400 text-xs uppercase tracking-wider mb-2">
+                  <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 text-xs uppercase tracking-wider mb-2">
                     iOS Bundle (`AppIcon.appiconset`)
                   </h4>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {IOS_ICON_SPECS.map((spec) => (
-                      <div key={spec.filename} className="p-2 rounded-lg bg-[#131318] border border-zinc-800 font-mono text-[11px] text-zinc-300">
+                      <div key={spec.filename} className="p-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 font-mono text-[11px] text-zinc-700 dark:text-zinc-300">
                         <span className="text-zinc-500">{spec.idiom}</span>
                         <div className="font-semibold">{spec.pixels}×{spec.pixels}px</div>
                         <div className="text-[10px] text-zinc-500 truncate">{spec.filename}</div>
@@ -522,12 +522,12 @@ export const AppIconGeneratorPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-emerald-400 text-xs uppercase tracking-wider mb-2">
+                  <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 text-xs uppercase tracking-wider mb-2">
                     Android Bundle (`res/mipmap-...`)
                   </h4>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {ANDROID_ICON_SPECS.map((spec) => (
-                      <div key={spec.folder} className="p-2 rounded-lg bg-[#131318] border border-zinc-800 font-mono text-[11px] text-zinc-300">
+                      <div key={spec.folder} className="p-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 font-mono text-[11px] text-zinc-700 dark:text-zinc-300">
                         <span className="text-zinc-500">{spec.folder}</span>
                         <div className="font-semibold">{spec.pixels}×{spec.pixels}px</div>
                         <div className="text-[10px] text-zinc-500">ic_launcher.png</div>
@@ -537,12 +537,12 @@ export const AppIconGeneratorPage: React.FC = () => {
                 </div>
 
                 <div>
-                  <h4 className="font-semibold text-cyan-400 text-xs uppercase tracking-wider mb-2">
+                  <h4 className="font-semibold text-zinc-900 dark:text-zinc-100 text-xs uppercase tracking-wider mb-2">
                     Web & Favicon Bundle
                   </h4>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
                     {WEB_ICON_SPECS.map((spec) => (
-                      <div key={spec.filename} className="p-2 rounded-lg bg-[#131318] border border-zinc-800 font-mono text-[11px] text-zinc-300">
+                      <div key={spec.filename} className="p-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 font-mono text-[11px] text-zinc-700 dark:text-zinc-300">
                         <span className="text-zinc-500">Web</span>
                         <div className="font-semibold">{spec.pixels}×{spec.pixels}px</div>
                         <div className="text-[10px] text-zinc-500">{spec.filename}</div>
@@ -556,17 +556,17 @@ export const AppIconGeneratorPage: React.FC = () => {
 
           {/* Real-time Progress when downloading */}
           {isGenerating && (
-            <div className="p-3.5 rounded-xl bg-lime-400/10 border border-lime-400/30 flex flex-col space-y-1.5">
+            <div className="p-3.5 rounded-xl bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex flex-col space-y-1.5">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-lime-400 font-medium flex items-center gap-2">
-                  <span className="w-3.5 h-3.5 rounded-full border-2 border-lime-400 border-t-transparent animate-spin" />
+                <span className="text-zinc-900 dark:text-zinc-100 font-medium flex items-center gap-2">
+                  <span className="w-3.5 h-3.5 rounded-full border-2 border-zinc-900 dark:border-zinc-100 border-t-transparent animate-spin" />
                   Generating asset bundle: {generationItem}
                 </span>
-                <span className="font-mono text-lime-400">{generationProgress}%</span>
+                <span className="font-mono text-zinc-900 dark:text-zinc-100 font-semibold">{generationProgress}%</span>
               </div>
-              <div className="h-1.5 w-full bg-zinc-800 rounded-full overflow-hidden">
+              <div className="h-1.5 w-full bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
                 <div
-                  className="h-full bg-lime-400 transition-all duration-200"
+                  className="h-full bg-zinc-900 dark:bg-zinc-100 transition-all duration-200"
                   style={{ width: `${generationProgress}%` }}
                 />
               </div>

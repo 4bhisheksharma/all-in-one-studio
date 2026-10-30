@@ -768,26 +768,23 @@ export const CanvasStudioPage: React.FC = () => {
   return (
     <div className="flex flex-col h-[calc(100vh-5rem)] -m-4 md:-m-6 lg:-m-8 select-none bg-[#0a0a0d]">
       {/* Top Application Bar */}
-      <header className="h-14 px-4 bg-[#121217] border-b border-[#22222a] flex items-center justify-between shrink-0 z-20">
+      <header className="h-14 px-4 bg-white dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between shrink-0 z-20">
         <div className="flex items-center gap-3">
           <div className="flex items-center gap-2">
-            <span className="text-xs font-bold text-zinc-100 flex items-center gap-1.5">
-              <Layers className="w-4 h-4 text-lime-400" />
+            <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-1.5">
+              <Layers className="w-4 h-4 text-zinc-600 dark:text-zinc-400" />
               Studio Canvas
-            </span>
-            <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-lime-400/20 text-lime-400 font-semibold">
-              PRO
             </span>
           </div>
 
-          <div className="h-4 w-px bg-zinc-800 mx-1" />
+          <div className="h-4 w-px bg-zinc-200 dark:bg-zinc-800 mx-1" />
 
           {/* Preset Selector */}
           <div className="relative">
             <select
               value={selectedPresetId}
               onChange={(e) => handlePresetChange(e.target.value)}
-              className="appearance-none bg-zinc-900 border border-zinc-800 text-xs text-zinc-200 pl-3 pr-8 py-1.5 rounded-lg focus:outline-none focus:border-lime-400 cursor-pointer"
+              className="appearance-none bg-zinc-100 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-800 dark:text-zinc-200 pl-3 pr-8 py-1.5 rounded-lg focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-600 cursor-pointer"
             >
               {PRESETS.map((p) => (
                 <option key={p.id} value={p.id}>
@@ -795,16 +792,16 @@ export const CanvasStudioPage: React.FC = () => {
                 </option>
               ))}
             </select>
-            <ChevronDown className="w-3.5 h-3.5 text-zinc-500 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <ChevronDown className="w-3.5 h-3.5 text-zinc-400 absolute right-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
           </div>
 
           {/* Custom Editable Canvas Dimensions */}
-          <div className="hidden sm:flex items-center gap-1.5 text-xs text-zinc-400 bg-zinc-900/80 px-2 py-1 rounded-lg border border-zinc-800">
+          <div className="hidden sm:flex items-center gap-1.5 text-xs text-zinc-500 bg-zinc-100 dark:bg-zinc-950 px-2 py-1 rounded-lg border border-zinc-200 dark:border-zinc-800">
             <input
               type="number"
               value={canvasWidth}
               onChange={(e) => setCanvasWidth(Math.max(100, Number(e.target.value)))}
-              className="w-14 bg-transparent text-center font-mono text-zinc-200 focus:outline-none focus:text-lime-400"
+              className="w-14 bg-transparent text-center font-mono text-zinc-800 dark:text-zinc-200 focus:outline-none focus:text-zinc-900 dark:focus:text-zinc-100"
               title="Canvas Width"
             />
             <span>×</span>
@@ -812,10 +809,10 @@ export const CanvasStudioPage: React.FC = () => {
               type="number"
               value={canvasHeight}
               onChange={(e) => setCanvasHeight(Math.max(100, Number(e.target.value)))}
-              className="w-14 bg-transparent text-center font-mono text-zinc-200 focus:outline-none focus:text-lime-400"
+              className="w-14 bg-transparent text-center font-mono text-zinc-800 dark:text-zinc-200 focus:outline-none focus:text-zinc-900 dark:focus:text-zinc-100"
               title="Canvas Height"
             />
-            <span className="text-zinc-600 font-mono">px</span>
+            <span className="text-zinc-400 font-mono">px</span>
           </div>
         </div>
 
@@ -823,15 +820,15 @@ export const CanvasStudioPage: React.FC = () => {
         <div className="flex items-center gap-2">
           <button
             onClick={() => setPickerOpen(true)}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 text-xs font-semibold rounded-lg transition-colors cursor-pointer border border-zinc-700"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-100 text-xs font-medium rounded-lg transition-colors cursor-pointer border border-zinc-200 dark:border-zinc-700"
           >
-            <FolderOpen className="w-3.5 h-3.5 text-lime-400" />
+            <FolderOpen className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
             <span>Add Images</span>
           </button>
 
           <button
             onClick={handleAddTextLayer}
-            className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-800 hover:bg-zinc-700 text-zinc-100 text-xs font-semibold rounded-lg transition-colors cursor-pointer border border-zinc-700"
+            className="flex items-center gap-1.5 px-3 py-1.5 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-100 text-xs font-medium rounded-lg transition-colors cursor-pointer border border-zinc-200 dark:border-zinc-700"
           >
             <Type className="w-3.5 h-3.5 text-sky-400" />
             <span className="hidden sm:inline">Add Text</span>
@@ -934,24 +931,24 @@ export const CanvasStudioPage: React.FC = () => {
           {/* Mobile Panel Toggles (visible only on small screens) */}
           <button
             onClick={() => setMobilePanel((p) => (p === 'layers' ? 'none' : 'layers'))}
-            className={`lg:hidden flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all interactive-press ${
+            className={`lg:hidden flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
               mobilePanel === 'layers'
-                ? 'bg-lime-400 text-black border-lime-400'
-                : 'bg-zinc-800 text-zinc-300 border-zinc-700'
+                ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border-zinc-900 dark:border-zinc-100'
+                : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700'
             }`}
             title="Toggle Layers"
           >
             <Layers className="w-3.5 h-3.5" />
             <span className="hidden sm:inline">Layers</span>
-            <span className="px-1 rounded bg-zinc-700/60 text-[10px]">{layers.length}</span>
+            <span className="px-1 rounded bg-zinc-200 dark:bg-zinc-700 text-[10px]">{layers.length}</span>
           </button>
 
           <button
             onClick={() => setMobilePanel((p) => (p === 'inspector' ? 'none' : 'inspector'))}
-            className={`lg:hidden flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-semibold border transition-all interactive-press ${
+            className={`lg:hidden flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg text-xs font-medium border transition-colors ${
               mobilePanel === 'inspector'
-                ? 'bg-lime-400 text-black border-lime-400'
-                : 'bg-zinc-800 text-zinc-300 border-zinc-700'
+                ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border-zinc-900 dark:border-zinc-100'
+                : 'bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 border-zinc-200 dark:border-zinc-700'
             }`}
             title="Toggle Inspector"
           >
@@ -962,9 +959,9 @@ export const CanvasStudioPage: React.FC = () => {
           <button
             onClick={handleExportComposition}
             disabled={exporting || layers.length === 0}
-            className="flex items-center gap-2 px-3.5 py-1.5 bg-lime-400 hover:bg-lime-300 disabled:opacity-50 text-black font-bold text-xs rounded-lg shadow-sm transition-all cursor-pointer interactive-press"
+            className="flex items-center gap-2 px-3.5 py-1.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 disabled:opacity-50 text-white dark:text-zinc-900 font-semibold text-xs rounded-lg transition-colors cursor-pointer"
           >
-            <Download className="w-4 h-4 fill-black" />
+            <Download className="w-4 h-4" />
             <span>{exporting ? 'Exporting...' : 'Export'}</span>
           </button>
         </div>
@@ -988,14 +985,14 @@ export const CanvasStudioPage: React.FC = () => {
               : 'hidden lg:flex lg:w-64'
           }`}
         >
-          <div className="p-3 border-b border-[#22222a] flex items-center justify-between">
-            <span className="text-xs font-semibold text-zinc-200 uppercase tracking-wider flex items-center gap-1.5">
-              <Layers className="w-3.5 h-3.5 text-lime-400" />
+          <div className="p-3 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between">
+            <span className="text-xs font-semibold text-zinc-800 dark:text-zinc-200 uppercase tracking-wider flex items-center gap-1.5">
+              <Layers className="w-3.5 h-3.5 text-zinc-500" />
               Layers ({layers.length})
             </span>
             <button
               onClick={() => setMobilePanel('none')}
-              className="lg:hidden p-1 rounded-md text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
+              className="lg:hidden p-1 rounded-md text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800"
               title="Close panel"
             >
               <X className="w-4 h-4" />
@@ -1004,9 +1001,9 @@ export const CanvasStudioPage: React.FC = () => {
 
           <div className="flex-1 overflow-y-auto p-2 space-y-1.5">
             {layers.length === 0 ? (
-              <div className="text-center p-6 text-zinc-600 text-xs space-y-2">
+              <div className="text-center p-6 text-zinc-500 text-xs space-y-2">
                 <p>No layers yet</p>
-                <p className="text-[11px] text-zinc-500">
+                <p className="text-[11px] text-zinc-400">
                   Click &quot;Add Images&quot; above to place photos onto the canvas.
                 </p>
               </div>
@@ -1019,8 +1016,8 @@ export const CanvasStudioPage: React.FC = () => {
                     onClick={() => setSelectedLayerId(layer.id)}
                     className={`flex items-center justify-between p-2 rounded-xl text-xs cursor-pointer border transition-all ${
                       layer.id === selectedLayerId
-                        ? 'bg-lime-400/10 border-lime-400/40 text-lime-300 font-medium'
-                        : 'bg-zinc-900/60 border-zinc-800/80 text-zinc-400 hover:text-zinc-200 hover:bg-zinc-850'
+                        ? 'bg-zinc-100 dark:bg-zinc-800/80 border-zinc-900 dark:border-zinc-100 text-zinc-900 dark:text-zinc-100 font-medium shadow-sm'
+                        : 'bg-zinc-50 dark:bg-zinc-900/60 border-zinc-200 dark:border-zinc-800/80 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800'
                     }`}
                   >
                     <div className="flex items-center gap-2 min-w-0 truncate">
@@ -1182,8 +1179,8 @@ export const CanvasStudioPage: React.FC = () => {
                   transformOrigin: 'center center',
                 }}
               >
-                {/* Dashed Border */}
-                <div className="absolute inset-0 border-2 border-dashed border-lime-400 shadow-[0_0_8px_rgba(163,230,53,0.4)]" />
+                {/* Selection Bounding Box */}
+                <div className="absolute inset-0 border border-zinc-900 dark:border-zinc-100 shadow-xs pointer-events-none" />
 
                 {/* Center translation / move area */}
                 <div
@@ -1200,33 +1197,33 @@ export const CanvasStudioPage: React.FC = () => {
                   className="absolute left-1/2 -top-8 -translate-x-1/2 flex flex-col items-center pointer-events-auto cursor-grab active:cursor-grabbing group z-40 touch-none"
                   title="Drag to rotate layer"
                 >
-                  <div className="w-4 h-4 rounded-full bg-lime-400 border-2 border-black shadow group-hover:scale-125 transition-transform" />
-                  <div className="w-0.5 h-4 bg-lime-400" />
+                  <div className="w-3.5 h-3.5 rounded-full bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-100 shadow-xs group-hover:scale-125 transition-transform" />
+                  <div className="w-px h-4 bg-zinc-900 dark:bg-zinc-100" />
                 </div>
 
                 {/* 4 Corner Resize Handles */}
                 <div
                   onPointerDown={(e) => handleStartTransform(e, 'nw')}
                   onMouseDown={(e) => handleStartTransform(e, 'nw')}
-                  className="absolute -top-2.5 -left-2.5 w-5 h-5 rounded-sm bg-lime-400 border-2 border-black shadow cursor-nwse-resize pointer-events-auto hover:scale-125 transition-transform z-40 touch-none"
+                  className="absolute -top-1.5 -left-1.5 w-3 h-3 rounded-xs bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-100 shadow-xs cursor-nwse-resize pointer-events-auto hover:scale-125 transition-transform z-40 touch-none"
                   title="Resize top-left"
                 />
                 <div
                   onPointerDown={(e) => handleStartTransform(e, 'ne')}
                   onMouseDown={(e) => handleStartTransform(e, 'ne')}
-                  className="absolute -top-2.5 -right-2.5 w-5 h-5 rounded-sm bg-lime-400 border-2 border-black shadow cursor-nesw-resize pointer-events-auto hover:scale-125 transition-transform z-40 touch-none"
+                  className="absolute -top-1.5 -right-1.5 w-3 h-3 rounded-xs bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-100 shadow-xs cursor-nesw-resize pointer-events-auto hover:scale-125 transition-transform z-40 touch-none"
                   title="Resize top-right"
                 />
                 <div
                   onPointerDown={(e) => handleStartTransform(e, 'se')}
                   onMouseDown={(e) => handleStartTransform(e, 'se')}
-                  className="absolute -bottom-2.5 -right-2.5 w-5 h-5 rounded-sm bg-lime-400 border-2 border-black shadow cursor-nwse-resize pointer-events-auto hover:scale-125 transition-transform z-40 touch-none"
+                  className="absolute -bottom-1.5 -right-1.5 w-3 h-3 rounded-xs bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-100 shadow-xs cursor-nwse-resize pointer-events-auto hover:scale-125 transition-transform z-40 touch-none"
                   title="Resize bottom-right"
                 />
                 <div
                   onPointerDown={(e) => handleStartTransform(e, 'sw')}
                   onMouseDown={(e) => handleStartTransform(e, 'sw')}
-                  className="absolute -bottom-2.5 -left-2.5 w-5 h-5 rounded-sm bg-lime-400 border-2 border-black shadow cursor-nesw-resize pointer-events-auto hover:scale-125 transition-transform z-40 touch-none"
+                  className="absolute -bottom-1.5 -left-1.5 w-3 h-3 rounded-xs bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-100 shadow-xs cursor-nesw-resize pointer-events-auto hover:scale-125 transition-transform z-40 touch-none"
                   title="Resize bottom-left"
                 />
 
@@ -1234,25 +1231,25 @@ export const CanvasStudioPage: React.FC = () => {
                 <div
                   onPointerDown={(e) => handleStartTransform(e, 'n')}
                   onMouseDown={(e) => handleStartTransform(e, 'n')}
-                  className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-8 h-3 rounded-full bg-lime-400 border border-black shadow cursor-ns-resize pointer-events-auto hover:scale-110 transition-transform z-40 touch-none"
+                  className="absolute -top-1 left-1/2 -translate-x-1/2 w-4 h-2 rounded-xs bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-100 shadow-xs cursor-ns-resize pointer-events-auto hover:scale-110 transition-transform z-40 touch-none"
                   title="Resize top edge"
                 />
                 <div
                   onPointerDown={(e) => handleStartTransform(e, 's')}
                   onMouseDown={(e) => handleStartTransform(e, 's')}
-                  className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-8 h-3 rounded-full bg-lime-400 border border-black shadow cursor-ns-resize pointer-events-auto hover:scale-110 transition-transform z-40 touch-none"
+                  className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-4 h-2 rounded-xs bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-100 shadow-xs cursor-ns-resize pointer-events-auto hover:scale-110 transition-transform z-40 touch-none"
                   title="Resize bottom edge"
                 />
                 <div
                   onPointerDown={(e) => handleStartTransform(e, 'w')}
                   onMouseDown={(e) => handleStartTransform(e, 'w')}
-                  className="absolute top-1/2 -left-1.5 -translate-y-1/2 w-3 h-8 rounded-full bg-lime-400 border border-black shadow cursor-ew-resize pointer-events-auto hover:scale-110 transition-transform z-40 touch-none"
+                  className="absolute top-1/2 -left-1 -translate-y-1/2 w-2 h-4 rounded-xs bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-100 shadow-xs cursor-ew-resize pointer-events-auto hover:scale-110 transition-transform z-40 touch-none"
                   title="Resize left edge"
                 />
                 <div
                   onPointerDown={(e) => handleStartTransform(e, 'e')}
                   onMouseDown={(e) => handleStartTransform(e, 'e')}
-                  className="absolute top-1/2 -right-1.5 -translate-y-1/2 w-3 h-8 rounded-full bg-lime-400 border border-black shadow cursor-ew-resize pointer-events-auto hover:scale-110 transition-transform z-40 touch-none"
+                  className="absolute top-1/2 -right-1 -translate-y-1/2 w-2 h-4 rounded-xs bg-white dark:bg-zinc-900 border border-zinc-900 dark:border-zinc-100 shadow-xs cursor-ew-resize pointer-events-auto hover:scale-110 transition-transform z-40 touch-none"
                   title="Resize right edge"
                 />
               </div>
@@ -1300,8 +1297,8 @@ export const CanvasStudioPage: React.FC = () => {
                   onClick={() => setInspectorTab('adjust')}
                   className={`py-1.5 text-xs font-semibold rounded-md transition-all ${
                     inspectorTab === 'adjust'
-                      ? 'bg-lime-400 text-black shadow-sm'
-                      : 'text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-sm'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                   }`}
                 >
                   Filters
@@ -1311,8 +1308,8 @@ export const CanvasStudioPage: React.FC = () => {
                   onClick={() => setInspectorTab('transform')}
                   className={`py-1.5 text-xs font-semibold rounded-md transition-all ${
                     inspectorTab === 'transform'
-                      ? 'bg-lime-400 text-black shadow-sm'
-                      : 'text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-sm'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                   }`}
                 >
                   Transform
@@ -1322,8 +1319,8 @@ export const CanvasStudioPage: React.FC = () => {
                   onClick={() => setInspectorTab('style')}
                   className={`py-1.5 text-xs font-semibold rounded-md transition-all ${
                     inspectorTab === 'style'
-                      ? 'bg-lime-400 text-black shadow-sm'
-                      : 'text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-sm'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                   }`}
                 >
                   Style
@@ -1340,7 +1337,7 @@ export const CanvasStudioPage: React.FC = () => {
                       <div className="grid grid-cols-2 gap-2">
                         <button
                           onClick={() => setCropModalOpen(true)}
-                          className="py-2 px-2.5 rounded-xl bg-lime-400/10 hover:bg-lime-400/20 text-lime-400 border border-lime-400/30 font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer text-xs"
+                          className="py-2 px-2.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-700 font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer text-xs"
                         >
                           <Crop className="w-3.5 h-3.5" />
                           <span>Crop Layer</span>
@@ -1348,7 +1345,7 @@ export const CanvasStudioPage: React.FC = () => {
 
                         <button
                           onClick={handleRemoveBgOnLayer}
-                          className="py-2 px-2.5 rounded-xl bg-lime-400/10 hover:bg-lime-400/20 text-lime-400 border border-lime-400/30 font-semibold flex items-center justify-center gap-1.5 transition-colors cursor-pointer text-xs"
+                          className="py-2 px-2.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-900 dark:text-zinc-100 border border-zinc-200 dark:border-zinc-700 font-medium flex items-center justify-center gap-1.5 transition-colors cursor-pointer text-xs"
                         >
                           <Sparkles className="w-3.5 h-3.5" />
                           <span>Remove BG</span>
@@ -1358,9 +1355,9 @@ export const CanvasStudioPage: React.FC = () => {
 
                     {/* Defocus Blur Slider */}
                     <div className="space-y-1.5">
-                      <div className="flex justify-between text-zinc-400">
-                        <span className="font-semibold text-zinc-300">Blur Effect</span>
-                        <span className="font-mono text-zinc-200">{selectedLayer.blur}px</span>
+                      <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
+                        <span className="font-medium text-zinc-800 dark:text-zinc-300">Blur Effect</span>
+                        <span className="font-mono text-zinc-900 dark:text-zinc-200">{selectedLayer.blur}px</span>
                       </div>
                       <input
                         type="range"
@@ -1368,7 +1365,7 @@ export const CanvasStudioPage: React.FC = () => {
                         max="50"
                         value={selectedLayer.blur}
                         onChange={(e) => updateSelectedLayer({ blur: Number(e.target.value) })}
-                        className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                        className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                       />
                     </div>
 
@@ -1384,15 +1381,15 @@ export const CanvasStudioPage: React.FC = () => {
                         max="200"
                         value={selectedLayer.brightness}
                         onChange={(e) => updateSelectedLayer({ brightness: Number(e.target.value) })}
-                        className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                        className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                       />
                     </div>
 
                     {/* Contrast */}
                     <div className="space-y-1.5">
-                      <div className="flex justify-between text-zinc-400">
+                      <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                         <span>Contrast</span>
-                        <span className="font-mono text-zinc-200">{selectedLayer.contrast}%</span>
+                        <span className="font-mono text-zinc-900 dark:text-zinc-200">{selectedLayer.contrast}%</span>
                       </div>
                       <input
                         type="range"
@@ -1400,15 +1397,15 @@ export const CanvasStudioPage: React.FC = () => {
                         max="200"
                         value={selectedLayer.contrast}
                         onChange={(e) => updateSelectedLayer({ contrast: Number(e.target.value) })}
-                        className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                        className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                       />
                     </div>
 
                     {/* Saturation */}
                     <div className="space-y-1.5">
-                      <div className="flex justify-between text-zinc-400">
+                      <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                         <span>Saturation</span>
-                        <span className="font-mono text-zinc-200">{selectedLayer.saturation}%</span>
+                        <span className="font-mono text-zinc-900 dark:text-zinc-200">{selectedLayer.saturation}%</span>
                       </div>
                       <input
                         type="range"
@@ -1416,15 +1413,15 @@ export const CanvasStudioPage: React.FC = () => {
                         max="200"
                         value={selectedLayer.saturation}
                         onChange={(e) => updateSelectedLayer({ saturation: Number(e.target.value) })}
-                        className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                        className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                       />
                     </div>
 
                     {/* Grayscale */}
                     <div className="space-y-1.5">
-                      <div className="flex justify-between text-zinc-400">
+                      <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                         <span>Black & White</span>
-                        <span className="font-mono text-zinc-200">{selectedLayer.grayscale}%</span>
+                        <span className="font-mono text-zinc-900 dark:text-zinc-200">{selectedLayer.grayscale}%</span>
                       </div>
                       <input
                         type="range"
@@ -1432,15 +1429,15 @@ export const CanvasStudioPage: React.FC = () => {
                         max="100"
                         value={selectedLayer.grayscale}
                         onChange={(e) => updateSelectedLayer({ grayscale: Number(e.target.value) })}
-                        className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                        className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                       />
                     </div>
 
                     {/* Sepia Vintage */}
                     <div className="space-y-1.5">
-                      <div className="flex justify-between text-zinc-400">
+                      <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                         <span>Sepia Tone</span>
-                        <span className="font-mono text-zinc-200">{selectedLayer.sepia}%</span>
+                        <span className="font-mono text-zinc-900 dark:text-zinc-200">{selectedLayer.sepia}%</span>
                       </div>
                       <input
                         type="range"
@@ -1448,15 +1445,15 @@ export const CanvasStudioPage: React.FC = () => {
                         max="100"
                         value={selectedLayer.sepia}
                         onChange={(e) => updateSelectedLayer({ sepia: Number(e.target.value) })}
-                        className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                        className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                       />
                     </div>
 
                     {/* Hue Rotate */}
                     <div className="space-y-1.5">
-                      <div className="flex justify-between text-zinc-400">
+                      <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                         <span>Hue Shift</span>
-                        <span className="font-mono text-zinc-200">{selectedLayer.hueRotate || 0}°</span>
+                        <span className="font-mono text-zinc-900 dark:text-zinc-200">{selectedLayer.hueRotate || 0}°</span>
                       </div>
                       <input
                         type="range"
@@ -1464,7 +1461,7 @@ export const CanvasStudioPage: React.FC = () => {
                         max="360"
                         value={selectedLayer.hueRotate || 0}
                         onChange={(e) => updateSelectedLayer({ hueRotate: Number(e.target.value) })}
-                        className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                        className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                       />
                     </div>
 
@@ -1501,12 +1498,12 @@ export const CanvasStudioPage: React.FC = () => {
                           onClick={() =>
                             updateSelectedLayer({ aspectRatioLocked: !selectedLayer.aspectRatioLocked })
                           }
-                          className="flex items-center gap-1 text-[10px] text-zinc-400 hover:text-zinc-200"
+                          className="flex items-center gap-1 text-[10px] text-zinc-500 hover:text-zinc-900 dark:hover:text-zinc-200"
                         >
                           {selectedLayer.aspectRatioLocked ? (
                             <>
-                              <Link className="w-3 h-3 text-lime-400" />
-                              <span className="text-lime-400">Locked</span>
+                              <Link className="w-3 h-3 text-zinc-900 dark:text-zinc-100" />
+                              <span className="text-zinc-900 dark:text-zinc-100 font-medium">Locked</span>
                             </>
                           ) : (
                             <>
@@ -1593,12 +1590,12 @@ export const CanvasStudioPage: React.FC = () => {
                           max="180"
                           value={selectedLayer.rotation}
                           onChange={(e) => updateSelectedLayer({ rotation: Number(e.target.value) })}
-                          className="flex-1 accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                          className="flex-1 accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                         />
                         <button
                           type="button"
                           onClick={() => updateSelectedLayer({ rotation: (selectedLayer.rotation + 90) % 360 })}
-                          className="p-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-300"
+                          className="p-1 rounded bg-zinc-100 dark:bg-zinc-800 hover:bg-zinc-200 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300"
                           title="Rotate 90 deg"
                         >
                           <RotateCw className="w-3.5 h-3.5" />
@@ -1608,9 +1605,9 @@ export const CanvasStudioPage: React.FC = () => {
 
                     {/* Opacity */}
                     <div className="space-y-1.5">
-                      <div className="flex justify-between text-zinc-400">
+                      <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                         <span>Opacity</span>
-                        <span className="font-mono text-zinc-200">{selectedLayer.opacity}%</span>
+                        <span className="font-mono text-zinc-900 dark:text-zinc-200">{selectedLayer.opacity}%</span>
                       </div>
                       <input
                         type="range"
@@ -1618,7 +1615,7 @@ export const CanvasStudioPage: React.FC = () => {
                         max="100"
                         value={selectedLayer.opacity}
                         onChange={(e) => updateSelectedLayer({ opacity: Number(e.target.value) })}
-                        className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                        className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                       />
                     </div>
 
@@ -1626,10 +1623,10 @@ export const CanvasStudioPage: React.FC = () => {
                     <div className="grid grid-cols-2 gap-2 pt-1">
                       <button
                         onClick={() => updateSelectedLayer({ flipX: !selectedLayer.flipX })}
-                        className={`py-1.5 px-2 rounded-lg border text-xs font-medium flex items-center justify-center gap-1.5 ${
+                        className={`py-1.5 px-2 rounded-lg border text-xs font-medium flex items-center justify-center gap-1.5 transition-colors ${
                           selectedLayer.flipX
-                            ? 'bg-lime-400/10 border-lime-400 text-lime-400'
-                            : 'bg-zinc-800 border-transparent text-zinc-400'
+                            ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border-zinc-900 dark:border-zinc-100 shadow-sm'
+                            : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400'
                         }`}
                       >
                         <FlipHorizontal className="w-3.5 h-3.5" />
@@ -1637,10 +1634,10 @@ export const CanvasStudioPage: React.FC = () => {
                       </button>
                       <button
                         onClick={() => updateSelectedLayer({ flipY: !selectedLayer.flipY })}
-                        className={`py-1.5 px-2 rounded-lg border text-xs font-medium flex items-center justify-center gap-1.5 ${
+                        className={`py-1.5 px-2 rounded-lg border text-xs font-medium flex items-center justify-center gap-1.5 transition-colors ${
                           selectedLayer.flipY
-                            ? 'bg-lime-400/10 border-lime-400 text-lime-400'
-                            : 'bg-zinc-800 border-transparent text-zinc-400'
+                            ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border-zinc-900 dark:border-zinc-100 shadow-sm'
+                            : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400'
                         }`}
                       >
                         <FlipVertical className="w-3.5 h-3.5" />
@@ -1720,9 +1717,9 @@ export const CanvasStudioPage: React.FC = () => {
 
                     {/* Border Width & Color */}
                     <div className="space-y-1.5">
-                      <div className="flex justify-between text-zinc-400">
+                      <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                         <span>Border Outline</span>
-                        <span className="font-mono text-zinc-200">{selectedLayer.borderWidth}px</span>
+                        <span className="font-mono text-zinc-900 dark:text-zinc-200">{selectedLayer.borderWidth}px</span>
                       </div>
                       <input
                         type="range"
@@ -1730,7 +1727,7 @@ export const CanvasStudioPage: React.FC = () => {
                         max="24"
                         value={selectedLayer.borderWidth}
                         onChange={(e) => updateSelectedLayer({ borderWidth: Number(e.target.value) })}
-                        className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                        className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                       />
                       {selectedLayer.borderWidth > 0 && (
                         <div className="flex items-center gap-2 pt-1">
@@ -1738,18 +1735,18 @@ export const CanvasStudioPage: React.FC = () => {
                             type="color"
                             value={selectedLayer.borderColor}
                             onChange={(e) => updateSelectedLayer({ borderColor: e.target.value })}
-                            className="w-7 h-7 rounded border border-zinc-700 bg-transparent cursor-pointer p-0"
+                            className="w-7 h-7 rounded border border-zinc-300 dark:border-zinc-700 bg-transparent cursor-pointer p-0"
                           />
-                          <span className="font-mono text-zinc-300 text-xs">{selectedLayer.borderColor}</span>
+                          <span className="font-mono text-zinc-800 dark:text-zinc-300 text-xs">{selectedLayer.borderColor}</span>
                         </div>
                       )}
                     </div>
 
                     {/* Drop Shadow */}
                     <div className="space-y-1.5">
-                      <div className="flex justify-between text-zinc-400">
+                      <div className="flex justify-between text-zinc-600 dark:text-zinc-400">
                         <span>Drop Shadow</span>
-                        <span className="font-mono text-zinc-200">{selectedLayer.shadowBlur}px</span>
+                        <span className="font-mono text-zinc-900 dark:text-zinc-200">{selectedLayer.shadowBlur}px</span>
                       </div>
                       <input
                         type="range"
@@ -1757,20 +1754,20 @@ export const CanvasStudioPage: React.FC = () => {
                         max="50"
                         value={selectedLayer.shadowBlur}
                         onChange={(e) => updateSelectedLayer({ shadowBlur: Number(e.target.value) })}
-                        className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                        className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                       />
                     </div>
 
                     {/* Text specific styling if text layer */}
                     {selectedLayer.type === 'text' && (
-                      <div className="space-y-3 pt-3 border-t border-zinc-800">
+                      <div className="space-y-3 pt-3 border-t border-zinc-200 dark:border-zinc-800">
                         <div className="space-y-1">
                           <label className="text-zinc-500 text-[11px]">Text Content</label>
                           <input
                             type="text"
                             value={selectedLayer.text || ''}
                             onChange={(e) => updateSelectedLayer({ text: e.target.value })}
-                            className="w-full px-2.5 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-200"
+                            className="w-full px-2.5 py-1.5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-zinc-900 dark:text-zinc-200"
                           />
                         </div>
 
@@ -1782,7 +1779,7 @@ export const CanvasStudioPage: React.FC = () => {
                             max="200"
                             value={selectedLayer.fontSize || 48}
                             onChange={(e) => updateSelectedLayer({ fontSize: Number(e.target.value) })}
-                            className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                            className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                           />
                         </div>
 
@@ -1834,8 +1831,8 @@ export const CanvasStudioPage: React.FC = () => {
                       onClick={() => setCanvasBgColor(bg.color)}
                       className={`px-2.5 py-1 rounded-lg text-[11px] font-medium border transition-all ${
                         canvasBgColor === bg.color
-                          ? 'bg-lime-400/10 border-lime-400 text-lime-400'
-                          : 'bg-zinc-900 border-zinc-800 text-zinc-400'
+                          ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border-zinc-900 dark:border-zinc-100 shadow-sm'
+                          : 'bg-zinc-100 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                       }`}
                     >
                       {bg.label}

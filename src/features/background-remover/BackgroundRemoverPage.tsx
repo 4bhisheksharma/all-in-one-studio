@@ -496,37 +496,37 @@ export const BackgroundRemoverPage: React.FC = () => {
           return (
             <div className="w-full h-full flex flex-col justify-between items-center relative overflow-hidden select-none">
               {/* Top Viewport Toolbar */}
-              <div className="w-full flex items-center justify-between px-4 py-2 bg-zinc-900/80 backdrop-blur-md border-b border-zinc-800 z-10 text-xs">
-                <div className="flex items-center gap-2 text-zinc-400">
-                  <Layers className="w-3.5 h-3.5 text-lime-400" />
+              <div className="w-full flex items-center justify-between px-4 py-2 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 z-10 text-xs">
+                <div className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
+                  <Layers className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-300" />
                   <span>
-                    Canvas: <span className="font-mono text-zinc-200">{selectedAsset.width} × {selectedAsset.height} px</span>
+                    Canvas: <span className="font-mono text-zinc-800 dark:text-zinc-200">{selectedAsset.width} × {selectedAsset.height} px</span>
                   </span>
                   <span>•</span>
-                  <span className="capitalize text-zinc-300">Mode: {toolMode}</span>
+                  <span className="capitalize text-zinc-700 dark:text-zinc-300">Mode: {toolMode}</span>
                 </div>
 
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => setZoomLevel((z) => Math.max(50, z - 25))}
-                    className="p-1 rounded hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200"
+                    className="p-1 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200"
                     title="Zoom Out"
                   >
                     <ZoomOut className="w-3.5 h-3.5" />
                   </button>
-                  <span className="font-mono text-[11px] text-zinc-400 min-w-10 text-center">
+                  <span className="font-mono text-[11px] text-zinc-600 dark:text-zinc-400 min-w-10 text-center">
                     {zoomLevel}%
                   </span>
                   <button
                     onClick={() => setZoomLevel((z) => Math.min(200, z + 25))}
-                    className="p-1 rounded hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200"
+                    className="p-1 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200"
                     title="Zoom In"
                   >
                     <ZoomIn className="w-3.5 h-3.5" />
                   </button>
                   <button
                     onClick={() => setZoomLevel(100)}
-                    className="p-1 rounded hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200"
+                    className="p-1 rounded hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200"
                     title="Reset Zoom"
                   >
                     <Maximize2 className="w-3.5 h-3.5" />
@@ -568,11 +568,11 @@ export const BackgroundRemoverPage: React.FC = () => {
         {(selectedAsset) => (
           <div className="space-y-6">
             {/* On-device Privacy Assurance */}
-            <div className="p-3.5 rounded-xl bg-lime-400/5 border border-lime-400/20 flex items-start gap-3">
-              <ShieldCheck className="w-5 h-5 text-lime-400 shrink-0 mt-0.5" />
+            <div className="p-3.5 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 flex items-start gap-3">
+              <ShieldCheck className="w-5 h-5 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
               <div className="text-xs">
-                <span className="font-semibold text-lime-400 block">100% Client-Side Privacy</span>
-                <span className="text-zinc-400 leading-relaxed">
+                <span className="font-semibold text-emerald-700 dark:text-emerald-400 block">100% Client-Side Privacy</span>
+                <span className="text-zinc-600 dark:text-zinc-400 leading-relaxed">
                   Image matting and subject isolation run entirely inside your browser. No files are uploaded to any external server.
                 </span>
               </div>
@@ -580,17 +580,17 @@ export const BackgroundRemoverPage: React.FC = () => {
 
             {/* Segmentation Engine Mode */}
             <div className="space-y-2.5">
-              <label className="text-xs font-semibold text-zinc-300 uppercase tracking-wider">
+              <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider">
                 Segmentation Method
               </label>
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1 bg-zinc-900 rounded-xl border border-zinc-800">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-1.5 p-1 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800">
                 <button
                   type="button"
                   onClick={() => setToolMode('ai')}
-                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all interactive-press ${
+                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all ${
                     toolMode === 'ai'
-                      ? 'bg-lime-400 text-black shadow-sm font-semibold'
-                      : 'text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 shadow-sm font-semibold'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                   }`}
                 >
                   <Sparkles className="w-4 h-4 mb-1 text-current" />
@@ -599,10 +599,10 @@ export const BackgroundRemoverPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setToolMode('smart')}
-                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all interactive-press ${
+                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all ${
                     toolMode === 'smart'
-                      ? 'bg-lime-400 text-black shadow-sm font-semibold'
-                      : 'text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 shadow-sm font-semibold'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                   }`}
                 >
                   <Sliders className="w-4 h-4 mb-1 text-current" />
@@ -611,10 +611,10 @@ export const BackgroundRemoverPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setToolMode('chroma')}
-                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all interactive-press ${
+                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all ${
                     toolMode === 'chroma'
-                      ? 'bg-lime-400 text-black shadow-sm font-semibold'
-                      : 'text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 shadow-sm font-semibold'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                   }`}
                 >
                   <Pipette className="w-4 h-4 mb-1 text-current" />
@@ -623,10 +623,10 @@ export const BackgroundRemoverPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={() => setToolMode('brush')}
-                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all interactive-press ${
+                  className={`flex flex-col items-center justify-center py-2 px-1 rounded-lg text-xs font-medium transition-all ${
                     toolMode === 'brush'
-                      ? 'bg-lime-400 text-black shadow-sm font-semibold'
-                      : 'text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 shadow-sm font-semibold'
+                      : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                   }`}
                 >
                   <Paintbrush className="w-4 h-4 mb-1 text-current" />
@@ -637,29 +637,29 @@ export const BackgroundRemoverPage: React.FC = () => {
 
             {/* AI Neural Engine Action Card */}
             {toolMode === 'ai' && (
-              <div className="p-4 bg-zinc-900/90 rounded-xl border border-zinc-800 space-y-3 animate-fade-in">
+              <div className="p-4 bg-zinc-50 dark:bg-zinc-900/90 rounded-xl border border-zinc-200 dark:border-zinc-800 space-y-3 animate-fade-in">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-2">
-                    <Sparkles className="w-4 h-4 text-lime-400" />
-                    <span className="text-xs font-bold text-zinc-100">AI Background Removal</span>
+                    <Sparkles className="w-4 h-4 text-zinc-700 dark:text-zinc-300" />
+                    <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-100">AI Background Removal</span>
                   </div>
-                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-lime-400/20 text-lime-400 font-semibold">
+                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 rounded bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium">
                     Deep Learning
                   </span>
                 </div>
-                <p className="text-xs text-zinc-400 leading-relaxed">
+                <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                   Uses on-device ONNX WebAssembly segmentation to automatically isolate people, products, vehicles, and pets with crisp hair and border details.
                 </p>
 
                 {aiProgress && (
                   <div className="space-y-1.5 pt-1">
                     <div className="flex items-center justify-between text-xs font-mono">
-                      <span className="text-zinc-300">{aiProgress.stage}</span>
-                      <span className="text-lime-400 font-bold">{aiProgress.percent}%</span>
+                      <span className="text-zinc-700 dark:text-zinc-300">{aiProgress.stage}</span>
+                      <span className="text-zinc-900 dark:text-zinc-100 font-semibold">{aiProgress.percent}%</span>
                     </div>
-                    <div className="w-full h-1.5 bg-zinc-800 rounded-full overflow-hidden">
+                    <div className="w-full h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-lime-400 rounded-full transition-all duration-200"
+                        className="h-full bg-zinc-900 dark:bg-zinc-100 rounded-full transition-all duration-200"
                         style={{ width: `${aiProgress.percent}%` }}
                       />
                     </div>
@@ -670,7 +670,7 @@ export const BackgroundRemoverPage: React.FC = () => {
                   type="button"
                   onClick={() => handleRunAiSegmentation()}
                   disabled={isAiRunning}
-                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-lime-400 hover:bg-lime-300 disabled:opacity-50 text-black font-bold text-xs rounded-lg shadow-sm transition-all interactive-press cursor-pointer"
+                  className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 disabled:opacity-50 text-white dark:text-zinc-900 font-semibold text-xs rounded-lg shadow-sm transition-all active:scale-[0.98] cursor-pointer"
                 >
                   <Sparkles className={`w-4 h-4 ${isAiRunning ? 'animate-spin' : ''}`} />
                   <span>{isAiRunning ? 'Removing Background...' : 'Remove Background with AI'}</span>
@@ -680,15 +680,15 @@ export const BackgroundRemoverPage: React.FC = () => {
 
             {/* Chroma Color Picker Indicator if in chroma mode */}
             {toolMode === 'chroma' && (
-              <div className="p-3 bg-zinc-900/80 rounded-xl border border-zinc-800 space-y-2">
+              <div className="p-3 bg-zinc-50 dark:bg-zinc-900/80 rounded-xl border border-zinc-200 dark:border-zinc-800 space-y-2">
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-zinc-400 font-medium">Sampled Key Color:</span>
+                  <span className="text-zinc-600 dark:text-zinc-400 font-medium">Sampled Key Color:</span>
                   <div className="flex items-center gap-2">
                     <div
-                      className="w-5 h-5 rounded-full border border-zinc-700 shadow-sm"
+                      className="w-5 h-5 rounded-full border border-zinc-300 dark:border-zinc-700 shadow-sm"
                       style={{ backgroundColor: `rgb(${keyColor.r}, ${keyColor.g}, ${keyColor.b})` }}
                     />
-                    <span className="text-zinc-200 font-mono text-[11px]">
+                    <span className="text-zinc-900 dark:text-zinc-200 font-mono text-[11px]">
                       rgb({keyColor.r}, {keyColor.g}, {keyColor.b})
                     </span>
                   </div>
@@ -701,15 +701,15 @@ export const BackgroundRemoverPage: React.FC = () => {
 
             {/* Brush Controls if in brush mode */}
             {toolMode === 'brush' && (
-              <div className="p-3 bg-zinc-900/80 rounded-xl border border-zinc-800 space-y-3">
+              <div className="p-3 bg-zinc-50 dark:bg-zinc-900/80 rounded-xl border border-zinc-200 dark:border-zinc-800 space-y-3">
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => setBrushAction('erase')}
                     className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 border transition-all ${
                       brushAction === 'erase'
-                        ? 'bg-red-500/10 border-red-500/30 text-red-400 font-semibold'
-                        : 'bg-zinc-800 border-transparent text-zinc-400'
+                        ? 'bg-red-500/10 border-red-500/30 text-red-600 dark:text-red-400 font-semibold'
+                        : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-transparent text-zinc-600 dark:text-zinc-400'
                     }`}
                   >
                     <Eraser className="w-3.5 h-3.5" />
@@ -720,8 +720,8 @@ export const BackgroundRemoverPage: React.FC = () => {
                     onClick={() => setBrushAction('restore')}
                     className={`flex-1 py-1.5 px-2 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 border transition-all ${
                       brushAction === 'restore'
-                        ? 'bg-lime-400/10 border-lime-400/30 text-lime-400 font-semibold'
-                        : 'bg-zinc-800 border-transparent text-zinc-400'
+                        ? 'bg-zinc-900 dark:bg-zinc-100 border-zinc-900 dark:border-zinc-100 text-white dark:text-zinc-900 font-semibold'
+                        : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-transparent text-zinc-600 dark:text-zinc-400'
                     }`}
                   >
                     <Paintbrush className="w-3.5 h-3.5" />
@@ -730,9 +730,9 @@ export const BackgroundRemoverPage: React.FC = () => {
                 </div>
 
                 <div className="space-y-1.5">
-                  <div className="flex justify-between text-xs text-zinc-400">
+                  <div className="flex justify-between text-xs text-zinc-600 dark:text-zinc-400">
                     <span>Brush Radius</span>
-                    <span className="text-zinc-200 font-mono">{brushSize}px</span>
+                    <span className="text-zinc-900 dark:text-zinc-200 font-mono">{brushSize}px</span>
                   </div>
                   <input
                     type="range"
@@ -740,7 +740,7 @@ export const BackgroundRemoverPage: React.FC = () => {
                     max="80"
                     value={brushSize}
                     onChange={(e) => setBrushSize(Number(e.target.value))}
-                    className="w-full accent-lime-400 cursor-pointer h-1.5 bg-zinc-800 rounded-lg"
+                    className="w-full accent-zinc-900 dark:accent-zinc-100 cursor-pointer h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg"
                   />
                 </div>
 
@@ -748,7 +748,7 @@ export const BackgroundRemoverPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleUndo}
-                    className="w-full py-1.5 px-3 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-colors"
+                    className="w-full py-1.5 px-3 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-300 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition-colors border border-zinc-200 dark:border-zinc-700"
                   >
                     <Undo2 className="w-3.5 h-3.5" />
                     <span>Undo Last Brush Stroke</span>
@@ -760,8 +760,8 @@ export const BackgroundRemoverPage: React.FC = () => {
             {/* Threshold & Sensitivity Slider */}
             <div className="space-y-2">
               <div className="flex justify-between items-center text-xs">
-                <span className="font-medium text-zinc-300">Tolerance / Sensitivity</span>
-                <span className="font-mono text-zinc-400">{tolerance}%</span>
+                <span className="font-medium text-zinc-700 dark:text-zinc-300">Tolerance / Sensitivity</span>
+                <span className="font-mono text-zinc-600 dark:text-zinc-400">{tolerance}%</span>
               </div>
               <input
                 type="range"
@@ -769,7 +769,7 @@ export const BackgroundRemoverPage: React.FC = () => {
                 max="85"
                 value={tolerance}
                 onChange={(e) => setTolerance(Number(e.target.value))}
-                className="w-full accent-lime-400 cursor-pointer h-1.5 bg-zinc-800 rounded-lg"
+                className="w-full accent-zinc-900 dark:accent-zinc-100 cursor-pointer h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg"
               />
               <div className="flex justify-between text-[11px] text-zinc-500">
                 <span>Tight Edge</span>
@@ -780,8 +780,8 @@ export const BackgroundRemoverPage: React.FC = () => {
             {/* Feather / Edge Softness */}
             <div className="space-y-2">
               <div className="flex justify-between items-center text-xs">
-                <span className="font-medium text-zinc-300">Edge Feathering</span>
-                <span className="font-mono text-zinc-400">{feather}px</span>
+                <span className="font-medium text-zinc-700 dark:text-zinc-300">Edge Feathering</span>
+                <span className="font-mono text-zinc-600 dark:text-zinc-400">{feather}px</span>
               </div>
               <input
                 type="range"
@@ -789,22 +789,22 @@ export const BackgroundRemoverPage: React.FC = () => {
                 max="10"
                 value={feather}
                 onChange={(e) => setFeather(Number(e.target.value))}
-                className="w-full accent-lime-400 cursor-pointer h-1.5 bg-zinc-800 rounded-lg"
+                className="w-full accent-zinc-900 dark:accent-zinc-100 cursor-pointer h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg"
               />
             </div>
 
             <button
               type="button"
               onClick={handleRecalculate}
-              className="w-full py-2 px-3 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold flex items-center justify-center gap-2 transition-colors border border-zinc-700"
+              className="w-full py-2 px-3 rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-semibold flex items-center justify-center gap-2 transition-colors border border-zinc-200 dark:border-zinc-700"
             >
-              <Sliders className="w-3.5 h-3.5 text-lime-400" />
+              <Sliders className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
               <span>Re-calculate Matte</span>
             </button>
 
             {/* Background Replacement Options */}
-            <div className="space-y-3 pt-3 border-t border-zinc-800">
-              <label className="text-xs font-semibold text-zinc-300 uppercase tracking-wider block">
+            <div className="space-y-3 pt-3 border-t border-zinc-200 dark:border-zinc-800">
+              <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider block">
                 Replace Background With
               </label>
 
@@ -814,12 +814,12 @@ export const BackgroundRemoverPage: React.FC = () => {
                   onClick={() => setBgMode('transparent')}
                   className={`p-2.5 rounded-xl border text-left flex flex-col gap-1 transition-all ${
                     bgMode === 'transparent'
-                      ? 'bg-lime-400/10 border-lime-400/40 text-lime-400'
-                      : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-zinc-900/5 dark:bg-zinc-100/10 border-zinc-900 dark:border-zinc-100 text-zinc-900 dark:text-zinc-100 font-semibold shadow-sm'
+                      : 'bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                   }`}
                 >
-                  <div className="w-6 h-6 rounded-md border border-zinc-700 bg-[linear-gradient(45deg,#222_25%,transparent_25%),linear-gradient(-45deg,#222_25%,transparent_25%),linear-gradient(45deg,transparent_75%,#222_75%),linear-gradient(-45deg,transparent_75%,#222_75%)] bg-[size:8px_8px] bg-[position:0_0,0_4px,4px_-4px,-4px_0]" />
-                  <span className="text-xs font-semibold text-zinc-200">Transparent</span>
+                  <div className="w-6 h-6 rounded-md border border-zinc-300 dark:border-zinc-700 bg-[linear-gradient(45deg,#ccc_25%,transparent_25%),linear-gradient(-45deg,#ccc_25%,transparent_25%),linear-gradient(45deg,transparent_75%,#ccc_75%),linear-gradient(-45deg,transparent_75%,#ccc_75%)] dark:bg-[linear-gradient(45deg,#222_25%,transparent_25%),linear-gradient(-45deg,#222_25%,transparent_25%),linear-gradient(45deg,transparent_75%,#222_75%),linear-gradient(-45deg,transparent_75%,#222_75%)] bg-[size:8px_8px] bg-[position:0_0,0_4px,4px_-4px,-4px_0]" />
+                  <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-200">Transparent</span>
                   <span className="text-[10px] text-zinc-500">Pure PNG Cutout</span>
                 </button>
 
@@ -828,15 +828,15 @@ export const BackgroundRemoverPage: React.FC = () => {
                   onClick={() => setBgMode('color')}
                   className={`p-2.5 rounded-xl border text-left flex flex-col gap-1 transition-all ${
                     bgMode === 'color'
-                      ? 'bg-lime-400/10 border-lime-400/40 text-lime-400'
-                      : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-zinc-900/5 dark:bg-zinc-100/10 border-zinc-900 dark:border-zinc-100 text-zinc-900 dark:text-zinc-100 font-semibold shadow-sm'
+                      : 'bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                   }`}
                 >
                   <div
-                    className="w-6 h-6 rounded-md border border-zinc-700"
+                    className="w-6 h-6 rounded-md border border-zinc-300 dark:border-zinc-700"
                     style={{ backgroundColor: solidColor }}
                   />
-                  <span className="text-xs font-semibold text-zinc-200">Solid Color</span>
+                  <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-200">Solid Color</span>
                   <span className="text-[10px] text-zinc-500">Clean Backdrop</span>
                 </button>
 
@@ -845,12 +845,12 @@ export const BackgroundRemoverPage: React.FC = () => {
                   onClick={() => setBgMode('blur')}
                   className={`p-2.5 rounded-xl border text-left flex flex-col gap-1 transition-all ${
                     bgMode === 'blur'
-                      ? 'bg-lime-400/10 border-lime-400/40 text-lime-400'
-                      : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-zinc-900/5 dark:bg-zinc-100/10 border-zinc-900 dark:border-zinc-100 text-zinc-900 dark:text-zinc-100 font-semibold shadow-sm'
+                      : 'bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                   }`}
                 >
-                  <div className="w-6 h-6 rounded-md border border-zinc-700 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 opacity-60 filter blur-[1px]" />
-                  <span className="text-xs font-semibold text-zinc-200">Bokeh Blur</span>
+                  <div className="w-6 h-6 rounded-md border border-zinc-300 dark:border-zinc-700 bg-gradient-to-tr from-indigo-500 via-purple-500 to-pink-500 opacity-60 filter blur-[1px]" />
+                  <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-200">Bokeh Blur</span>
                   <span className="text-[10px] text-zinc-500">Defocus Original</span>
                 </button>
 
@@ -861,14 +861,14 @@ export const BackgroundRemoverPage: React.FC = () => {
                   }}
                   className={`p-2.5 rounded-xl border text-left flex flex-col gap-1 transition-all ${
                     bgMode === 'image'
-                      ? 'bg-lime-400/10 border-lime-400/40 text-lime-400'
-                      : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-zinc-900/5 dark:bg-zinc-100/10 border-zinc-900 dark:border-zinc-100 text-zinc-900 dark:text-zinc-100 font-semibold shadow-sm'
+                      : 'bg-white dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                   }`}
                 >
-                  <div className="w-6 h-6 rounded-md border border-zinc-700 bg-zinc-800 flex items-center justify-center text-zinc-400">
+                  <div className="w-6 h-6 rounded-md border border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-500 dark:text-zinc-400">
                     <ImageIcon className="w-3.5 h-3.5" />
                   </div>
-                  <span className="text-xs font-semibold text-zinc-200">
+                  <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-200">
                     {bgAsset ? 'Backdrop Set' : 'Library Photo'}
                   </span>
                   <span className="text-[10px] text-zinc-500">Select Image</span>
@@ -887,8 +887,8 @@ export const BackgroundRemoverPage: React.FC = () => {
                         title={preset.label}
                         className={`w-7 h-7 rounded-lg border flex items-center justify-center transition-transform ${
                           solidColor === preset.color
-                            ? 'scale-110 border-lime-400 ring-2 ring-lime-400/30'
-                            : 'border-zinc-700 hover:scale-105'
+                            ? 'scale-110 border-zinc-900 dark:border-zinc-100 ring-2 ring-zinc-400/40'
+                            : 'border-zinc-300 dark:border-zinc-700 hover:scale-105'
                         }`}
                         style={{ backgroundColor: preset.color }}
                       >
@@ -907,7 +907,7 @@ export const BackgroundRemoverPage: React.FC = () => {
                       type="color"
                       value={solidColor}
                       onChange={(e) => setSolidColor(e.target.value)}
-                      className="w-7 h-7 rounded-lg border border-zinc-700 bg-transparent cursor-pointer p-0"
+                      className="w-7 h-7 rounded-lg border border-zinc-300 dark:border-zinc-700 bg-transparent cursor-pointer p-0"
                     />
                   </div>
                 </div>
@@ -918,9 +918,9 @@ export const BackgroundRemoverPage: React.FC = () => {
             <button
               onClick={handleApply}
               disabled={processing || !selectedAsset}
-              className="w-full py-3 px-4 rounded-xl bg-lime-400 hover:bg-lime-300 disabled:opacity-50 text-black font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-lime-400/10 transition-all cursor-pointer"
+              className="w-full py-3 px-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 disabled:opacity-50 text-white dark:text-zinc-900 font-semibold text-sm flex items-center justify-center gap-2 shadow-sm transition-all active:scale-[0.98] cursor-pointer"
             >
-              <Play className="w-4 h-4 fill-black" />
+              <Play className="w-4 h-4 fill-current" />
               <span>{processing ? 'Processing Cutout...' : 'Export Cutout'}</span>
             </button>
           </div>

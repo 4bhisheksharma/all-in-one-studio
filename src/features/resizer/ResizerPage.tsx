@@ -112,27 +112,27 @@ export const ResizerPage: React.FC = () => {
                 className="max-h-[440px] max-w-full object-contain rounded-lg shadow-lg"
               />
             </div>
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-3 py-2 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 text-xs font-mono">
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-3 py-2 rounded-xl bg-zinc-900/90 dark:bg-black/80 backdrop-blur-md border border-zinc-700/50 dark:border-white/10 text-xs font-mono">
               <span className="text-zinc-400">Original: {selectedAsset.width} × {selectedAsset.height} px</span>
-              <span className="text-lime-400 font-bold">Target: {targetWidth} × {targetHeight} px</span>
+              <span className="text-zinc-100 font-semibold">Target: {targetWidth} × {targetHeight} px</span>
             </div>
           </div>
         );
       }}
     >
       {(selectedAsset, blob) => (
-        <div className="space-y-5 p-5 rounded-2xl bg-[#141419] border border-[#23232c] shadow-sm">
-          <div className="flex items-center justify-between pb-3 border-b border-[#23232c]">
-            <h3 className="text-sm font-bold text-zinc-100 flex items-center gap-2">
-              <Sliders className="w-4 h-4 text-emerald-400" />
+        <div className="space-y-5 p-5 rounded-2xl bg-white dark:bg-[#0e0e11] border border-zinc-200 dark:border-zinc-800 shadow-sm">
+          <div className="flex items-center justify-between pb-3 border-b border-zinc-100 dark:border-zinc-800/80">
+            <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+              <Sliders className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
               Resize Dimensions
             </h3>
             <button
               onClick={() => setLockAspect(!lockAspect)}
               className={`p-1.5 rounded-lg border text-xs flex items-center gap-1 transition-colors ${
                 lockAspect
-                  ? 'bg-lime-400/10 border-lime-400/30 text-lime-400'
-                  : 'bg-zinc-800 border-zinc-700 text-zinc-400'
+                  ? 'bg-zinc-900 dark:bg-zinc-100 border-zinc-900 dark:border-zinc-100 text-white dark:text-zinc-900 shadow-sm'
+                  : 'bg-zinc-100 dark:bg-zinc-800 border-zinc-200 dark:border-zinc-700 text-zinc-600 dark:text-zinc-400'
               }`}
               title={lockAspect ? 'Aspect ratio locked' : 'Aspect ratio unlocked'}
             >
@@ -144,39 +144,39 @@ export const ResizerPage: React.FC = () => {
           {/* Width & Height Inputs */}
           <div className="grid grid-cols-2 gap-3">
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-zinc-300">Width (pixels)</label>
+              <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Width (pixels)</label>
               <input
                 type="number"
                 min="1"
                 max="16000"
                 value={targetWidth || ''}
                 onChange={(e) => handleWidthChange(Number(e.target.value))}
-                className="w-full px-3 py-2 rounded-lg bg-[#0e0e12] border border-[#242430] text-xs font-mono text-zinc-100 focus:outline-none focus:border-lime-400"
+                className="w-full px-3 py-2 rounded-lg bg-white dark:bg-[#141418] border border-zinc-200 dark:border-zinc-800 text-xs font-mono text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-zinc-400 dark:focus:ring-zinc-600"
               />
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-xs font-semibold text-zinc-300">Height (pixels)</label>
+              <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Height (pixels)</label>
               <input
                 type="number"
                 min="1"
                 max="16000"
                 value={targetHeight || ''}
                 onChange={(e) => handleHeightChange(Number(e.target.value))}
-                className="w-full px-3 py-2 rounded-lg bg-[#0e0e12] border border-[#242430] text-xs font-mono text-zinc-100 focus:outline-none focus:border-lime-400"
+                className="w-full px-3 py-2 rounded-lg bg-white dark:bg-[#141418] border border-zinc-200 dark:border-zinc-800 text-xs font-mono text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-zinc-400 dark:focus:ring-zinc-600"
               />
             </div>
           </div>
 
           {/* Presets Select */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-zinc-300">Social Media & Web Presets</label>
+            <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Social Media & Web Presets</label>
             <select
               onChange={(e) => {
                 const p = PRESETS.find((item) => item.label === e.target.value);
                 if (p) handlePresetSelect(p);
               }}
-              className="w-full px-3 py-2 rounded-lg bg-[#0e0e12] border border-[#242430] text-xs text-zinc-300 focus:outline-none focus:border-lime-400"
+              className="w-full px-3 py-2 rounded-lg bg-white dark:bg-[#141418] border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-zinc-400 dark:focus:ring-zinc-600"
               defaultValue=""
             >
               <option value="" disabled>Select a preset dimension...</option>
@@ -189,16 +189,16 @@ export const ResizerPage: React.FC = () => {
           </div>
 
           {/* Prevent Enlargement Toggle */}
-          <div className="pt-2 border-t border-[#23232c] flex items-center justify-between">
+          <div className="pt-2 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between">
             <div className="space-y-0.5">
-              <label className="text-xs font-semibold text-zinc-200">Prevent Accidental Upscaling</label>
+              <label className="text-xs font-medium text-zinc-700 dark:text-zinc-200">Prevent Accidental Upscaling</label>
               <p className="text-[11px] text-zinc-500">Stops output from exceeding source resolution</p>
             </div>
             <input
               type="checkbox"
               checked={preventEnlarge}
               onChange={(e) => setPreventEnlarge(e.target.checked)}
-              className="w-4 h-4 accent-lime-400 cursor-pointer"
+              className="w-4 h-4 accent-zinc-900 dark:accent-zinc-100 cursor-pointer"
             />
           </div>
 
@@ -206,16 +206,16 @@ export const ResizerPage: React.FC = () => {
           <button
             disabled={!selectedAsset || processing}
             onClick={() => handleProcess(selectedAsset, blob)}
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs shadow-md transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-semibold text-xs shadow-sm transition-all active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {processing ? (
               <>
-                <Sparkles className="w-4 h-4 animate-spin text-black" />
+                <Sparkles className="w-4 h-4 animate-spin text-white dark:text-zinc-900" />
                 <span>Resizing Image...</span>
               </>
             ) : (
               <>
-                <Play className="w-4 h-4 fill-black" />
+                <Play className="w-4 h-4 fill-current" />
                 <span>Apply Resize & Preview</span>
               </>
             )}

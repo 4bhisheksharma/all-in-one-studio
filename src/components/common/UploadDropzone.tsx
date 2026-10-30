@@ -61,11 +61,11 @@ export const UploadDropzone: React.FC<UploadDropzoneProps> = ({
       onDrop={handleDrop}
       onClick={() => !uploading && fileInputRef.current?.click()}
       className={cn(
-        'group relative border-2 border-dashed rounded-xl transition-all duration-200 cursor-pointer flex flex-col items-center justify-center text-center select-none',
+        'group relative border border-dashed rounded-xl transition-all duration-150 cursor-pointer flex flex-col items-center justify-center text-center select-none',
         isDragOver
-          ? 'border-lime-400 bg-lime-400/5 shadow-[0_0_20px_rgba(163,230,53,0.15)] scale-[1.005]'
-          : 'border-[#2c2c38] hover:border-zinc-500 bg-[#121217]/60 hover:bg-[#16161d]',
-        compact ? 'p-6' : 'p-10 sm:p-14',
+          ? 'border-zinc-900 bg-zinc-100/70 dark:border-zinc-100 dark:bg-zinc-800/40'
+          : 'border-zinc-300 hover:border-zinc-400 bg-zinc-50/50 hover:bg-zinc-100/50 dark:border-zinc-800 dark:hover:border-zinc-700 dark:bg-[#111115]/50 dark:hover:bg-[#141418]',
+        compact ? 'p-6' : 'p-8 sm:p-12',
         uploading && 'cursor-wait pointer-events-none opacity-80',
         className
       )}
@@ -81,12 +81,12 @@ export const UploadDropzone: React.FC<UploadDropzoneProps> = ({
 
       {uploading ? (
         <div className="flex flex-col items-center gap-3">
-          <Loader2 className="w-10 h-10 text-lime-400 animate-spin" />
+          <Loader2 className="w-8 h-8 text-zinc-900 dark:text-zinc-100 animate-spin" />
           <div className="space-y-1">
-            <p className="text-sm font-semibold text-zinc-100">
+            <p className="text-xs font-medium text-zinc-900 dark:text-zinc-100">
               Processing & Saving Images...
             </p>
-            <p className="text-xs text-zinc-400 font-mono">
+            <p className="text-[11px] text-zinc-500 font-mono">
               {progress.current} of {progress.total} completed
             </p>
           </div>
@@ -95,29 +95,29 @@ export const UploadDropzone: React.FC<UploadDropzoneProps> = ({
         <>
           <div
             className={cn(
-              'rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-400 mb-4 transition-transform group-hover:scale-105 group-hover:border-lime-400/50 group-hover:text-lime-400 shadow-inner',
-              compact ? 'w-10 h-10' : 'w-14 h-14'
+              'rounded-lg bg-white dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700/60 flex items-center justify-center text-zinc-600 dark:text-zinc-400 mb-3 transition-colors shadow-xs',
+              compact ? 'w-9 h-9' : 'w-11 h-11'
             )}
           >
             {isDragOver ? (
-              <ImageIcon className="w-6 h-6 text-lime-400 animate-bounce" />
+              <ImageIcon className="w-5 h-5 text-zinc-900 dark:text-zinc-100" />
             ) : (
-              <UploadCloud className={compact ? 'w-5 h-5' : 'w-7 h-7'} />
+              <UploadCloud className={compact ? 'w-4 h-4' : 'w-5 h-5'} />
             )}
           </div>
 
           <div className="space-y-1">
-            <p className="text-sm font-semibold text-zinc-200">
-              <span className="text-lime-400 group-hover:underline">Click to upload</span> or drag and drop images
+            <p className="text-xs font-medium text-zinc-800 dark:text-zinc-200">
+              <span className="text-zinc-950 dark:text-zinc-100 underline underline-offset-2">Click to upload</span> or drag and drop images
             </p>
-            <p className="text-xs text-zinc-500">
+            <p className="text-[11px] text-zinc-500">
               PNG, JPG, WebP, GIF, or SVG (up to 50MB per file)
             </p>
           </div>
 
-          <div className="mt-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-900/80 border border-zinc-800 text-[11px] text-zinc-400">
-            <ShieldCheck className="w-3.5 h-3.5 text-zinc-400" />
-            <span>Stored 100% locally in IndexedDB</span>
+          <div className="mt-3.5 inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700/50 text-[10px] text-zinc-600 dark:text-zinc-400 font-medium">
+            <ShieldCheck className="w-3 h-3 text-emerald-600 dark:text-emerald-400" />
+            <span>Stored locally in browser IndexedDB</span>
           </div>
         </>
       )}

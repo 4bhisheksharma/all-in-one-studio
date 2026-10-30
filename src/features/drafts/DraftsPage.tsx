@@ -20,7 +20,7 @@ import { useDraftStore } from '@/stores/draftStore';
 import { ToolType, EditorDraft } from '@/types';
 
 const TOOL_CONFIG: Record<ToolType, { name: string; path: string; icon: React.ElementType; color: string }> = {
-  compress: { name: 'Image Compressor', path: '/tools/compress', icon: RefreshCw, color: 'text-lime-400' },
+  compress: { name: 'Image Compressor', path: '/tools/compress', icon: RefreshCw, color: 'text-emerald-500' },
   resize: { name: 'Image Resizer', path: '/tools/resize', icon: Maximize2, color: 'text-sky-400' },
   crop: { name: 'Image Cropper', path: '/tools/crop', icon: Crop, color: 'text-indigo-400' },
   collage: { name: 'Collage Maker', path: '/tools/collage', icon: Layers, color: 'text-amber-400' },
@@ -106,16 +106,16 @@ export const DraftsPage: React.FC = () => {
             return (
               <div
                 key={draft.id}
-                className="group p-4 rounded-2xl bg-[#141418] border border-[#23232c] hover:border-zinc-700 transition-all flex flex-col justify-between space-y-4 shadow-sm"
+                className="group p-4 rounded-2xl bg-white dark:bg-[#0e0e11] border border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 transition-all flex flex-col justify-between space-y-4 shadow-sm"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center">
+                    <div className="w-9 h-9 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center">
                       <Icon className={`w-4 h-4 ${tool.color}`} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-zinc-100">{tool.name}</h4>
+                      <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{tool.name}</h4>
                       <div className="flex items-center gap-1.5 text-[11px] text-zinc-500 font-medium">
                         <Clock className="w-3 h-3" />
                         <span>{formatRelativeTime(draft.updatedAt)}</span>
@@ -125,7 +125,7 @@ export const DraftsPage: React.FC = () => {
 
                   <button
                     onClick={() => deleteDraft(draft.id)}
-                    className="p-1.5 rounded-lg text-zinc-500 hover:text-red-400 hover:bg-zinc-800/80 transition-colors"
+                    className="p-1.5 rounded-lg text-zinc-400 hover:text-red-500 hover:bg-zinc-100 dark:hover:bg-zinc-800/80 transition-colors"
                     title="Delete draft"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
@@ -133,19 +133,19 @@ export const DraftsPage: React.FC = () => {
                 </div>
 
                 {/* Source Assets Preview Thumbnail */}
-                <div className="p-2.5 rounded-xl bg-[#0c0c0e] border border-zinc-800/80 flex items-center gap-3">
+                <div className="p-2.5 rounded-xl bg-zinc-50 dark:bg-[#0c0c0e] border border-zinc-200 dark:border-zinc-800/80 flex items-center gap-3">
                   {draft.sourceAssetIds.length > 0 ? (
-                    <div className="w-12 h-12 rounded-lg overflow-hidden bg-zinc-900 border border-zinc-800 shrink-0">
+                    <div className="w-12 h-12 rounded-lg overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shrink-0">
                       <AssetThumbnail assetId={draft.sourceAssetIds[0]} alt="Draft Source" />
                     </div>
                   ) : (
-                    <div className="w-12 h-12 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-600 shrink-0">
+                    <div className="w-12 h-12 rounded-lg bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center text-zinc-400 dark:text-zinc-600 shrink-0">
                       <FileEdit className="w-5 h-5" />
                     </div>
                   )}
 
                   <div className="text-xs space-y-0.5 truncate">
-                    <p className="text-zinc-300 font-medium truncate">
+                    <p className="text-zinc-800 dark:text-zinc-300 font-medium truncate">
                       {draft.sourceAssetIds.length === 1
                         ? '1 Source Image'
                         : `${draft.sourceAssetIds.length} Images in Session`}
@@ -159,7 +159,7 @@ export const DraftsPage: React.FC = () => {
                 {/* Action Button */}
                 <button
                   onClick={() => handleResume(draft)}
-                  className="w-full py-2 px-3 rounded-xl bg-zinc-800 hover:bg-lime-400 hover:text-black text-zinc-200 text-xs font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer group/btn"
+                  className="w-full py-2 px-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 text-xs font-semibold flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm group/btn active:scale-[0.98]"
                 >
                   <span>Resume Session</span>
                   <ArrowRight className="w-3.5 h-3.5 group-hover/btn:translate-x-0.5 transition-transform" />

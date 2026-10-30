@@ -67,7 +67,12 @@ export const useUIStore = create<UIState>((set, get) => ({
 
   toggleTheme: () => {
     const current = get().theme;
-    const next: AppTheme = current === 'dark' ? 'light' : 'dark';
+    const isCurrentlyDark =
+      current === 'dark' ||
+      (current === 'system' &&
+        typeof window !== 'undefined' &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches);
+    const next: AppTheme = isCurrentlyDark ? 'light' : 'dark';
     get().setTheme(next);
   },
 

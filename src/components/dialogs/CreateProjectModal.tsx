@@ -42,22 +42,22 @@ export const CreateProjectModal: React.FC = () => {
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       {/* Backdrop */}
       <div
-        className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity"
+        className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-sm transition-opacity"
         onClick={() => setActiveCreateProjectModal(false)}
       />
 
       {/* Modal Dialog */}
-      <div className="relative z-10 w-full max-w-md rounded-2xl bg-[#141418] border border-[#2a2a36] shadow-2xl overflow-hidden p-6 space-y-5 animate-scale-in">
-        <div className="flex items-center justify-between pb-3 border-b border-[#23232c]">
+      <div className="relative z-10 w-full max-w-md rounded-xl bg-white dark:bg-[#0e0e11] border border-zinc-200 dark:border-[#22222a] shadow-xl overflow-hidden p-6 space-y-5 animate-scale-in">
+        <div className="flex items-center justify-between pb-3 border-b border-zinc-200 dark:border-zinc-800">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-lime-400/10 flex items-center justify-center text-lime-400">
+            <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-900 dark:text-zinc-100">
               <FolderPlus className="w-4 h-4" />
             </div>
-            <h3 className="text-base font-bold text-zinc-100">Create New Project</h3>
+            <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">Create New Project</h3>
           </div>
           <button
             onClick={() => setActiveCreateProjectModal(false)}
-            className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-100 hover:bg-zinc-800 transition-colors"
+            className="p-1.5 rounded-lg text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -65,8 +65,8 @@ export const CreateProjectModal: React.FC = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-zinc-300">
-              Project Name <span className="text-lime-400">*</span>
+            <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">
+              Project Name <span className="text-red-500">*</span>
             </label>
             <input
               type="text"
@@ -75,13 +75,13 @@ export const CreateProjectModal: React.FC = () => {
               placeholder="e.g. Website Assets, Campaign Q4"
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg bg-[#0e0e12] border border-[#262632] text-sm text-zinc-100 focus:border-lime-400 focus:outline-none placeholder:text-zinc-600"
+              className="w-full px-3 py-2 rounded-lg bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 focus:border-zinc-400 dark:focus:border-zinc-600 focus:outline-none placeholder:text-zinc-400 dark:placeholder:text-zinc-600"
               autoFocus
             />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-zinc-300">
+            <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">
               Description <span className="text-zinc-500 font-normal">(Optional)</span>
             </label>
             <textarea
@@ -89,7 +89,7 @@ export const CreateProjectModal: React.FC = () => {
               placeholder="Add details about this project's purpose or image requirements..."
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3 py-2 rounded-lg bg-[#0e0e12] border border-[#262632] text-sm text-zinc-100 focus:border-lime-400 focus:outline-none placeholder:text-zinc-600 resize-none"
+              className="w-full px-3 py-2 rounded-lg bg-zinc-50 dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 text-sm text-zinc-900 dark:text-zinc-100 focus:border-zinc-400 dark:focus:border-zinc-600 focus:outline-none placeholder:text-zinc-400 dark:placeholder:text-zinc-600 resize-none"
             />
           </div>
 
@@ -97,14 +97,14 @@ export const CreateProjectModal: React.FC = () => {
             <button
               type="button"
               onClick={() => setActiveCreateProjectModal(false)}
-              className="px-4 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-xs font-semibold text-zinc-300 transition-colors"
+              className="px-4 py-2 rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-xs font-medium text-zinc-700 dark:text-zinc-300 transition-colors"
             >
               Cancel
             </button>
             <button
               type="submit"
               disabled={submitting}
-              className="px-4 py-2 rounded-lg bg-lime-400 hover:bg-lime-300 text-black text-xs font-semibold transition-all shadow-sm active:scale-95 disabled:opacity-50"
+              className="px-4 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 text-xs font-semibold transition-colors disabled:opacity-50"
             >
               {submitting ? 'Creating...' : 'Create Project'}
             </button>

@@ -14,21 +14,21 @@ export const PageHeader: React.FC<PageHeaderProps> = ({
   badge,
 }) => {
   return (
-    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-6 border-b border-[#22222a]">
+    <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-5 border-b border-zinc-200 dark:border-[#22222a]">
       <div className="space-y-1">
         <div className="flex items-center gap-2.5">
-          <h1 className="text-xl sm:text-2xl font-bold tracking-tight text-zinc-100">
+          <h1 className="text-lg sm:text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
             {title}
           </h1>
           {badge}
         </div>
         {description && (
-          <p className="text-sm text-zinc-400 max-w-2xl">
+          <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-2xl leading-relaxed">
             {description}
           </p>
         )}
       </div>
-      {actions && <div className="flex items-center gap-2.5 shrink-0">{actions}</div>}
+      {actions && <div className="flex items-center gap-2 shrink-0">{actions}</div>}
     </div>
   );
 };

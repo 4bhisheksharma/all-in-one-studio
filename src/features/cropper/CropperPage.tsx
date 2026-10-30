@@ -281,14 +281,14 @@ export const CropperPage: React.FC = () => {
             className="w-full h-full flex flex-col justify-between items-center relative select-none overflow-hidden"
           >
             {/* Viewport Top Bar */}
-            <div className="w-full flex items-center justify-between px-4 py-2 bg-zinc-900/80 backdrop-blur-md border-b border-zinc-800 z-20 text-xs">
-              <div className="flex items-center gap-2 text-zinc-400">
-                <Crop className="w-3.5 h-3.5 text-lime-400" />
+            <div className="w-full flex items-center justify-between px-4 py-2 bg-white/90 dark:bg-zinc-900/90 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 z-20 text-xs">
+              <div className="flex items-center gap-2 text-zinc-600 dark:text-zinc-400">
+                <Crop className="w-3.5 h-3.5 text-zinc-500" />
                 <span>
-                  Crop Area: <strong className="font-mono text-lime-300 font-bold">{cropPixelW} × {cropPixelH} px</strong>
+                  Crop Area: <strong className="font-mono text-zinc-900 dark:text-zinc-100 font-semibold">{cropPixelW} × {cropPixelH} px</strong>
                 </span>
                 <span>•</span>
-                <span className="uppercase text-zinc-300">{aspect}</span>
+                <span className="uppercase text-zinc-700 dark:text-zinc-300 font-medium">{aspect}</span>
               </div>
 
               <div className="flex items-center gap-1.5">
@@ -342,13 +342,13 @@ export const CropperPage: React.FC = () => {
                 {/* Interactive Crop Boundary Box */}
                 <div
                   ref={cropBoxRef}
-                  className="absolute border-2 border-lime-400 z-10"
+                  className="absolute border border-white z-10"
                   style={{
                     left: `${crop.x * 100}%`,
                     top: `${crop.y * 100}%`,
                     width: `${crop.w * 100}%`,
                     height: `${crop.h * 100}%`,
-                    boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.65)',
+                    boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.6)',
                   }}
                 >
                   {/* Center Reposition Grab Area */}
@@ -361,14 +361,14 @@ export const CropperPage: React.FC = () => {
 
                   {/* Rule of Thirds Grid Guidelines */}
                   <div className="w-full h-full grid grid-cols-3 grid-rows-3 pointer-events-none opacity-40">
-                    <div className="border-r border-b border-lime-300" />
-                    <div className="border-r border-b border-lime-300" />
-                    <div className="border-b border-lime-300" />
-                    <div className="border-r border-b border-lime-300" />
-                    <div className="border-r border-b border-lime-300" />
-                    <div className="border-b border-lime-300" />
-                    <div className="border-r border-lime-300" />
-                    <div className="border-r border-lime-300" />
+                    <div className="border-r border-b border-white" />
+                    <div className="border-r border-b border-white" />
+                    <div className="border-b border-white" />
+                    <div className="border-r border-b border-white" />
+                    <div className="border-r border-b border-white" />
+                    <div className="border-b border-white" />
+                    <div className="border-r border-white" />
+                    <div className="border-r border-white" />
                     <div />
                   </div>
 
@@ -379,7 +379,7 @@ export const CropperPage: React.FC = () => {
                     className="absolute -top-3 left-3 right-3 h-6 cursor-ns-resize z-20 flex items-center justify-center group touch-none"
                     title="Drag top edge"
                   >
-                    <div className="w-10 h-1.5 bg-lime-400 rounded-full border border-black shadow group-hover:scale-110 transition-transform" />
+                    <div className="w-8 h-1 bg-white rounded-full shadow-xs group-hover:scale-110 transition-transform" />
                   </div>
 
                   {/* Bottom Edge Sliding Zone */}
@@ -389,7 +389,7 @@ export const CropperPage: React.FC = () => {
                     className="absolute -bottom-3 left-3 right-3 h-6 cursor-ns-resize z-20 flex items-center justify-center group touch-none"
                     title="Drag bottom edge"
                   >
-                    <div className="w-10 h-1.5 bg-lime-400 rounded-full border border-black shadow group-hover:scale-110 transition-transform" />
+                    <div className="w-8 h-1 bg-white rounded-full shadow-xs group-hover:scale-110 transition-transform" />
                   </div>
 
                   {/* Left Edge Sliding Zone */}
@@ -399,7 +399,7 @@ export const CropperPage: React.FC = () => {
                     className="absolute -left-3 top-3 bottom-3 w-6 cursor-ew-resize z-20 flex items-center justify-center group touch-none"
                     title="Drag left edge"
                   >
-                    <div className="w-1.5 h-10 bg-lime-400 rounded-full border border-black shadow group-hover:scale-110 transition-transform" />
+                    <div className="w-1 h-8 bg-white rounded-full shadow-xs group-hover:scale-110 transition-transform" />
                   </div>
 
                   {/* Right Edge Sliding Zone */}
@@ -409,7 +409,7 @@ export const CropperPage: React.FC = () => {
                     className="absolute -right-3 top-3 bottom-3 w-6 cursor-ew-resize z-20 flex items-center justify-center group touch-none"
                     title="Drag right edge"
                   >
-                    <div className="w-1.5 h-10 bg-lime-400 rounded-full border border-black shadow group-hover:scale-110 transition-transform" />
+                    <div className="w-1 h-8 bg-white rounded-full shadow-xs group-hover:scale-110 transition-transform" />
                   </div>
 
                   {/* 4 Corner Handles */}
@@ -419,7 +419,7 @@ export const CropperPage: React.FC = () => {
                     className="absolute -top-3 -left-3 w-6 h-6 flex items-center justify-center cursor-nwse-resize z-30 touch-none"
                     title="Resize top-left"
                   >
-                    <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
+                    <div className="w-3.5 h-3.5 bg-white border border-black/40 rounded-xs shadow-xs" />
                   </div>
                   <div
                     onPointerDown={(e) => handlePointerDownHandle(e, 'ne')}
@@ -427,7 +427,7 @@ export const CropperPage: React.FC = () => {
                     className="absolute -top-3 -right-3 w-6 h-6 flex items-center justify-center cursor-nesw-resize z-30 touch-none"
                     title="Resize top-right"
                   >
-                    <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
+                    <div className="w-3.5 h-3.5 bg-white border border-black/40 rounded-xs shadow-xs" />
                   </div>
                   <div
                     onPointerDown={(e) => handlePointerDownHandle(e, 'se')}
@@ -435,7 +435,7 @@ export const CropperPage: React.FC = () => {
                     className="absolute -bottom-3 -right-3 w-6 h-6 flex items-center justify-center cursor-nwse-resize z-30 touch-none"
                     title="Resize bottom-right"
                   >
-                    <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
+                    <div className="w-3.5 h-3.5 bg-white border border-black/40 rounded-xs shadow-xs" />
                   </div>
                   <div
                     onPointerDown={(e) => handlePointerDownHandle(e, 'sw')}
@@ -443,7 +443,7 @@ export const CropperPage: React.FC = () => {
                     className="absolute -bottom-3 -left-3 w-6 h-6 flex items-center justify-center cursor-nesw-resize z-30 touch-none"
                     title="Resize bottom-left"
                   >
-                    <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
+                    <div className="w-3.5 h-3.5 bg-white border border-black/40 rounded-xs shadow-xs" />
                   </div>
                 </div>
               </div>
@@ -483,10 +483,10 @@ export const CropperPage: React.FC = () => {
                   key={preset}
                   type="button"
                   onClick={() => handleAspectChange(preset, selectedAsset)}
-                  className={`py-1.5 px-2 rounded-lg text-xs font-semibold uppercase border transition-all ${
+                  className={`py-1.5 px-2 rounded-lg text-xs font-semibold uppercase border transition-colors ${
                     aspect === preset
-                      ? 'bg-lime-400/15 border-lime-400 text-lime-400 shadow-sm'
-                      : 'bg-[#0e0e12] border-[#252530] text-zinc-400 hover:text-zinc-200'
+                      ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border-zinc-900 dark:border-zinc-100 shadow-xs'
+                      : 'bg-zinc-50 dark:bg-[#0e0e12] border-zinc-200 dark:border-[#252530] text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                   }`}
                 >
                   {preset}
@@ -496,36 +496,36 @@ export const CropperPage: React.FC = () => {
           </div>
 
           {/* Rotation & Flip Controls */}
-          <div className="space-y-2 pt-2 border-t border-[#23232c]">
-            <label className="text-xs font-semibold text-zinc-300">Orientation & Flips</label>
+          <div className="space-y-2 pt-2 border-t border-zinc-200 dark:border-[#23232c]">
+            <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Orientation & Flips</label>
             <div className="grid grid-cols-4 gap-2">
               <button
                 type="button"
                 onClick={() => setRotation((r) => (r - 90) % 360)}
-                className="flex flex-col items-center gap-1 p-2.5 rounded-xl bg-[#0e0e12] border border-[#252530] text-zinc-300 hover:text-zinc-100 hover:bg-zinc-800 transition-colors"
+                className="flex flex-col items-center gap-1 p-2.5 rounded-lg bg-zinc-50 dark:bg-[#0e0e12] border border-zinc-200 dark:border-[#252530] text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 title="Rotate 90° CCW"
               >
-                <RotateCcw className="w-4 h-4 text-cyan-400" />
+                <RotateCcw className="w-4 h-4 text-zinc-500" />
                 <span className="text-[10px] font-mono">-90°</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setRotation((r) => (r + 90) % 360)}
-                className="flex flex-col items-center gap-1 p-2.5 rounded-xl bg-[#0e0e12] border border-[#252530] text-zinc-300 hover:text-zinc-100 hover:bg-zinc-800 transition-colors"
+                className="flex flex-col items-center gap-1 p-2.5 rounded-lg bg-zinc-50 dark:bg-[#0e0e12] border border-zinc-200 dark:border-[#252530] text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                 title="Rotate 90° CW"
               >
-                <RotateCw className="w-4 h-4 text-cyan-400" />
+                <RotateCw className="w-4 h-4 text-zinc-500" />
                 <span className="text-[10px] font-mono">+90°</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => setFlipH((f) => !f)}
-                className={`flex flex-col items-center gap-1 p-2.5 rounded-xl border transition-colors ${
+                className={`flex flex-col items-center gap-1 p-2.5 rounded-lg border transition-colors ${
                   flipH
-                    ? 'bg-lime-400/10 border-lime-400/40 text-lime-400'
-                    : 'bg-[#0e0e12] border-[#252530] text-zinc-300 hover:bg-zinc-800'
+                    ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border-zinc-900 dark:border-zinc-100'
+                    : 'bg-zinc-50 dark:bg-[#0e0e12] border-zinc-200 dark:border-[#252530] text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800'
                 }`}
                 title="Flip Horizontally"
               >
@@ -536,10 +536,10 @@ export const CropperPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setFlipV((f) => !f)}
-                className={`flex flex-col items-center gap-1 p-2.5 rounded-xl border transition-colors ${
+                className={`flex flex-col items-center gap-1 p-2.5 rounded-lg border transition-colors ${
                   flipV
-                    ? 'bg-lime-400/10 border-lime-400/40 text-lime-400'
-                    : 'bg-[#0e0e12] border-[#252530] text-zinc-300 hover:bg-zinc-800'
+                    ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border-zinc-900 dark:border-zinc-100'
+                    : 'bg-zinc-50 dark:bg-[#0e0e12] border-zinc-200 dark:border-[#252530] text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800'
                 }`}
                 title="Flip Vertically"
               >
@@ -553,16 +553,16 @@ export const CropperPage: React.FC = () => {
           <button
             disabled={!selectedAsset || processing}
             onClick={() => handleProcess(selectedAsset, blob)}
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs shadow-md transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-lg bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-semibold text-xs transition-colors active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
           >
             {processing ? (
               <>
-                <Sparkles className="w-4 h-4 animate-spin text-black" />
+                <Sparkles className="w-4 h-4 animate-spin" />
                 <span>Applying Transformations...</span>
               </>
             ) : (
               <>
-                <Play className="w-4 h-4 fill-black" />
+                <Play className="w-4 h-4 fill-current" />
                 <span>Crop & Export</span>
               </>
             )}

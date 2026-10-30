@@ -212,26 +212,26 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in select-none">
-      <div className="bg-[#141418] border border-[#262632] rounded-2xl w-full max-w-3xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl w-full max-w-3xl max-h-[92vh] flex flex-col shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="px-5 py-4 border-b border-zinc-800 flex items-center justify-between bg-[#121217]">
+        <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between bg-zinc-50 dark:bg-zinc-950">
           <div className="flex items-center gap-2.5">
             <span className="text-2xl">{recipe.icon}</span>
             <div>
               <div className="flex items-center gap-2">
-                <h3 className="text-sm font-bold text-zinc-100">{recipe.name}</h3>
-                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-lime-400/20 text-lime-400 font-semibold uppercase">
+                <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">{recipe.name}</h3>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-300 font-medium uppercase border border-zinc-200 dark:border-zinc-700">
                   Batch Run
                 </span>
               </div>
-              <p className="text-xs text-zinc-400">{recipe.description}</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">{recipe.description}</p>
             </div>
           </div>
 
           {!running && (
             <button
               onClick={onClose}
-              className="p-1 rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
+              className="p-1 rounded-lg text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
             >
               <X className="w-4 h-4" />
             </button>
@@ -241,8 +241,8 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
         {/* Modal Body */}
         <div className="flex-1 overflow-y-auto p-5 space-y-5 text-xs">
           {/* Recipe Steps Sequence Summary */}
-          <div className="p-3 rounded-xl bg-zinc-900/80 border border-zinc-800 space-y-2">
-            <span className="text-[11px] font-semibold text-zinc-400 block uppercase tracking-wider">
+          <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 space-y-2">
+            <span className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400 block uppercase tracking-wider">
               Sequence of Actions ({recipe.steps.filter((s) => s.enabled).length} Steps)
             </span>
             <div className="flex flex-wrap items-center gap-1.5">
@@ -251,9 +251,9 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
                 .map((step, idx) => (
                   <div
                     key={step.id}
-                    className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-zinc-800 border border-zinc-700/80 text-zinc-200 text-[11px]"
+                    className="flex items-center gap-1 px-2.5 py-1 rounded-md bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200 text-[11px]"
                   >
-                    <span className="text-lime-400 font-mono font-bold">{idx + 1}.</span>
+                    <span className="text-zinc-900 dark:text-zinc-100 font-mono font-semibold">{idx + 1}.</span>
                     <span>{step.name}</span>
                   </div>
                 ))}
@@ -264,16 +264,16 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
           {!running && !completed && (
             <div className="space-y-3">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-zinc-200">
+                <span className="text-xs font-semibold text-zinc-900 dark:text-zinc-200">
                   Select Target Images ({items.length} chosen)
                 </span>
                 <div className="flex items-center gap-2">
                   <button
                     type="button"
                     onClick={() => setPickerOpen(true)}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition-colors cursor-pointer border border-zinc-700"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium transition-colors cursor-pointer border border-zinc-200 dark:border-zinc-700"
                   >
-                    <FolderOpen className="w-3.5 h-3.5 text-lime-400" />
+                    <FolderOpen className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400" />
                     <span>Choose from Library</span>
                   </button>
 
@@ -288,9 +288,9 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition-colors cursor-pointer border border-zinc-700"
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium transition-colors cursor-pointer border border-zinc-200 dark:border-zinc-700"
                   >
-                    <UploadCloud className="w-3.5 h-3.5 text-sky-400" />
+                    <UploadCloud className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400" />
                     <span>Upload Files</span>
                   </button>
                 </div>
@@ -299,33 +299,33 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
               {items.length === 0 ? (
                 <div
                   onClick={() => setPickerOpen(true)}
-                  className="border-2 border-dashed border-zinc-800 hover:border-lime-400/50 rounded-xl p-8 text-center text-zinc-500 hover:text-zinc-400 transition-colors cursor-pointer flex flex-col items-center justify-center gap-2"
+                  className="border-2 border-dashed border-zinc-200 dark:border-zinc-800 hover:border-zinc-400 dark:hover:border-zinc-600 rounded-xl p-8 text-center text-zinc-500 hover:text-zinc-700 dark:hover:text-zinc-400 transition-colors cursor-pointer flex flex-col items-center justify-center gap-2"
                 >
-                  <Layers className="w-8 h-8 text-zinc-600" />
-                  <p className="font-semibold text-zinc-300">No images selected for this recipe</p>
+                  <Layers className="w-8 h-8 text-zinc-400 dark:text-zinc-600" />
+                  <p className="font-semibold text-zinc-800 dark:text-zinc-200">No images selected for this recipe</p>
                   <p className="text-[11px] text-zinc-500">
-                    Click here to pick up to 50+ images from your library or drop files.
+                    Click here to pick images from your library or upload files.
                   </p>
                 </div>
               ) : (
-                <div className="max-h-52 overflow-y-auto space-y-1 p-2 bg-zinc-900/50 rounded-xl border border-zinc-800">
+                <div className="max-h-52 overflow-y-auto space-y-1 p-2 bg-zinc-50 dark:bg-zinc-950 rounded-xl border border-zinc-200 dark:border-zinc-800">
                   {items.map((item, idx) => (
                     <div
                       key={item.id}
-                      className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800/80 text-zinc-300"
+                      className="flex items-center justify-between px-2.5 py-1.5 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200"
                     >
                       <div className="flex items-center gap-2 truncate">
-                        <span className="font-mono text-zinc-500 text-[10px]">{idx + 1}.</span>
+                        <span className="font-mono text-zinc-400 dark:text-zinc-500 text-[10px]">{idx + 1}.</span>
                         <span className="truncate">{item.filename}</span>
                       </div>
                       <div className="flex items-center gap-3 shrink-0">
-                        <span className="font-mono text-[10px] text-zinc-400">
+                        <span className="font-mono text-[10px] text-zinc-500 dark:text-zinc-400">
                           {formatBytes(item.size)}
                         </span>
                         <button
                           type="button"
                           onClick={() => setItems((prev) => prev.filter((_, i) => i !== idx))}
-                          className="text-zinc-500 hover:text-red-400"
+                          className="text-zinc-400 hover:text-red-500 transition-colors"
                         >
                           <X className="w-3.5 h-3.5" />
                         </button>
@@ -336,13 +336,13 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
               )}
 
               {/* Target Project and Output Configuration */}
-              <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-zinc-800">
+              <div className="pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 border-t border-zinc-200 dark:border-zinc-800">
                 <div className="space-y-1">
-                  <label className="text-zinc-400 font-medium">Save Results to Project</label>
+                  <label className="text-zinc-600 dark:text-zinc-400 font-medium">Save Results to Project</label>
                   <select
                     value={selectedProjectId}
                     onChange={(e) => setSelectedProjectId(e.target.value)}
-                    className="w-full px-3 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300 focus:outline-none focus:border-lime-400 cursor-pointer"
+                    className="w-full px-3 py-1.5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-600 cursor-pointer"
                   >
                     <option value="">Default (No specific project)</option>
                     {projects.map((p) => (
@@ -354,12 +354,12 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
                 </div>
 
                 <div className="space-y-1 flex flex-col justify-end">
-                  <label className="flex items-center gap-2 text-zinc-300 cursor-pointer py-1.5">
+                  <label className="flex items-center gap-2 text-zinc-700 dark:text-zinc-300 cursor-pointer py-1.5">
                     <input
                       type="checkbox"
                       checked={saveToLibrary}
                       onChange={(e) => setSaveToLibrary(e.target.checked)}
-                      className="accent-lime-400"
+                      className="accent-zinc-900 dark:accent-zinc-100"
                     />
                     <span>Add processed images into Studio Library</span>
                   </label>
@@ -372,21 +372,21 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
           {(running || completed) && (
             <div className="space-y-4 animate-in fade-in">
               {/* Progress Bar & Current Status */}
-              <div className="p-4 rounded-xl bg-zinc-900 border border-zinc-800 space-y-2.5">
+              <div className="p-4 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 space-y-2.5">
                 <div className="flex items-center justify-between text-xs">
                   <div className="flex items-center gap-2">
                     {running ? (
-                      <Loader2 className="w-4 h-4 text-lime-400 animate-spin" />
+                      <Loader2 className="w-4 h-4 text-zinc-700 dark:text-zinc-300 animate-spin" />
                     ) : (
-                      <CheckCircle2 className="w-4 h-4 text-lime-400" />
+                      <CheckCircle2 className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
                     )}
-                    <span className="font-semibold text-zinc-200">
+                    <span className="font-semibold text-zinc-900 dark:text-zinc-100">
                       {running
                         ? `Processing image ${currentIndex + 1} of ${items.length}...`
                         : 'Batch Processing Complete!'}
                     </span>
                   </div>
-                  <span className="font-mono text-lime-400 font-bold">
+                  <span className="font-mono text-zinc-900 dark:text-zinc-100 font-bold">
                     {Math.round(
                       ((progressList.filter((p) => p.status === 'done' || p.status === 'error').length) /
                         (items.length || 1)) *
@@ -397,9 +397,9 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
                 </div>
 
                 {/* Bar */}
-                <div className="w-full h-2 bg-zinc-800 rounded-full overflow-hidden">
+                <div className="w-full h-2 bg-zinc-200 dark:bg-zinc-800 rounded-full overflow-hidden">
                   <div
-                    className="h-full bg-lime-400 transition-all duration-300"
+                    className="h-full bg-zinc-900 dark:bg-zinc-100 transition-all duration-300"
                     style={{
                       width: `${
                         ((progressList.filter((p) => p.status === 'done' || p.status === 'error').length) /
@@ -411,8 +411,8 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
                 </div>
 
                 {running && (
-                  <p className="text-[11px] text-zinc-400 font-mono truncate">
-                    Current Step: <strong className="text-zinc-200">{currentStepName}</strong> on{' '}
+                  <p className="text-[11px] text-zinc-500 dark:text-zinc-400 font-mono truncate">
+                    Current Step: <strong className="text-zinc-800 dark:text-zinc-200">{currentStepName}</strong> on{' '}
                     {items[currentIndex]?.filename}
                   </p>
                 )}
@@ -421,29 +421,29 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
               {/* Metrics Summary Badge */}
               {completed && (
                 <div className="grid grid-cols-3 gap-3">
-                  <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-center space-y-0.5">
+                  <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-center space-y-0.5">
                     <span className="text-[10px] text-zinc-500 uppercase tracking-wider block font-semibold">
                       Processed
                     </span>
-                    <span className="text-base font-bold text-zinc-100 font-mono">
+                    <span className="text-base font-bold text-zinc-900 dark:text-zinc-100 font-mono">
                       {progressList.filter((p) => p.status === 'done').length} / {items.length}
                     </span>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-center space-y-0.5">
+                  <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-center space-y-0.5">
                     <span className="text-[10px] text-zinc-500 uppercase tracking-wider block font-semibold">
                       Output Size
                     </span>
-                    <span className="text-base font-bold text-lime-400 font-mono">
+                    <span className="text-base font-bold text-zinc-900 dark:text-zinc-100 font-mono">
                       {formatBytes(totalOutputSize)}
                     </span>
                   </div>
 
-                  <div className="p-3 rounded-xl bg-zinc-900 border border-zinc-800 text-center space-y-0.5">
+                  <div className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 text-center space-y-0.5">
                     <span className="text-[10px] text-zinc-500 uppercase tracking-wider block font-semibold">
                       Size Reduction
                     </span>
-                    <span className="text-base font-bold text-sky-400 font-mono">
+                    <span className="text-base font-bold text-emerald-600 dark:text-emerald-400 font-mono">
                       {savingsPct > 0 ? `-${savingsPct}%` : 'Optimal'}
                     </span>
                   </div>
@@ -451,21 +451,21 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
               )}
 
               {/* Item by Item Log */}
-              <div className="max-h-60 overflow-y-auto space-y-1 p-2 bg-zinc-900/60 rounded-xl border border-zinc-800">
+              <div className="max-h-60 overflow-y-auto space-y-1 p-2 bg-zinc-50 dark:bg-zinc-950 rounded-xl border border-zinc-200 dark:border-zinc-800">
                 {progressList.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-center justify-between p-2 rounded-lg bg-zinc-900/90 border border-zinc-800/80 text-xs"
+                    className="flex items-center justify-between p-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs"
                   >
                     <div className="flex items-center gap-2 truncate">
                       {item.status === 'done' ? (
-                        <CheckCircle2 className="w-3.5 h-3.5 text-lime-400 shrink-0" />
+                        <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
                       ) : item.status === 'processing' ? (
-                        <Loader2 className="w-3.5 h-3.5 text-lime-400 animate-spin shrink-0" />
+                        <Loader2 className="w-3.5 h-3.5 text-zinc-700 dark:text-zinc-300 animate-spin shrink-0" />
                       ) : item.status === 'error' ? (
-                        <AlertCircle className="w-3.5 h-3.5 text-red-400 shrink-0" />
+                        <AlertCircle className="w-3.5 h-3.5 text-red-500 shrink-0" />
                       ) : (
-                        <span className="w-3.5 h-3.5 rounded-full border border-zinc-700 shrink-0" />
+                        <span className="w-3.5 h-3.5 rounded-full border border-zinc-300 dark:border-zinc-700 shrink-0" />
                       )}
                       <span className="truncate">{item.filename}</span>
                     </div>
@@ -474,8 +474,8 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
                       <span className="text-zinc-500">{formatBytes(item.originalSize)}</span>
                       {item.processedSize && (
                         <>
-                          <span>→</span>
-                          <span className="text-lime-400 font-bold">
+                          <span className="text-zinc-400">→</span>
+                          <span className="text-zinc-900 dark:text-zinc-100 font-semibold">
                             {formatBytes(item.processedSize)}
                           </span>
                         </>
@@ -489,7 +489,7 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
         </div>
 
         {/* Footer Actions */}
-        <div className="p-4 border-t border-zinc-800 flex items-center justify-between bg-[#121217]">
+        <div className="p-4 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between bg-zinc-50 dark:bg-zinc-950">
           <div>
             {items.length > 0 && !completed && (
               <span className="text-xs text-zinc-400">
@@ -505,7 +505,7 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-lg text-xs font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 transition-colors cursor-pointer"
                 >
                   Cancel
                 </button>
@@ -513,9 +513,9 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
                   type="button"
                   disabled={items.length === 0}
                   onClick={handleRunBatch}
-                  className="flex items-center gap-1.5 px-4 py-1.5 bg-lime-400 hover:bg-lime-300 disabled:opacity-40 text-black font-bold text-xs rounded-lg shadow-sm transition-all cursor-pointer"
+                  className="flex items-center gap-1.5 px-4 py-1.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 disabled:opacity-40 text-white dark:text-zinc-900 font-semibold text-xs rounded-lg transition-colors cursor-pointer"
                 >
-                  <Play className="w-3.5 h-3.5 fill-black" />
+                  <Play className="w-3.5 h-3.5 fill-current" />
                   <span>Execute Recipe ({items.length} Images)</span>
                 </button>
               </>
@@ -526,7 +526,7 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
                 <button
                   type="button"
                   onClick={handleDownloadZip}
-                  className="flex items-center gap-1.5 px-4 py-1.5 bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs rounded-lg shadow-sm transition-all cursor-pointer"
+                  className="flex items-center gap-1.5 px-4 py-1.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-semibold text-xs rounded-lg transition-colors cursor-pointer"
                 >
                   <Download className="w-4 h-4" />
                   <span>Download All as ZIP</span>
@@ -534,7 +534,7 @@ export const BatchExecutionModal: React.FC<BatchExecutionModalProps> = ({
                 <button
                   type="button"
                   onClick={onClose}
-                  className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-zinc-300 bg-zinc-800 hover:bg-zinc-700 transition-colors cursor-pointer"
+                  className="px-3.5 py-1.5 rounded-lg text-xs font-medium text-zinc-700 dark:text-zinc-300 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 transition-colors cursor-pointer"
                 >
                   Done
                 </button>

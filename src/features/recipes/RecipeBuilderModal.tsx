@@ -186,16 +186,16 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in">
-      <div className="bg-[#141418] border border-[#262632] rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl w-full max-w-2xl max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
         {/* Header */}
-        <div className="px-5 py-4 border-b border-zinc-800 flex items-center justify-between bg-[#121217]">
+        <div className="px-5 py-4 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between bg-zinc-50 dark:bg-zinc-950">
           <div className="flex items-center gap-2.5">
             <span className="text-xl">{icon}</span>
             <div>
-              <h3 className="text-sm font-bold text-zinc-100">
+              <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                 {recipe ? 'Edit Smart Recipe' : 'Create New Image Recipe'}
               </h3>
-              <p className="text-xs text-zinc-500">
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">
                 Build an automated sequence of actions to apply in batch.
               </p>
             </div>
@@ -203,7 +203,7 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
 
           <button
             onClick={onClose}
-            className="p-1 rounded-lg text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800"
+            className="p-1 rounded-lg text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
           >
             <X className="w-4 h-4" />
           </button>
@@ -214,15 +214,15 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
           {/* Metadata Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-12 gap-3">
             <div className="sm:col-span-2 space-y-1">
-              <label className="text-zinc-400 font-medium">Icon</label>
+              <label className="text-zinc-600 dark:text-zinc-400 font-medium">Icon</label>
               <div className="flex items-center gap-1.5">
-                <div className="w-8 h-8 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center shrink-0">
-                  <RecipeIcon name={icon} className="w-4 h-4 text-zinc-200" />
+                <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center shrink-0">
+                  <RecipeIcon name={icon} className="w-4 h-4 text-zinc-700 dark:text-zinc-200" />
                 </div>
                 <select
                   value={icon}
                   onChange={(e) => setIcon(e.target.value)}
-                  className="w-full px-2 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-xs text-zinc-200 focus:outline-none focus:border-zinc-500"
+                  className="w-full px-2 py-1.5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-xs text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-600"
                 >
                   <option value="zap">Fast</option>
                   <option value="shopping-bag">Commerce</option>
@@ -238,22 +238,22 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
             </div>
 
             <div className="sm:col-span-6 space-y-1">
-              <label className="text-zinc-400 font-medium">Recipe Name</label>
+              <label className="text-zinc-600 dark:text-zinc-400 font-medium">Recipe Name</label>
               <input
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Website Product Image"
-                className="w-full px-3 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-200 focus:outline-none focus:border-lime-400"
+                className="w-full px-3 py-1.5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-600"
               />
             </div>
 
             <div className="sm:col-span-4 space-y-1">
-              <label className="text-zinc-400 font-medium">Category</label>
+              <label className="text-zinc-600 dark:text-zinc-400 font-medium">Category</label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value as any)}
-                className="w-full px-2.5 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300 focus:outline-none focus:border-lime-400 cursor-pointer"
+                className="w-full px-2.5 py-1.5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-600 cursor-pointer"
               >
                 <option value="ecommerce">E-Commerce</option>
                 <option value="social">Social Media</option>
@@ -264,26 +264,26 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
             </div>
 
             <div className="sm:col-span-12 space-y-1">
-              <label className="text-zinc-400 font-medium">Description</label>
+              <label className="text-zinc-600 dark:text-zinc-400 font-medium">Description</label>
               <input
                 type="text"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Brief summary of what this recipe does..."
-                className="w-full px-3 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-200 focus:outline-none focus:border-lime-400"
+                className="w-full px-3 py-1.5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-zinc-900 dark:text-zinc-100 focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-600"
               />
             </div>
 
             {/* Target Destination Project */}
             <div className="sm:col-span-12 space-y-1">
-              <label className="text-zinc-400 font-medium flex items-center gap-1.5">
-                <FolderOpen className="w-3.5 h-3.5 text-lime-400" />
+              <label className="text-zinc-600 dark:text-zinc-400 font-medium flex items-center gap-1.5">
+                <FolderOpen className="w-3.5 h-3.5 text-zinc-500" />
                 <span>Save Batch Results to Project (Optional)</span>
               </label>
               <select
                 value={targetProjectId || ''}
                 onChange={(e) => setTargetProjectId(e.target.value || undefined)}
-                className="w-full px-3 py-1.5 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-300 focus:outline-none focus:border-lime-400 cursor-pointer"
+                className="w-full px-3 py-1.5 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg text-zinc-800 dark:text-zinc-200 focus:outline-none focus:border-zinc-400 dark:focus:border-zinc-600 cursor-pointer"
               >
                 <option value="">None (Download or Default Library)</option>
                 {projects.map((p) => (
@@ -297,15 +297,15 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
 
           {/* Sequential Step Pipeline */}
           <div className="space-y-3">
-            <div className="flex items-center justify-between border-b border-zinc-800 pb-2">
-              <h4 className="text-xs font-bold text-zinc-200 uppercase tracking-wider">
+            <div className="flex items-center justify-between border-b border-zinc-200 dark:border-zinc-800 pb-2">
+              <h4 className="text-xs font-semibold text-zinc-900 dark:text-zinc-200 uppercase tracking-wider">
                 Pipeline Steps ({steps.length})
               </h4>
               <span className="text-[11px] text-zinc-500">Executed sequentially top-to-bottom</span>
             </div>
 
             {steps.length === 0 ? (
-              <div className="p-8 text-center text-zinc-500 bg-zinc-900/40 rounded-xl border border-zinc-800/60">
+              <div className="p-8 text-center text-zinc-500 bg-zinc-50 dark:bg-zinc-950 rounded-xl border border-zinc-200 dark:border-zinc-800">
                 No steps added yet. Choose an action below to add to the pipeline.
               </div>
             ) : (
@@ -313,14 +313,14 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
                 {steps.map((step, idx) => (
                   <div
                     key={step.id}
-                    className="p-3 rounded-xl bg-zinc-900/90 border border-zinc-800 flex flex-col gap-2.5 transition-all"
+                    className="p-3 rounded-xl bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 flex flex-col gap-2.5 transition-all"
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex items-center gap-2">
-                        <span className="w-5 h-5 rounded-full bg-lime-400/20 text-lime-400 text-[10px] font-bold flex items-center justify-center font-mono">
+                        <span className="w-5 h-5 rounded-full bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-[10px] font-semibold flex items-center justify-center font-mono">
                           {idx + 1}
                         </span>
-                        <span className="font-bold text-zinc-200 capitalize">{step.type}</span>
+                        <span className="font-semibold text-zinc-900 dark:text-zinc-200 capitalize">{step.type}</span>
                         <span className="text-zinc-500 font-mono text-[10px]">({step.name})</span>
                       </div>
 
@@ -329,7 +329,7 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
                           type="button"
                           onClick={() => handleMoveStep(idx, 'up')}
                           disabled={idx === 0}
-                          className="p-1 rounded text-zinc-500 hover:text-zinc-200 disabled:opacity-30"
+                          className="p-1 rounded text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 disabled:opacity-30"
                           title="Move step up"
                         >
                           <ChevronUp className="w-3.5 h-3.5" />
@@ -427,7 +427,7 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
                               onChange={(e) =>
                                 handleUpdateStepParams(step.id, { quality: Number(e.target.value) })
                               }
-                              className="w-full accent-lime-400 h-1 bg-zinc-800 rounded"
+                              className="w-full accent-zinc-900 dark:accent-zinc-100 h-1 bg-zinc-200 dark:bg-zinc-800 rounded"
                             />
                           </div>
                         </>
@@ -443,7 +443,7 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
                               handleUpdateStepParams(step.id, { targetKB: Number(e.target.value) })
                             }
                             placeholder="e.g. 150"
-                            className="w-full px-2 py-1 bg-zinc-950 border border-zinc-800 rounded text-zinc-200 font-mono"
+                            className="w-full px-2 py-1 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded text-zinc-900 dark:text-zinc-200 font-mono"
                           />
                         </div>
                       )}
@@ -458,7 +458,7 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
                               onChange={(e) =>
                                 handleUpdateStepParams(step.id, { radius: Number(e.target.value) })
                               }
-                              className="w-full px-2 py-1 bg-zinc-950 border border-zinc-800 rounded text-zinc-200 font-mono"
+                              className="w-full px-2 py-1 bg-white dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded text-zinc-900 dark:text-zinc-200 font-mono"
                             />
                           </div>
                           <div className="col-span-2 flex items-center gap-2 pt-3">
@@ -469,9 +469,9 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
                               onChange={(e) =>
                                 handleUpdateStepParams(step.id, { isCircular: e.target.checked })
                               }
-                              className="accent-lime-400"
+                              className="accent-zinc-900 dark:accent-zinc-100"
                             />
-                            <label htmlFor={`circle-${step.id}`} className="text-zinc-300">
+                            <label htmlFor={`circle-${step.id}`} className="text-zinc-700 dark:text-zinc-300">
                               Perfect Circle Mask
                             </label>
                           </div>
@@ -586,9 +586,9 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
                     key={item.type}
                     type="button"
                     onClick={() => handleAddStep(item.type as RecipeStepType)}
-                    className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-zinc-850 hover:bg-zinc-800 text-zinc-300 border border-zinc-800 hover:border-zinc-700 text-[11px] transition-colors cursor-pointer"
+                    className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700 text-[11px] transition-colors cursor-pointer"
                   >
-                    <Plus className="w-3 h-3 text-lime-400" />
+                    <Plus className="w-3 h-3 text-zinc-500" />
                     <span>{item.label}</span>
                   </button>
                 ))}
@@ -598,21 +598,21 @@ export const RecipeBuilderModal: React.FC<RecipeBuilderModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-zinc-800 flex items-center justify-between bg-[#121217]">
-          <span className="text-zinc-500 text-xs">
+        <div className="p-4 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between bg-zinc-50/50 dark:bg-[#121217]">
+          <span className="text-zinc-500 dark:text-zinc-400 text-xs">
             {steps.length} step(s) will be executed for every selected image.
           </span>
 
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
-              className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+              className="px-3.5 py-1.5 rounded-lg text-xs font-medium text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 transition-colors cursor-pointer"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
-              className="flex items-center gap-1.5 px-4 py-1.5 bg-lime-400 hover:bg-lime-300 text-black text-xs font-bold rounded-lg transition-all cursor-pointer"
+              className="flex items-center gap-1.5 px-4 py-1.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 text-xs font-semibold rounded-lg transition-colors cursor-pointer"
             >
               <Check className="w-4 h-4" />
               <span>Save Recipe</span>

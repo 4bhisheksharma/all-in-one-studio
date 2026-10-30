@@ -333,19 +333,19 @@ export const FaceBlurPage: React.FC = () => {
               />
             </div>
 
-            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-3 py-2 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 text-xs font-mono">
+            <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-3 py-2 rounded-xl bg-zinc-900/90 dark:bg-black/80 backdrop-blur-md border border-zinc-700/50 dark:border-white/10 text-xs font-mono">
               <span className="text-zinc-400">Click & drag on image to draw blur box</span>
-              <span className="text-lime-400 font-bold">{regions.length} region{regions.length === 1 ? '' : 's'}</span>
+              <span className="text-zinc-100 font-semibold">{regions.length} region{regions.length === 1 ? '' : 's'}</span>
             </div>
           </div>
         );
       }}
     >
       {(selectedAsset) => (
-        <div className="space-y-5 p-5 rounded-2xl bg-[#141419] border border-[#23232c] shadow-sm">
-          <div className="flex items-center justify-between pb-3 border-b border-[#23232c]">
-            <h3 className="text-sm font-bold text-zinc-100 flex items-center gap-2">
-              <Sliders className="w-4 h-4 text-purple-400" />
+        <div className="space-y-5 p-5 rounded-2xl bg-white dark:bg-[#0e0e11] border border-zinc-200 dark:border-zinc-800 shadow-sm">
+          <div className="flex items-center justify-between pb-3 border-b border-zinc-100 dark:border-zinc-800/80">
+            <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+              <Sliders className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
               Blur Controls
             </h3>
           </div>
@@ -355,7 +355,7 @@ export const FaceBlurPage: React.FC = () => {
             type="button"
             disabled={!selectedAsset || detectingFaces}
             onClick={() => handleDetectFaces(selectedAsset)}
-            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-purple-500/15 hover:bg-purple-500/25 border border-purple-500/30 text-purple-300 font-semibold text-xs transition-colors"
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700/80 border border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-zinc-100 font-medium text-xs transition-colors"
           >
             <ScanFace className="w-4 h-4" />
             <span>{detectingFaces ? 'Scanning Faces...' : 'Auto-Detect Faces (On-Device)'}</span>
@@ -363,15 +363,15 @@ export const FaceBlurPage: React.FC = () => {
 
           {/* Blur Style: Pixelate vs Blur */}
           <div className="space-y-1.5">
-            <label className="text-xs font-semibold text-zinc-300">Concealment Style</label>
+            <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Concealment Style</label>
             <div className="grid grid-cols-2 gap-2">
               <button
                 type="button"
                 onClick={() => setBlurStyle('pixelate')}
-                className={`py-2 px-3 rounded-lg text-xs font-semibold border transition-all ${
+                className={`py-2 px-3 rounded-lg text-xs font-medium border transition-all ${
                   blurStyle === 'pixelate'
-                    ? 'bg-purple-400/15 border-purple-400 text-purple-300 shadow-sm'
-                    : 'bg-[#0e0e12] border-[#252530] text-zinc-400 hover:text-zinc-200'
+                    ? 'bg-zinc-900 dark:bg-zinc-100 border-zinc-900 dark:border-zinc-100 text-white dark:text-zinc-900 shadow-sm'
+                    : 'bg-zinc-50 dark:bg-[#141418] border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
                 Pixelate / Mosaic
@@ -379,10 +379,10 @@ export const FaceBlurPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setBlurStyle('blur')}
-                className={`py-2 px-3 rounded-lg text-xs font-semibold border transition-all ${
+                className={`py-2 px-3 rounded-lg text-xs font-medium border transition-all ${
                   blurStyle === 'blur'
-                    ? 'bg-purple-400/15 border-purple-400 text-purple-300 shadow-sm'
-                    : 'bg-[#0e0e12] border-[#252530] text-zinc-400 hover:text-zinc-200'
+                    ? 'bg-zinc-900 dark:bg-zinc-100 border-zinc-900 dark:border-zinc-100 text-white dark:text-zinc-900 shadow-sm'
+                    : 'bg-zinc-50 dark:bg-[#141418] border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
                 Soft Blur
@@ -391,10 +391,10 @@ export const FaceBlurPage: React.FC = () => {
           </div>
 
           {/* Intensity Slider */}
-          <div className="space-y-2 pt-2 border-t border-[#23232c]">
+          <div className="space-y-2 pt-2 border-t border-zinc-100 dark:border-zinc-800/80">
             <div className="flex justify-between text-xs">
-              <span className="text-zinc-400">Blur Strength</span>
-              <span className="font-mono font-bold text-purple-400">{blurIntensity}px</span>
+              <span className="text-zinc-600 dark:text-zinc-400">Blur Strength</span>
+              <span className="font-mono font-semibold text-zinc-900 dark:text-zinc-100">{blurIntensity}px</span>
             </div>
             <input
               type="range"
@@ -402,22 +402,22 @@ export const FaceBlurPage: React.FC = () => {
               max="40"
               value={blurIntensity}
               onChange={(e) => setBlurIntensity(Number(e.target.value))}
-              className="w-full accent-purple-400 bg-zinc-800 h-1.5 rounded-lg cursor-pointer"
+              className="w-full accent-zinc-900 dark:accent-zinc-100 bg-zinc-200 dark:bg-zinc-800 h-1.5 rounded-lg cursor-pointer"
             />
           </div>
 
           {/* Region Action Tools */}
-          <div className="space-y-2 pt-2 border-t border-[#23232c]">
-            <label className="text-xs font-semibold text-zinc-300">Region Actions</label>
+          <div className="space-y-2 pt-2 border-t border-zinc-100 dark:border-zinc-800/80">
+            <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Region Actions</label>
             <div className="grid grid-cols-3 gap-1.5">
               <button
                 type="button"
                 disabled={!selectedAsset}
                 onClick={() => handleAddDefaultRegion(selectedAsset)}
-                className="flex items-center justify-center gap-1 p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium transition-colors"
+                className="flex items-center justify-center gap-1 p-2 rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium transition-colors"
                 title="Add center box"
               >
-                <Plus className="w-3.5 h-3.5 text-lime-400" />
+                <Plus className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400" />
                 <span>Add Box</span>
               </button>
 
@@ -425,7 +425,7 @@ export const FaceBlurPage: React.FC = () => {
                 type="button"
                 disabled={regions.length === 0}
                 onClick={handleUndo}
-                className="flex items-center justify-center gap-1 p-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-medium transition-colors disabled:opacity-40"
+                className="flex items-center justify-center gap-1 p-2 rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium transition-colors disabled:opacity-40"
                 title="Undo last box"
               >
                 <Undo2 className="w-3.5 h-3.5" />
@@ -436,7 +436,7 @@ export const FaceBlurPage: React.FC = () => {
                 type="button"
                 disabled={regions.length === 0}
                 onClick={handleClearAll}
-                className="flex items-center justify-center gap-1 p-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-medium transition-colors disabled:opacity-40"
+                className="flex items-center justify-center gap-1 p-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 text-xs font-medium transition-colors disabled:opacity-40"
                 title="Clear all"
               >
                 <Trash2 className="w-3.5 h-3.5" />
@@ -449,16 +449,16 @@ export const FaceBlurPage: React.FC = () => {
           <button
             disabled={!selectedAsset || regions.length === 0 || processing}
             onClick={() => handleExport(selectedAsset)}
-            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs shadow-md transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
+            className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-semibold text-xs shadow-sm transition-all active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
           >
             {processing ? (
               <>
-                <Sparkles className="w-4 h-4 animate-spin text-black" />
+                <Sparkles className="w-4 h-4 animate-spin text-white dark:text-zinc-900" />
                 <span>Applying Concealment...</span>
               </>
             ) : (
               <>
-                <Play className="w-4 h-4 fill-black" />
+                <Play className="w-4 h-4 fill-current" />
                 <span>Apply Blur & Export</span>
               </>
             )}

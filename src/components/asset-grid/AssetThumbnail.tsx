@@ -31,7 +31,7 @@ export const AssetThumbnail: React.FC<AssetThumbnailProps> = ({ assetId, alt, cl
 
   if (loading) {
     return (
-      <div className={cn('w-full h-full bg-[#181820] animate-pulse flex items-center justify-center text-zinc-700', className)}>
+      <div className={cn('w-full h-full bg-zinc-100 dark:bg-zinc-800 animate-pulse flex items-center justify-center text-zinc-400 dark:text-zinc-600', className)}>
         <ImageIcon className="w-5 h-5 opacity-40" />
       </div>
     );
@@ -39,7 +39,7 @@ export const AssetThumbnail: React.FC<AssetThumbnailProps> = ({ assetId, alt, cl
 
   if (!thumbUrl) {
     return (
-      <div className={cn('w-full h-full bg-[#181820] flex items-center justify-center text-zinc-600', className)}>
+      <div className={cn('w-full h-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-zinc-400 dark:text-zinc-600', className)}>
         <ImageIcon className="w-5 h-5" />
       </div>
     );

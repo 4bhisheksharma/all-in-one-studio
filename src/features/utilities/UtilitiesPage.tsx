@@ -461,11 +461,11 @@ export const UtilitiesPage: React.FC = () => {
           return (
             <div className="w-full h-full flex flex-col justify-between items-center relative overflow-hidden select-none">
               {/* Top Viewport Indicator */}
-              <div className="w-full flex items-center justify-between px-4 py-2 bg-zinc-900/80 backdrop-blur-md border-b border-zinc-800 z-10 text-xs">
-                <div className="flex items-center gap-2 text-zinc-400">
-                  <Layers className="w-3.5 h-3.5 text-lime-400" />
+              <div className="w-full flex items-center justify-between px-4 py-2 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 z-10 text-xs">
+                <div className="flex items-center gap-2 text-zinc-500 dark:text-zinc-400">
+                  <Layers className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400" />
                   <span>
-                    Utility Target: <span className="font-mono text-zinc-200">{selectedAsset.width} × {selectedAsset.height} px</span>
+                    Utility Target: <span className="font-mono text-zinc-800 dark:text-zinc-200">{selectedAsset.width} × {selectedAsset.height} px</span>
                   </span>
                 </div>
 
@@ -473,9 +473,9 @@ export const UtilitiesPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={handleNativeEyeDropper}
-                    className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 font-medium transition-colors"
+                    className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 font-medium transition-colors border border-zinc-200 dark:border-zinc-700"
                   >
-                    <Pipette className="w-3 h-3 text-lime-400" />
+                    <Pipette className="w-3 h-3 text-zinc-500 dark:text-zinc-400" />
                     <span>Pick Pixel Color</span>
                   </button>
                 )}
@@ -483,7 +483,7 @@ export const UtilitiesPage: React.FC = () => {
 
               {/* Viewport Canvas Container */}
               <div className="flex-1 w-full flex items-center justify-center p-4 overflow-auto">
-                <div className="relative rounded-lg shadow-2xl overflow-hidden border border-zinc-700/50 bg-[#141419]">
+                <div className="relative rounded-lg shadow-md overflow-hidden border border-zinc-200 dark:border-zinc-700/50 bg-[#141419]">
                   <canvas
                     ref={previewCanvasRef}
                     onClick={handleCanvasClickSample}
@@ -496,15 +496,15 @@ export const UtilitiesPage: React.FC = () => {
 
               {/* Sampled Color Bar if picked */}
               {pickedColor && (
-                <div className="flex items-center gap-3 py-1.5 px-3 rounded-full bg-black/80 backdrop-blur-md border border-zinc-800 mb-2 text-xs">
+                <div className="flex items-center gap-3 py-1.5 px-3 rounded-full bg-zinc-900/90 dark:bg-black/80 backdrop-blur-md border border-zinc-700/50 dark:border-zinc-800 mb-2 text-xs">
                   <div
                     className="w-4 h-4 rounded-full border border-zinc-600"
                     style={{ backgroundColor: pickedColor }}
                   />
-                  <span className="font-mono text-zinc-200 font-bold">{pickedColor}</span>
+                  <span className="font-mono text-zinc-100 font-semibold">{pickedColor}</span>
                   <button
                     onClick={() => copyToClipboard(pickedColor)}
-                    className="text-lime-400 hover:text-lime-300 font-semibold transition-colors"
+                    className="text-zinc-300 hover:text-white font-medium underline underline-offset-2 transition-colors"
                   >
                     Copy HEX
                   </button>
@@ -517,14 +517,14 @@ export const UtilitiesPage: React.FC = () => {
         {(selectedAsset) => (
           <div className="space-y-5">
             {/* Utility Tool Tabs */}
-            <div className="grid grid-cols-4 gap-1 p-1 bg-zinc-900 rounded-xl border border-zinc-800">
+            <div className="grid grid-cols-4 gap-1 p-1 bg-zinc-100 dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800">
               <button
                 type="button"
                 onClick={() => setActiveTab('palette')}
-                className={`py-2 px-1 rounded-lg text-xs font-semibold flex flex-col items-center justify-center gap-1 transition-all ${
+                className={`py-2 px-1 rounded-lg text-xs font-medium flex flex-col items-center justify-center gap-1 transition-all ${
                   activeTab === 'palette'
-                    ? 'bg-lime-400 text-black shadow-sm'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm font-semibold'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
                 <Palette className="w-4 h-4" />
@@ -534,10 +534,10 @@ export const UtilitiesPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setActiveTab('watermark')}
-                className={`py-2 px-1 rounded-lg text-xs font-semibold flex flex-col items-center justify-center gap-1 transition-all ${
+                className={`py-2 px-1 rounded-lg text-xs font-medium flex flex-col items-center justify-center gap-1 transition-all ${
                   activeTab === 'watermark'
-                    ? 'bg-lime-400 text-black shadow-sm'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm font-semibold'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
                 <Stamp className="w-4 h-4" />
@@ -547,10 +547,10 @@ export const UtilitiesPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setActiveTab('favicon')}
-                className={`py-2 px-1 rounded-lg text-xs font-semibold flex flex-col items-center justify-center gap-1 transition-all ${
+                className={`py-2 px-1 rounded-lg text-xs font-medium flex flex-col items-center justify-center gap-1 transition-all ${
                   activeTab === 'favicon'
-                    ? 'bg-lime-400 text-black shadow-sm'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm font-semibold'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
                 <Box className="w-4 h-4" />
@@ -560,10 +560,10 @@ export const UtilitiesPage: React.FC = () => {
               <button
                 type="button"
                 onClick={() => setActiveTab('exif')}
-                className={`py-2 px-1 rounded-lg text-xs font-semibold flex flex-col items-center justify-center gap-1 transition-all ${
+                className={`py-2 px-1 rounded-lg text-xs font-medium flex flex-col items-center justify-center gap-1 transition-all ${
                   activeTab === 'exif'
-                    ? 'bg-lime-400 text-black shadow-sm'
-                    : 'text-zinc-400 hover:text-zinc-200'
+                    ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm font-semibold'
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
                 <FileText className="w-4 h-4" />
@@ -575,7 +575,7 @@ export const UtilitiesPage: React.FC = () => {
             {activeTab === 'palette' && (
               <div className="space-y-4">
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-zinc-300 uppercase tracking-wider block">
+                  <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider block">
                     Dominant Color Palette
                   </label>
                   <p className="text-[11px] text-zinc-500">
@@ -591,15 +591,15 @@ export const UtilitiesPage: React.FC = () => {
                         key={color}
                         type="button"
                         onClick={() => copyToClipboard(color)}
-                        className="p-2.5 rounded-xl border border-zinc-800 bg-zinc-900/80 hover:border-zinc-600 transition-all text-left group"
+                        className="p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 hover:border-zinc-400 dark:hover:border-zinc-600 transition-all text-left group"
                       >
                         <div
-                          className="w-full h-8 rounded-lg mb-2 border border-zinc-700/60 shadow-sm"
+                          className="w-full h-8 rounded-lg mb-2 border border-zinc-200 dark:border-zinc-700/60 shadow-sm"
                           style={{ backgroundColor: color }}
                         />
-                        <span className="font-mono text-xs font-bold text-zinc-200 flex items-center justify-between group-hover:text-lime-400">
+                        <span className="font-mono text-xs font-semibold text-zinc-800 dark:text-zinc-200 flex items-center justify-between group-hover:text-zinc-950 dark:group-hover:text-white">
                           <span>{color.toUpperCase()}</span>
-                          {copiedColor === color && <Check className="w-3.5 h-3.5 text-lime-400" />}
+                          {copiedColor === color && <Check className="w-3.5 h-3.5 text-zinc-900 dark:text-zinc-100" />}
                         </span>
                         <span className="text-[10px] text-zinc-500 font-mono block truncate">
                           {c.toRgbString()}
@@ -610,19 +610,19 @@ export const UtilitiesPage: React.FC = () => {
                 </div>
 
                 {/* Eyedropper Card */}
-                <div className="p-3.5 rounded-xl bg-zinc-900 border border-zinc-800 space-y-3">
+                <div className="p-3.5 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-xs font-semibold text-zinc-200">Interactive Eyedropper</span>
+                    <span className="text-xs font-medium text-zinc-800 dark:text-zinc-200">Interactive Eyedropper</span>
                     <button
                       type="button"
                       onClick={handleNativeEyeDropper}
-                      className="px-2.5 py-1 rounded-lg bg-lime-400 hover:bg-lime-300 text-black text-xs font-bold flex items-center gap-1.5 transition-colors"
+                      className="px-2.5 py-1 rounded-lg bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 text-xs font-medium flex items-center gap-1.5 transition-colors shadow-sm"
                     >
                       <Pipette className="w-3.5 h-3.5" />
                       <span>Sample Screen</span>
                     </button>
                   </div>
-                  <p className="text-[11px] text-zinc-400 leading-relaxed">
+                  <p className="text-[11px] text-zinc-500 dark:text-zinc-400 leading-relaxed">
                     Click anywhere on the preview canvas to inspect exact pixel values in real-time.
                   </p>
                 </div>
@@ -636,10 +636,10 @@ export const UtilitiesPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setWatermarkType('text')}
-                    className={`py-2 px-3 rounded-lg text-xs font-semibold border transition-all ${
+                    className={`py-2 px-3 rounded-lg text-xs font-medium border transition-all ${
                       watermarkType === 'text'
-                        ? 'bg-lime-400/10 border-lime-400/40 text-lime-400'
-                        : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-zinc-200'
+                        ? 'bg-zinc-900 dark:bg-zinc-100 border-zinc-900 dark:border-zinc-100 text-white dark:text-zinc-900 shadow-sm'
+                        : 'bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                     }`}
                   >
                     Text Watermark
@@ -647,10 +647,10 @@ export const UtilitiesPage: React.FC = () => {
                   <button
                     type="button"
                     onClick={() => setWatermarkType('logo')}
-                    className={`py-2 px-3 rounded-lg text-xs font-semibold border transition-all ${
+                    className={`py-2 px-3 rounded-lg text-xs font-medium border transition-all ${
                       watermarkType === 'logo'
-                        ? 'bg-lime-400/10 border-lime-400/40 text-lime-400'
-                        : 'bg-zinc-900 border-zinc-800 text-zinc-400 hover:text-zinc-200'
+                        ? 'bg-zinc-900 dark:bg-zinc-100 border-zinc-900 dark:border-zinc-100 text-white dark:text-zinc-900 shadow-sm'
+                        : 'bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                     }`}
                   >
                     Logo Image
@@ -660,38 +660,38 @@ export const UtilitiesPage: React.FC = () => {
                 {watermarkType === 'text' ? (
                   <div className="space-y-3">
                     <div className="space-y-1">
-                      <label className="text-xs font-medium text-zinc-400">Watermark Text</label>
+                      <label className="text-xs font-medium text-zinc-700 dark:text-zinc-400">Watermark Text</label>
                       <input
                         type="text"
                         value={watermarkText}
                         onChange={(e) => setWatermarkText(e.target.value)}
                         placeholder="e.g. Confidential or Brand Name"
-                        className="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 text-xs text-zinc-100 focus:outline-none focus:border-lime-400"
+                        className="w-full px-3 py-2 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-900 dark:text-zinc-100 focus:outline-none focus:ring-1 focus:ring-zinc-400 dark:focus:ring-zinc-600"
                       />
                     </div>
 
                     <div className="grid grid-cols-2 gap-3">
                       <div className="space-y-1">
-                        <label className="text-xs font-medium text-zinc-400">Font Size ({fontSize}px)</label>
+                        <label className="text-xs font-medium text-zinc-700 dark:text-zinc-400">Font Size ({fontSize}px)</label>
                         <input
                           type="range"
                           min="16"
                           max="96"
                           value={fontSize}
                           onChange={(e) => setFontSize(Number(e.target.value))}
-                          className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                          className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                         />
                       </div>
                       <div className="space-y-1">
-                        <label className="text-xs font-medium text-zinc-400">Color</label>
+                        <label className="text-xs font-medium text-zinc-700 dark:text-zinc-400">Color</label>
                         <div className="flex items-center gap-2">
                           <input
                             type="color"
                             value={textColor}
                             onChange={(e) => setTextColor(e.target.value)}
-                            className="w-8 h-8 rounded border border-zinc-700 bg-transparent cursor-pointer p-0"
+                            className="w-8 h-8 rounded border border-zinc-300 dark:border-zinc-700 bg-transparent cursor-pointer p-0"
                           />
-                          <span className="font-mono text-xs text-zinc-300">{textColor}</span>
+                          <span className="font-mono text-xs text-zinc-700 dark:text-zinc-300">{textColor}</span>
                         </div>
                       </div>
                     </div>
@@ -701,16 +701,16 @@ export const UtilitiesPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={() => setLogoPickerOpen(true)}
-                      className="w-full py-2.5 px-3 rounded-xl border border-zinc-800 bg-zinc-900 hover:border-zinc-700 text-xs text-zinc-200 flex items-center justify-center gap-2 font-medium transition-colors"
+                      className="w-full py-2.5 px-3 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 hover:border-zinc-300 dark:hover:border-zinc-700 text-xs text-zinc-800 dark:text-zinc-200 flex items-center justify-center gap-2 font-medium transition-colors"
                     >
-                      <ImageIcon className="w-4 h-4 text-lime-400" />
+                      <ImageIcon className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
                       <span>{logoAsset ? `Logo: ${logoAsset.filename}` : 'Choose Logo from Library'}</span>
                     </button>
 
                     <div className="space-y-1">
-                      <div className="flex justify-between text-xs text-zinc-400">
+                      <div className="flex justify-between text-xs text-zinc-600 dark:text-zinc-400">
                         <span>Logo Scale</span>
-                        <span className="font-mono text-zinc-200">{logoScale}%</span>
+                        <span className="font-mono text-zinc-900 dark:text-zinc-200">{logoScale}%</span>
                       </div>
                       <input
                         type="range"
@@ -718,17 +718,17 @@ export const UtilitiesPage: React.FC = () => {
                         max="60"
                         value={logoScale}
                         onChange={(e) => setLogoScale(Number(e.target.value))}
-                        className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                        className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                       />
                     </div>
                   </div>
                 )}
 
                 {/* Common Anchor & Opacity Controls */}
-                <div className="space-y-2 pt-2 border-t border-zinc-800">
-                  <div className="flex justify-between text-xs text-zinc-400">
+                <div className="space-y-2 pt-2 border-t border-zinc-200 dark:border-zinc-800">
+                  <div className="flex justify-between text-xs text-zinc-600 dark:text-zinc-400">
                     <span>Opacity</span>
-                    <span className="font-mono text-zinc-200">{watermarkOpacity}%</span>
+                    <span className="font-mono text-zinc-900 dark:text-zinc-200">{watermarkOpacity}%</span>
                   </div>
                   <input
                     type="range"
@@ -736,15 +736,15 @@ export const UtilitiesPage: React.FC = () => {
                     max="100"
                     value={watermarkOpacity}
                     onChange={(e) => setWatermarkOpacity(Number(e.target.value))}
-                    className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                    className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                   />
                 </div>
 
                 {watermarkType === 'text' && (
                   <div className="space-y-1">
-                    <div className="flex justify-between text-xs text-zinc-400">
+                    <div className="flex justify-between text-xs text-zinc-600 dark:text-zinc-400">
                       <span>Rotation</span>
-                      <span className="font-mono text-zinc-200">{rotation}°</span>
+                      <span className="font-mono text-zinc-900 dark:text-zinc-200">{rotation}°</span>
                     </div>
                     <input
                       type="range"
@@ -752,24 +752,24 @@ export const UtilitiesPage: React.FC = () => {
                       max="90"
                       value={rotation}
                       onChange={(e) => setRotation(Number(e.target.value))}
-                      className="w-full accent-lime-400 h-1.5 bg-zinc-800 rounded-lg cursor-pointer"
+                      className="w-full accent-zinc-900 dark:accent-zinc-100 h-1.5 bg-zinc-200 dark:bg-zinc-800 rounded-lg cursor-pointer"
                     />
                   </div>
                 )}
 
                 {/* 9-Point Anchor Position */}
                 <div className="space-y-1.5">
-                  <label className="text-xs font-medium text-zinc-400 block">Anchor Position</label>
-                  <div className="grid grid-cols-3 gap-1.5 w-36 mx-auto p-1.5 bg-zinc-900 border border-zinc-800 rounded-xl">
+                  <label className="text-xs font-medium text-zinc-700 dark:text-zinc-400 block">Anchor Position</label>
+                  <div className="grid grid-cols-3 gap-1.5 w-36 mx-auto p-1.5 bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl">
                     {(['tl', 'tc', 'tr', 'ml', 'mc', 'mr', 'bl', 'bc', 'br'] as const).map((pos) => (
                       <button
                         key={pos}
                         type="button"
                         onClick={() => setAnchor(pos)}
-                        className={`h-7 rounded text-[10px] font-bold uppercase transition-all ${
+                        className={`h-7 rounded text-[10px] font-semibold uppercase transition-all ${
                           anchor === pos
-                            ? 'bg-lime-400 text-black shadow-sm'
-                            : 'bg-zinc-800 text-zinc-400 hover:text-zinc-200'
+                            ? 'bg-zinc-900 dark:bg-zinc-100 text-white dark:text-zinc-900 shadow-sm'
+                            : 'bg-white dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                         }`}
                       >
                         {pos}
@@ -781,7 +781,7 @@ export const UtilitiesPage: React.FC = () => {
                 <button
                   type="button"
                   onClick={handleExportWatermark}
-                  className="w-full py-2.5 px-4 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md shadow-lime-400/10"
+                  className="w-full py-2.5 px-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-semibold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm active:scale-[0.98]"
                 >
                   <Stamp className="w-4 h-4" />
                   <span>Export Watermarked Image</span>
@@ -793,10 +793,10 @@ export const UtilitiesPage: React.FC = () => {
             {activeTab === 'favicon' && (
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <label className="text-xs font-semibold text-zinc-300 uppercase tracking-wider block">
+                  <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider block">
                     Icon Suite Specs
                   </label>
-                  <p className="text-[11px] text-zinc-400">
+                  <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
                     Generates 16px, 32px, 48px, 180px, 192px, and 512px icon pack.
                   </p>
                 </div>
@@ -805,7 +805,7 @@ export const UtilitiesPage: React.FC = () => {
                   type="button"
                   onClick={handleGenerateFavicons}
                   disabled={generatingIcons || !selectedAsset}
-                  className="w-full py-2.5 px-4 rounded-xl bg-lime-400 hover:bg-lime-300 disabled:opacity-50 text-black font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-md shadow-lime-400/10"
+                  className="w-full py-2.5 px-4 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 disabled:opacity-50 text-white dark:text-zinc-900 font-semibold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm active:scale-[0.98]"
                 >
                   <Box className="w-4 h-4" />
                   <span>{generatingIcons ? 'Generating Pack...' : 'Generate 6 Icon Formats'}</span>
@@ -817,12 +817,12 @@ export const UtilitiesPage: React.FC = () => {
                       {generatedIcons.map((icon) => (
                         <div
                           key={icon.name}
-                          className="p-2 rounded-xl bg-zinc-900 border border-zinc-800 flex flex-col items-center text-center space-y-1.5"
+                          className="p-2 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex flex-col items-center text-center space-y-1.5"
                         >
-                          <div className="w-10 h-10 rounded-lg bg-zinc-800 flex items-center justify-center overflow-hidden border border-zinc-700">
+                          <div className="w-10 h-10 rounded-lg bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center overflow-hidden border border-zinc-200 dark:border-zinc-700">
                             <img src={icon.url} alt={icon.name} className="w-full h-full object-contain" />
                           </div>
-                          <span className="text-[11px] font-mono text-zinc-200">{icon.size}×{icon.size}</span>
+                          <span className="text-[11px] font-mono text-zinc-700 dark:text-zinc-200">{icon.size}×{icon.size}</span>
                         </div>
                       ))}
                     </div>
@@ -830,9 +830,9 @@ export const UtilitiesPage: React.FC = () => {
                     <button
                       type="button"
                       onClick={handleDownloadFaviconPack}
-                      className="w-full py-2.5 px-4 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-100 font-semibold text-xs flex items-center justify-center gap-2 transition-colors border border-zinc-700"
+                      className="w-full py-2.5 px-4 rounded-xl bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-100 font-medium text-xs flex items-center justify-center gap-2 transition-colors border border-zinc-200 dark:border-zinc-700"
                     >
-                      <Download className="w-4 h-4 text-lime-400" />
+                      <Download className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
                       <span>Download Icon Pack (.zip)</span>
                     </button>
                   </div>
@@ -844,38 +844,38 @@ export const UtilitiesPage: React.FC = () => {
             {activeTab === 'exif' && (
               <div className="space-y-4">
                 <div className="space-y-1">
-                  <label className="text-xs font-semibold text-zinc-300 uppercase tracking-wider block">
+                  <label className="text-xs font-semibold text-zinc-700 dark:text-zinc-300 uppercase tracking-wider block">
                     File & Camera Metadata
                   </label>
-                  <p className="text-[11px] text-zinc-400">
+                  <p className="text-[11px] text-zinc-500 dark:text-zinc-400">
                     Inspect technical capture properties and hardware tags.
                   </p>
                 </div>
 
-                <div className="p-3 bg-zinc-900 rounded-xl border border-zinc-800 space-y-2 text-xs">
-                  <div className="flex justify-between py-1 border-b border-zinc-800">
+                <div className="p-3 bg-zinc-50 dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 space-y-2 text-xs">
+                  <div className="flex justify-between py-1 border-b border-zinc-200/80 dark:border-zinc-800">
                     <span className="text-zinc-500">Dimensions</span>
-                    <span className="font-mono text-zinc-200">{selectedAsset?.width} × {selectedAsset?.height} px</span>
+                    <span className="font-mono text-zinc-800 dark:text-zinc-200">{selectedAsset?.width} × {selectedAsset?.height} px</span>
                   </div>
-                  <div className="flex justify-between py-1 border-b border-zinc-800">
+                  <div className="flex justify-between py-1 border-b border-zinc-200/80 dark:border-zinc-800">
                     <span className="text-zinc-500">File Size</span>
-                    <span className="font-mono text-zinc-200">{selectedAsset ? formatBytes(selectedAsset.currentSize) : '-'}</span>
+                    <span className="font-mono text-zinc-800 dark:text-zinc-200">{selectedAsset ? formatBytes(selectedAsset.currentSize) : '-'}</span>
                   </div>
-                  <div className="flex justify-between py-1 border-b border-zinc-800">
+                  <div className="flex justify-between py-1 border-b border-zinc-200/80 dark:border-zinc-800">
                     <span className="text-zinc-500">Format</span>
-                    <span className="font-mono uppercase text-zinc-200">{selectedAsset?.mimeType.replace('image/', '')}</span>
+                    <span className="font-mono uppercase text-zinc-800 dark:text-zinc-200">{selectedAsset?.mimeType.replace('image/', '')}</span>
                   </div>
-                  <div className="flex justify-between py-1 border-b border-zinc-800">
+                  <div className="flex justify-between py-1 border-b border-zinc-200/80 dark:border-zinc-800">
                     <span className="text-zinc-500">Camera Model</span>
-                    <span className="font-mono text-zinc-200">{exifInfo?.model || 'Generic / N/A'}</span>
+                    <span className="font-mono text-zinc-800 dark:text-zinc-200">{exifInfo?.model || 'Generic / N/A'}</span>
                   </div>
-                  <div className="flex justify-between py-1 border-b border-zinc-800">
+                  <div className="flex justify-between py-1 border-b border-zinc-200/80 dark:border-zinc-800">
                     <span className="text-zinc-500">Lens / Aperture</span>
-                    <span className="font-mono text-zinc-200">{exifInfo?.fNumber || 'N/A'}</span>
+                    <span className="font-mono text-zinc-800 dark:text-zinc-200">{exifInfo?.fNumber || 'N/A'}</span>
                   </div>
                   <div className="flex justify-between py-1">
                     <span className="text-zinc-500">Exposure / ISO</span>
-                    <span className="font-mono text-zinc-200">
+                    <span className="font-mono text-zinc-800 dark:text-zinc-200">
                       {exifInfo?.exposureTime ? `${exifInfo.exposureTime} (ISO ${exifInfo.iso})` : 'N/A'}
                     </span>
                   </div>
@@ -886,7 +886,7 @@ export const UtilitiesPage: React.FC = () => {
                   type="button"
                   onClick={() => selectedAsset && handleStripExif(selectedAsset)}
                   disabled={strippingExif || !selectedAsset}
-                  className="w-full py-2.5 px-3 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                  className="w-full py-2.5 px-3 rounded-xl bg-red-500/10 hover:bg-red-500/20 text-red-600 dark:text-red-400 border border-red-500/30 text-xs font-semibold flex items-center justify-center gap-2 transition-colors cursor-pointer"
                 >
                   <ShieldAlert className="w-4 h-4" />
                   <span>{strippingExif ? 'Stripping Metadata...' : 'Strip EXIF & Sanitize Image'}</span>

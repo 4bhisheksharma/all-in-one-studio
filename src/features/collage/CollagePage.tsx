@@ -269,14 +269,14 @@ export const CollagePage: React.FC = () => {
   return (
     <div className="space-y-6 pb-16">
       {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[#22222a]">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-zinc-200 dark:border-zinc-800">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-amber-400/10 border border-amber-400/20 flex items-center justify-center text-amber-400">
+          <div className="w-10 h-10 rounded-xl bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-zinc-900 dark:text-zinc-100">
             <Layers className="w-5 h-5" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-zinc-100">Collage Maker</h1>
-            <p className="text-xs text-zinc-400 max-w-xl">
+            <h1 className="text-lg sm:text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">Collage Maker</h1>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-xl">
               Arrange multiple images from your library into customizable grid compositions.
             </p>
           </div>
@@ -285,16 +285,16 @@ export const CollagePage: React.FC = () => {
         <button
           disabled={processing}
           onClick={handleExportCollage}
-          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-lime-400 hover:bg-lime-300 text-black text-xs font-bold shadow-md transition-all active:scale-95 disabled:opacity-50"
+          className="flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 text-xs font-semibold shadow-sm transition-all active:scale-[0.98] disabled:opacity-50"
         >
           {processing ? (
             <>
-              <Sparkles className="w-4 h-4 animate-spin text-black" />
+              <Sparkles className="w-4 h-4 animate-spin text-white dark:text-zinc-900" />
               <span>Rendering Composition...</span>
             </>
           ) : (
             <>
-              <Play className="w-4 h-4 fill-black" />
+              <Play className="w-4 h-4 fill-current" />
               <span>Export Collage</span>
             </>
           )}
@@ -305,9 +305,9 @@ export const CollagePage: React.FC = () => {
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         {/* Left Controls Column */}
         <div className="lg:col-span-5 xl:col-span-4 space-y-4">
-          <div className="p-5 rounded-2xl bg-[#141419] border border-[#23232c] space-y-5 shadow-sm">
-            <h3 className="text-sm font-bold text-zinc-100 flex items-center gap-2 pb-2 border-b border-[#23232c]">
-              <Sliders className="w-4 h-4 text-amber-400" />
+          <div className="p-5 rounded-2xl bg-white dark:bg-[#0e0e11] border border-zinc-200 dark:border-zinc-800 space-y-5 shadow-sm">
+            <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2 pb-2 border-b border-zinc-100 dark:border-zinc-800/80">
+              <Sliders className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
               Layout & Grid Presets
             </h3>
 
@@ -319,8 +319,8 @@ export const CollagePage: React.FC = () => {
                   onClick={() => handleSelectLayout(layout)}
                   className={`p-2.5 rounded-xl border text-left flex flex-col justify-between transition-all ${
                     selectedLayout.id === layout.id
-                      ? 'bg-amber-400/10 border-amber-400 text-amber-300 shadow-sm'
-                      : 'bg-[#0e0e12] border-[#252530] text-zinc-400 hover:text-zinc-200 hover:bg-[#16161d]'
+                      ? 'bg-zinc-900 dark:bg-zinc-100 border-zinc-900 dark:border-zinc-100 text-white dark:text-zinc-900 shadow-sm'
+                      : 'bg-zinc-50 dark:bg-[#0e0e12] border-zinc-200 dark:border-[#252530] text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                   }`}
                 >
                   <span className="text-xs font-semibold">{layout.name}</span>
@@ -332,21 +332,21 @@ export const CollagePage: React.FC = () => {
             </div>
 
             {/* Slot Asset Assignment List */}
-            <div className="space-y-2 pt-2 border-t border-[#23232c]">
-              <label className="text-xs font-semibold text-zinc-300">Image Slots</label>
+            <div className="space-y-2 pt-2 border-t border-zinc-100 dark:border-zinc-800/80">
+              <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Image Slots</label>
               <div className="space-y-2">
                 {selectedLayout.slots.map((_, i) => {
                   const asset = slotAssets[i];
                   return (
                     <div
                       key={i}
-                      className="flex items-center justify-between p-2 rounded-xl bg-[#0e0e12] border border-[#22222a]"
+                      className="flex items-center justify-between p-2 rounded-xl bg-zinc-50 dark:bg-[#0e0e12] border border-zinc-200 dark:border-[#22222a]"
                     >
-                      <span className="text-xs font-mono text-zinc-400 pl-1">Slot {i + 1}</span>
+                      <span className="text-xs font-mono text-zinc-500 dark:text-zinc-400 pl-1">Slot {i + 1}</span>
                       <div className="flex items-center gap-2">
                         {asset ? (
                           <>
-                            <span className="text-xs text-zinc-200 font-medium truncate max-w-[130px]" title={asset.filename}>
+                            <span className="text-xs text-zinc-800 dark:text-zinc-200 font-medium truncate max-w-[130px]" title={asset.filename}>
                               {asset.filename}
                             </span>
                             <button
@@ -362,7 +362,7 @@ export const CollagePage: React.FC = () => {
                                   return n;
                                 });
                               }}
-                              className="p-1 text-zinc-500 hover:text-red-400"
+                              className="p-1 text-zinc-400 hover:text-red-500 transition-colors"
                               title="Clear slot"
                             >
                               <Trash2 className="w-3.5 h-3.5" />
@@ -374,9 +374,9 @@ export const CollagePage: React.FC = () => {
                               setActiveSlotIndex(i);
                               setPickerOpen(true);
                             }}
-                            className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold transition-colors"
+                            className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-300 text-xs font-medium transition-colors border border-zinc-200 dark:border-zinc-700"
                           >
-                            <FolderOpen className="w-3.5 h-3.5 text-amber-400" />
+                            <FolderOpen className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
                             <span>Select Image</span>
                           </button>
                         )}
@@ -388,11 +388,11 @@ export const CollagePage: React.FC = () => {
             </div>
 
             {/* Styling Sliders */}
-            <div className="space-y-3 pt-2 border-t border-[#23232c]">
+            <div className="space-y-3 pt-2 border-t border-zinc-100 dark:border-zinc-800/80">
               <div className="space-y-1.5">
-                <div className="flex justify-between text-xs text-zinc-300">
+                <div className="flex justify-between text-xs text-zinc-600 dark:text-zinc-400">
                   <span>Slot Gap</span>
-                  <span className="font-mono text-amber-400">{gap}px</span>
+                  <span className="font-mono font-semibold text-zinc-900 dark:text-zinc-100">{gap}px</span>
                 </div>
                 <input
                   type="range"
@@ -400,14 +400,14 @@ export const CollagePage: React.FC = () => {
                   max="40"
                   value={gap}
                   onChange={(e) => setGap(Number(e.target.value))}
-                  className="w-full accent-amber-400 bg-zinc-800 h-1.5 rounded-lg cursor-pointer"
+                  className="w-full accent-zinc-900 dark:accent-zinc-100 bg-zinc-200 dark:bg-zinc-800 h-1.5 rounded-lg cursor-pointer"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <div className="flex justify-between text-xs text-zinc-300">
+                <div className="flex justify-between text-xs text-zinc-600 dark:text-zinc-400">
                   <span>Outer Margin</span>
-                  <span className="font-mono text-amber-400">{padding}px</span>
+                  <span className="font-mono font-semibold text-zinc-900 dark:text-zinc-100">{padding}px</span>
                 </div>
                 <input
                   type="range"
@@ -415,14 +415,14 @@ export const CollagePage: React.FC = () => {
                   max="40"
                   value={padding}
                   onChange={(e) => setPadding(Number(e.target.value))}
-                  className="w-full accent-amber-400 bg-zinc-800 h-1.5 rounded-lg cursor-pointer"
+                  className="w-full accent-zinc-900 dark:accent-zinc-100 bg-zinc-200 dark:bg-zinc-800 h-1.5 rounded-lg cursor-pointer"
                 />
               </div>
 
               <div className="space-y-1.5">
-                <div className="flex justify-between text-xs text-zinc-300">
+                <div className="flex justify-between text-xs text-zinc-600 dark:text-zinc-400">
                   <span>Corner Radius</span>
-                  <span className="font-mono text-amber-400">{cornerRadius}px</span>
+                  <span className="font-mono font-semibold text-zinc-900 dark:text-zinc-100">{cornerRadius}px</span>
                 </div>
                 <input
                   type="range"
@@ -430,13 +430,13 @@ export const CollagePage: React.FC = () => {
                   max="40"
                   value={cornerRadius}
                   onChange={(e) => setCornerRadius(Number(e.target.value))}
-                  className="w-full accent-amber-400 bg-zinc-800 h-1.5 rounded-lg cursor-pointer"
+                  className="w-full accent-zinc-900 dark:accent-zinc-100 bg-zinc-200 dark:bg-zinc-800 h-1.5 rounded-lg cursor-pointer"
                 />
               </div>
 
               <div className="space-y-1.5 pt-2">
-                <label className="text-xs font-semibold text-zinc-300 flex items-center gap-1.5">
-                  <Palette className="w-3.5 h-3.5 text-amber-400" />
+                <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
+                  <Palette className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
                   Background Color
                 </label>
                 <div className="flex items-center gap-2">
@@ -445,7 +445,7 @@ export const CollagePage: React.FC = () => {
                       key={c}
                       onClick={() => setBgColor(c)}
                       className={`w-7 h-7 rounded-lg border transition-transform ${
-                        bgColor === c ? 'border-amber-400 scale-110 shadow-sm' : 'border-zinc-700'
+                        bgColor === c ? 'border-zinc-900 dark:border-zinc-100 ring-2 ring-zinc-400/40 scale-110 shadow-sm' : 'border-zinc-300 dark:border-zinc-700'
                       }`}
                       style={{ backgroundColor: c }}
                       title={c}
@@ -463,8 +463,8 @@ export const CollagePage: React.FC = () => {
 
               {/* Resolution Select */}
               <div className="space-y-1.5 pt-2">
-                <label className="text-xs font-semibold text-zinc-300 flex items-center gap-1.5">
-                  <Maximize2 className="w-3.5 h-3.5 text-amber-400" />
+                <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300 flex items-center gap-1.5">
+                  <Maximize2 className="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400" />
                   Output Canvas Dimensions
                 </label>
                 <div className="grid grid-cols-2 gap-2 text-xs">
@@ -475,8 +475,8 @@ export const CollagePage: React.FC = () => {
                     }}
                     className={`p-2 rounded-lg border text-center font-mono ${
                       canvasWidth === 1200 && canvasHeight === 1200
-                        ? 'bg-amber-400/10 border-amber-400 text-amber-400'
-                        : 'bg-[#0e0e12] border-[#22222a] text-zinc-400'
+                        ? 'bg-zinc-900 dark:bg-zinc-100 border-zinc-900 dark:border-zinc-100 text-white dark:text-zinc-900 shadow-sm font-semibold'
+                        : 'bg-zinc-50 dark:bg-[#0e0e12] border-zinc-200 dark:border-[#22222a] text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                     }`}
                   >
                     1200 × 1200 (1:1)
@@ -488,8 +488,8 @@ export const CollagePage: React.FC = () => {
                     }}
                     className={`p-2 rounded-lg border text-center font-mono ${
                       canvasWidth === 1920 && canvasHeight === 1080
-                        ? 'bg-amber-400/10 border-amber-400 text-amber-400'
-                        : 'bg-[#0e0e12] border-[#22222a] text-zinc-400'
+                        ? 'bg-zinc-900 dark:bg-zinc-100 border-zinc-900 dark:border-zinc-100 text-white dark:text-zinc-900 shadow-sm font-semibold'
+                        : 'bg-zinc-50 dark:bg-[#0e0e12] border-zinc-200 dark:border-[#22222a] text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                     }`}
                   >
                     1920 × 1080 (16:9)
@@ -501,17 +501,17 @@ export const CollagePage: React.FC = () => {
         </div>
 
         {/* Right Canvas Preview Viewport */}
-        <div className="lg:col-span-7 xl:col-span-8 min-h-[500px] rounded-2xl bg-[#0e0e12] border border-[#23232c] p-6 flex flex-col items-center justify-center relative overflow-hidden">
-          <div className="max-w-full max-h-[540px] flex items-center justify-center overflow-hidden rounded-xl shadow-2xl border border-white/5">
+        <div className="lg:col-span-7 xl:col-span-8 min-h-[500px] rounded-2xl bg-zinc-100 dark:bg-[#0e0e12] border border-zinc-200 dark:border-zinc-800 p-6 flex flex-col items-center justify-center relative overflow-hidden">
+          <div className="max-w-full max-h-[540px] flex items-center justify-center overflow-hidden rounded-xl shadow-md border border-zinc-200/50 dark:border-white/5">
             <canvas
               ref={canvasRef}
-              className="max-w-full max-h-[520px] object-contain rounded-lg shadow-inner"
+              className="max-w-full max-h-[520px] object-contain rounded-lg"
             />
           </div>
 
-          <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs px-3 py-2 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 font-mono">
+          <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs px-3 py-2 rounded-xl bg-zinc-900/90 dark:bg-black/80 backdrop-blur-md border border-zinc-700/50 dark:border-white/10 font-mono">
             <span className="text-zinc-400">Layout: {selectedLayout.name}</span>
-            <span className="text-amber-400 font-bold">{canvasWidth} × {canvasHeight} px</span>
+            <span className="text-zinc-100 font-semibold">{canvasWidth} × {canvasHeight} px</span>
           </div>
         </div>
       </div>

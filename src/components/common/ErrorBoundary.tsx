@@ -37,14 +37,14 @@ export class ErrorBoundary extends Component<Props, State> {
 
       return (
         <div className="min-h-[400px] flex items-center justify-center p-6">
-          <div className="w-full max-w-md p-6 rounded-2xl bg-[#141418] border border-red-500/30 text-center space-y-4 shadow-xl">
-            <div className="w-12 h-12 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 flex items-center justify-center mx-auto">
+          <div className="w-full max-w-md p-6 rounded-xl bg-white dark:bg-[#0e0e11] border border-red-500/30 text-center space-y-4 shadow-sm">
+            <div className="w-12 h-12 rounded-lg bg-red-500/10 border border-red-500/20 text-red-600 dark:text-red-400 flex items-center justify-center mx-auto">
               <AlertTriangle className="w-6 h-6" />
             </div>
 
             <div className="space-y-1">
-              <h3 className="text-base font-bold text-zinc-100">Something went wrong</h3>
-              <p className="text-xs text-zinc-400 leading-relaxed">
+              <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100">Something went wrong</h3>
+              <p className="text-xs text-zinc-600 dark:text-zinc-400 leading-relaxed">
                 {this.state.error?.message || 'An unexpected rendering or processing error occurred.'}
               </p>
             </div>
@@ -53,7 +53,7 @@ export class ErrorBoundary extends Component<Props, State> {
               <button
                 type="button"
                 onClick={this.handleReset}
-                className="px-4 py-2 rounded-xl bg-lime-400 hover:bg-lime-300 text-black text-xs font-bold flex items-center gap-2 transition-all cursor-pointer"
+                className="px-4 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 text-xs font-semibold flex items-center gap-2 transition-colors cursor-pointer"
               >
                 <RefreshCw className="w-3.5 h-3.5" />
                 <span>Try Again</span>
@@ -61,7 +61,7 @@ export class ErrorBoundary extends Component<Props, State> {
 
               <a
                 href="/"
-                className="px-4 py-2 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold flex items-center gap-2 transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-700 dark:text-zinc-300 text-xs font-medium flex items-center gap-2 transition-colors cursor-pointer"
               >
                 <Home className="w-3.5 h-3.5" />
                 <span>Go to Dashboard</span>

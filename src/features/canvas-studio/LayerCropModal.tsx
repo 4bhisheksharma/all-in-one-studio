@@ -152,21 +152,21 @@ export const LayerCropModal: React.FC<LayerCropModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in">
-      <div className="bg-[#141418] border border-[#262632] rounded-2xl w-full max-w-3xl flex flex-col max-h-[90vh] overflow-hidden shadow-2xl">
+      <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl w-full max-w-3xl flex flex-col max-h-[90vh] overflow-hidden shadow-2xl">
         {/* Header */}
-        <div className="px-5 py-3.5 border-b border-zinc-800 flex items-center justify-between">
+        <div className="px-5 py-3.5 border-b border-zinc-200 dark:border-zinc-800 flex items-center justify-between bg-zinc-50 dark:bg-zinc-950">
           <div className="flex items-center gap-2">
-            <Crop className="w-4 h-4 text-lime-400" />
-            <h3 className="text-sm font-bold text-zinc-100">Crop Image Layer</h3>
+            <Crop className="w-4 h-4 text-zinc-600 dark:text-zinc-400" />
+            <h3 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">Crop Image Layer</h3>
             <span className="text-xs text-zinc-500 font-mono">({layer.name})</span>
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1 bg-zinc-900 border border-zinc-800 rounded-lg p-0.5 text-zinc-400">
+            <div className="flex items-center gap-1 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-lg p-0.5 text-zinc-600 dark:text-zinc-400">
               <button
                 type="button"
                 onClick={() => setZoom((z) => Math.max(50, z - 25))}
-                className="p-1 hover:text-zinc-200"
+                className="p-1 hover:text-zinc-900 dark:hover:text-zinc-200"
               >
                 <ZoomOut className="w-3.5 h-3.5" />
               </button>
@@ -204,13 +204,13 @@ export const LayerCropModal: React.FC<LayerCropModalProps> = ({
 
             {/* Crop Boundary Box */}
             <div
-              className="absolute border-2 border-lime-400 z-10"
+              className="absolute border border-white z-10"
               style={{
                 left: `${crop.x * 100}%`,
                 top: `${crop.y * 100}%`,
                 width: `${crop.w * 100}%`,
                 height: `${crop.h * 100}%`,
-                boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.65)',
+                boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.6)',
               }}
             >
               {/* Center Move Area */}
@@ -221,14 +221,14 @@ export const LayerCropModal: React.FC<LayerCropModalProps> = ({
 
               {/* Grid Lines */}
               <div className="w-full h-full grid grid-cols-3 grid-rows-3 pointer-events-none opacity-40">
-                <div className="border-r border-b border-lime-300" />
-                <div className="border-r border-b border-lime-300" />
-                <div className="border-b border-lime-300" />
-                <div className="border-r border-b border-lime-300" />
-                <div className="border-r border-b border-lime-300" />
-                <div className="border-b border-lime-300" />
-                <div className="border-r border-b border-lime-300" />
-                <div className="border-r border-b border-lime-300" />
+                <div className="border-r border-b border-white" />
+                <div className="border-r border-b border-white" />
+                <div className="border-b border-white" />
+                <div className="border-r border-b border-white" />
+                <div className="border-r border-b border-white" />
+                <div className="border-b border-white" />
+                <div className="border-r border-b border-white" />
+                <div className="border-r border-b border-white" />
                 <div />
               </div>
 
@@ -237,25 +237,25 @@ export const LayerCropModal: React.FC<LayerCropModalProps> = ({
                 onMouseDown={(e) => handleMouseDownHandle(e, 'n')}
                 className="absolute -top-3 left-3 right-3 h-6 cursor-ns-resize z-20 flex items-center justify-center group"
               >
-                <div className="w-10 h-1.5 bg-lime-400 rounded-full border border-black shadow" />
+                <div className="w-8 h-1 bg-white rounded-full shadow-xs" />
               </div>
               <div
                 onMouseDown={(e) => handleMouseDownHandle(e, 's')}
                 className="absolute -bottom-3 left-3 right-3 h-6 cursor-ns-resize z-20 flex items-center justify-center group"
               >
-                <div className="w-10 h-1.5 bg-lime-400 rounded-full border border-black shadow" />
+                <div className="w-8 h-1 bg-white rounded-full shadow-xs" />
               </div>
               <div
                 onMouseDown={(e) => handleMouseDownHandle(e, 'w')}
                 className="absolute -left-3 top-3 bottom-3 w-6 cursor-ew-resize z-20 flex items-center justify-center group"
               >
-                <div className="w-1.5 h-10 bg-lime-400 rounded-full border border-black shadow" />
+                <div className="w-1 h-8 bg-white rounded-full shadow-xs" />
               </div>
               <div
                 onMouseDown={(e) => handleMouseDownHandle(e, 'e')}
                 className="absolute -right-3 top-3 bottom-3 w-6 cursor-ew-resize z-20 flex items-center justify-center group"
               >
-                <div className="w-1.5 h-10 bg-lime-400 rounded-full border border-black shadow" />
+                <div className="w-1 h-8 bg-white rounded-full shadow-xs" />
               </div>
 
               {/* 4 Corner Handles */}
@@ -263,46 +263,46 @@ export const LayerCropModal: React.FC<LayerCropModalProps> = ({
                 onMouseDown={(e) => handleMouseDownHandle(e, 'nw')}
                 className="absolute -top-3 -left-3 w-6 h-6 flex items-center justify-center cursor-nwse-resize z-30"
               >
-                <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
+                <div className="w-3.5 h-3.5 bg-white border border-black/40 rounded-xs shadow-xs" />
               </div>
               <div
                 onMouseDown={(e) => handleMouseDownHandle(e, 'ne')}
                 className="absolute -top-3 -right-3 w-6 h-6 flex items-center justify-center cursor-nesw-resize z-30"
               >
-                <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
+                <div className="w-3.5 h-3.5 bg-white border border-black/40 rounded-xs shadow-xs" />
               </div>
               <div
                 onMouseDown={(e) => handleMouseDownHandle(e, 'se')}
                 className="absolute -bottom-3 -right-3 w-6 h-6 flex items-center justify-center cursor-nwse-resize z-30"
               >
-                <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
+                <div className="w-3.5 h-3.5 bg-white border border-black/40 rounded-xs shadow-xs" />
               </div>
               <div
                 onMouseDown={(e) => handleMouseDownHandle(e, 'sw')}
                 className="absolute -bottom-3 -left-3 w-6 h-6 flex items-center justify-center cursor-nesw-resize z-30"
               >
-                <div className="w-3.5 h-3.5 bg-lime-400 border-2 border-black rounded-sm shadow-md" />
+                <div className="w-3.5 h-3.5 bg-white border border-black/40 rounded-xs shadow-xs" />
               </div>
             </div>
           </div>
         </div>
 
         {/* Footer */}
-        <div className="p-4 border-t border-zinc-800 flex items-center justify-between bg-[#121217]">
-          <span className="text-xs text-zinc-400">
+        <div className="p-4 border-t border-zinc-200 dark:border-zinc-800 flex items-center justify-between bg-zinc-50/50 dark:bg-[#121217]">
+          <span className="text-xs text-zinc-500 dark:text-zinc-400">
             Drag handles to slice layer image. Center area repositions the crop.
           </span>
 
           <div className="flex items-center gap-2">
             <button
               onClick={onClose}
-              className="px-3.5 py-1.5 rounded-lg text-xs font-semibold text-zinc-400 hover:text-zinc-200 transition-colors"
+              className="px-3.5 py-1.5 rounded-lg text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 transition-colors"
             >
               Cancel
             </button>
             <button
               onClick={handleApplyCrop}
-              className="flex items-center gap-1.5 px-4 py-1.5 bg-lime-400 hover:bg-lime-300 text-black text-xs font-bold rounded-lg transition-all"
+              className="flex items-center gap-1.5 px-4 py-1.5 bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 text-xs font-semibold rounded-lg transition-colors"
             >
               <Check className="w-4 h-4" />
               <span>Apply Layer Crop</span>

@@ -122,23 +122,23 @@ export const ConverterPage: React.FC = () => {
   return (
     <div className="space-y-6">
       {/* Mode Switcher Tabs */}
-      <div className="flex items-center gap-2 p-1.5 rounded-xl bg-[#121217] border border-[#23232c] max-w-sm">
+      <div className="flex items-center gap-1.5 p-1 rounded-xl bg-zinc-100 dark:bg-[#121217] border border-zinc-200 dark:border-zinc-800 max-w-sm">
         <button
           onClick={() => setMode('single')}
-          className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+          className={`flex-1 py-1.5 rounded-lg text-xs font-medium transition-all ${
             mode === 'single'
-              ? 'bg-zinc-800 text-lime-400 shadow-sm'
-              : 'text-zinc-400 hover:text-zinc-200'
+              ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm'
+              : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
           }`}
         >
           Single Image
         </button>
         <button
           onClick={() => setMode('batch')}
-          className={`flex-1 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+          className={`flex-1 py-1.5 rounded-lg text-xs font-medium transition-all ${
             mode === 'batch'
-              ? 'bg-zinc-800 text-lime-400 shadow-sm'
-              : 'text-zinc-400 hover:text-zinc-200'
+              ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-sm'
+              : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
           }`}
         >
           Batch Converter
@@ -162,18 +162,18 @@ export const ConverterPage: React.FC = () => {
                     className="max-h-[440px] max-w-full object-contain rounded-lg shadow-lg"
                   />
                 </div>
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-3 py-2 rounded-xl bg-black/80 backdrop-blur-md border border-white/10 text-xs font-mono">
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between px-3 py-2 rounded-xl bg-zinc-900/90 dark:bg-black/80 backdrop-blur-md border border-zinc-700/50 dark:border-white/10 text-xs font-mono">
                   <span className="text-zinc-400">Current: {selectedAsset.mimeType.replace('image/', '').toUpperCase()}</span>
-                  <span className="text-lime-400 font-bold">Target: {targetFormat.replace('image/', '').toUpperCase()}</span>
+                  <span className="text-zinc-100 font-semibold">Target: {targetFormat.replace('image/', '').toUpperCase()}</span>
                 </div>
               </div>
             );
           }}
         >
           {(selectedAsset, blob) => (
-            <div className="space-y-5 p-5 rounded-2xl bg-[#141419] border border-[#23232c] shadow-sm">
+            <div className="space-y-5 p-5 rounded-2xl bg-white dark:bg-[#0e0e11] border border-zinc-200 dark:border-zinc-800 shadow-sm">
               <div className="space-y-1.5">
-                <label className="text-xs font-semibold text-zinc-300">Target Output Format</label>
+                <label className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Target Output Format</label>
                 <div className="grid grid-cols-3 gap-2">
                   {(['image/webp', 'image/jpeg', 'image/png'] as const).map((fmt) => (
                     <button
@@ -182,8 +182,8 @@ export const ConverterPage: React.FC = () => {
                       onClick={() => setTargetFormat(fmt)}
                       className={`py-2 px-3 rounded-lg text-xs font-semibold uppercase border transition-all ${
                         targetFormat === fmt
-                          ? 'bg-lime-400/15 border-lime-400 text-lime-400 shadow-sm'
-                          : 'bg-[#0e0e12] border-[#252530] text-zinc-400 hover:text-zinc-200'
+                          ? 'bg-zinc-900 dark:bg-zinc-100 border-zinc-900 dark:border-zinc-100 text-white dark:text-zinc-900 shadow-sm'
+                          : 'bg-zinc-50 dark:bg-[#141418] border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                       }`}
                     >
                       {fmt.replace('image/', '')}
@@ -193,10 +193,10 @@ export const ConverterPage: React.FC = () => {
               </div>
 
               {targetFormat !== 'image/png' && (
-                <div className="space-y-2 pt-2 border-t border-[#23232c]">
+                <div className="space-y-2 pt-2 border-t border-zinc-100 dark:border-zinc-800/80">
                   <div className="flex justify-between text-xs">
-                    <span className="text-zinc-400">Output Encoding Quality</span>
-                    <span className="font-mono font-bold text-lime-400">{quality}%</span>
+                    <span className="text-zinc-600 dark:text-zinc-400">Output Encoding Quality</span>
+                    <span className="font-mono font-semibold text-zinc-900 dark:text-zinc-100">{quality}%</span>
                   </div>
                   <input
                     type="range"
@@ -204,7 +204,7 @@ export const ConverterPage: React.FC = () => {
                     max="100"
                     value={quality}
                     onChange={(e) => setQuality(Number(e.target.value))}
-                    className="w-full accent-lime-400 bg-zinc-800 h-1.5 rounded-lg cursor-pointer"
+                    className="w-full accent-zinc-900 dark:accent-zinc-100 bg-zinc-200 dark:bg-zinc-800 h-1.5 rounded-lg cursor-pointer"
                   />
                 </div>
               )}
@@ -212,16 +212,16 @@ export const ConverterPage: React.FC = () => {
               <button
                 disabled={!selectedAsset || singleProcessing}
                 onClick={() => handleSingleProcess(selectedAsset, blob)}
-                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-lime-400 hover:bg-lime-300 text-black font-bold text-xs shadow-md transition-all active:scale-95 disabled:opacity-40 disabled:cursor-not-allowed"
+                className="w-full flex items-center justify-center gap-2 py-3 rounded-xl bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-semibold text-xs shadow-sm transition-all active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 {singleProcessing ? (
                   <>
-                    <Sparkles className="w-4 h-4 animate-spin text-black" />
+                    <Sparkles className="w-4 h-4 animate-spin text-white dark:text-zinc-900" />
                     <span>Converting Format...</span>
                   </>
                 ) : (
                   <>
-                    <Play className="w-4 h-4 fill-black" />
+                    <Play className="w-4 h-4 fill-current" />
                     <span>Convert Image</span>
                   </>
                 )}
@@ -244,21 +244,21 @@ export const ConverterPage: React.FC = () => {
       ) : (
         /* Batch Converter Workspace */
         <div className="space-y-6">
-          <div className="p-6 rounded-2xl bg-[#141419] border border-[#23232c] space-y-5">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-[#23232c]">
+          <div className="p-6 rounded-2xl bg-white dark:bg-[#0e0e11] border border-zinc-200 dark:border-zinc-800 space-y-5 shadow-sm">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-zinc-100 dark:border-zinc-800/80">
               <div>
-                <h3 className="text-base font-bold text-zinc-100 flex items-center gap-2">
-                  <Layers className="w-4 h-4 text-blue-400" />
+                <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 flex items-center gap-2">
+                  <Layers className="w-4 h-4 text-zinc-500 dark:text-zinc-400" />
                   Batch Image Converter
                 </h3>
-                <p className="text-xs text-zinc-400">
+                <p className="text-xs text-zinc-500 dark:text-zinc-400">
                   Select multiple library images, convert them simultaneously, and download as a ZIP archive.
                 </p>
               </div>
 
               <button
                 onClick={() => setBatchPickerOpen(true)}
-                className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-lime-400 hover:bg-lime-300 text-black text-xs font-semibold shadow-sm transition-all self-start sm:self-auto"
+                className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 text-xs font-medium shadow-sm transition-all self-start sm:self-auto"
               >
                 <FolderOpen className="w-4 h-4" />
                 <span>Select Images ({batchAssets.length})</span>
@@ -268,7 +268,7 @@ export const ConverterPage: React.FC = () => {
             {/* Target Format selector */}
             <div className="flex flex-wrap items-center gap-4">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-semibold text-zinc-300">Convert All To:</span>
+                <span className="text-xs font-medium text-zinc-700 dark:text-zinc-300">Convert All To:</span>
                 <div className="flex gap-1.5">
                   {(['image/webp', 'image/jpeg', 'image/png'] as const).map((fmt) => (
                     <button
@@ -276,8 +276,8 @@ export const ConverterPage: React.FC = () => {
                       onClick={() => setTargetFormat(fmt)}
                       className={`px-3 py-1.5 rounded-lg text-xs font-semibold uppercase border transition-all ${
                         targetFormat === fmt
-                          ? 'bg-lime-400/15 border-lime-400 text-lime-400'
-                          : 'bg-[#0e0e12] border-[#252530] text-zinc-400 hover:text-zinc-200'
+                          ? 'bg-zinc-900 dark:bg-zinc-100 border-zinc-900 dark:border-zinc-100 text-white dark:text-zinc-900 shadow-sm'
+                          : 'bg-zinc-50 dark:bg-[#141418] border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
                       }`}
                     >
                       {fmt.replace('image/', '')}
@@ -289,16 +289,16 @@ export const ConverterPage: React.FC = () => {
               <button
                 disabled={batchAssets.length === 0 || batchProcessing}
                 onClick={handleBatchProcess}
-                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-lime-400 hover:bg-lime-300 text-black text-xs font-bold transition-all disabled:opacity-40"
+                className="flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 text-xs font-semibold shadow-sm transition-all active:scale-[0.98] disabled:opacity-40"
               >
                 {batchProcessing ? (
                   <>
-                    <Sparkles className="w-4 h-4 animate-spin text-black" />
+                    <Sparkles className="w-4 h-4 animate-spin text-white dark:text-zinc-900" />
                     <span>Converting Queue...</span>
                   </>
                 ) : (
                   <>
-                    <Play className="w-4 h-4 fill-black" />
+                    <Play className="w-4 h-4 fill-current" />
                     <span>Run Batch Conversion</span>
                   </>
                 )}
@@ -307,10 +307,10 @@ export const ConverterPage: React.FC = () => {
 
             {/* Selected Queue Table */}
             {batchAssets.length > 0 && (
-              <div className="rounded-xl border border-[#22222a] bg-[#0e0e12] overflow-hidden">
+              <div className="rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-[#0e0e12] overflow-hidden">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
-                    <tr className="border-b border-[#22222a] bg-[#121217] text-[11px] font-semibold text-zinc-400 uppercase">
+                    <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-100/80 dark:bg-[#121217] text-[11px] font-semibold text-zinc-600 dark:text-zinc-400 uppercase">
                       <th className="p-3">File Name</th>
                       <th className="p-3">Source Format</th>
                       <th className="p-3">Dimensions</th>
@@ -320,12 +320,12 @@ export const ConverterPage: React.FC = () => {
                   </thead>
                   <tbody>
                     {batchAssets.map((asset) => (
-                      <tr key={asset.id} className="border-b border-[#1c1c24] text-zinc-300">
-                        <td className="p-3 font-medium text-zinc-200">{asset.filename}</td>
+                      <tr key={asset.id} className="border-b border-zinc-100 dark:border-zinc-800/60 text-zinc-700 dark:text-zinc-300">
+                        <td className="p-3 font-medium text-zinc-900 dark:text-zinc-200">{asset.filename}</td>
                         <td className="p-3 font-mono uppercase text-zinc-500">{asset.mimeType.replace('image/', '')}</td>
-                        <td className="p-3 font-mono text-zinc-400">{asset.width} × {asset.height}</td>
-                        <td className="p-3 font-mono text-zinc-400">{formatBytes(asset.currentSize)}</td>
-                        <td className="p-3 text-right font-mono uppercase font-bold text-lime-400">
+                        <td className="p-3 font-mono text-zinc-500 dark:text-zinc-400">{asset.width} × {asset.height}</td>
+                        <td className="p-3 font-mono text-zinc-500 dark:text-zinc-400">{formatBytes(asset.currentSize)}</td>
+                        <td className="p-3 text-right font-mono uppercase font-semibold text-zinc-900 dark:text-zinc-100">
                           {targetFormat.replace('image/', '')}
                         </td>
                       </tr>
@@ -337,14 +337,14 @@ export const ConverterPage: React.FC = () => {
 
             {/* Batch Completed Summary & Export */}
             {batchCompleted.length > 0 && (
-              <div className="p-4 rounded-xl bg-lime-400/5 border border-lime-400/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+              <div className="p-4 rounded-xl bg-emerald-500/5 dark:bg-emerald-500/10 border border-emerald-500/20 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                 <div className="flex items-center gap-3">
-                  <CheckCircle2 className="w-6 h-6 text-lime-400" />
+                  <CheckCircle2 className="w-6 h-6 text-emerald-600 dark:text-emerald-400" />
                   <div>
-                    <h4 className="text-sm font-bold text-zinc-100">
+                    <h4 className="text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                       {batchCompleted.length} Images Converted Successfully
                     </h4>
-                    <p className="text-xs text-zinc-400">
+                    <p className="text-xs text-zinc-500 dark:text-zinc-400">
                       Ready to download as a zipped package or save back into your library.
                     </p>
                   </div>
@@ -353,7 +353,7 @@ export const ConverterPage: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <button
                     onClick={handleDownloadBatchZip}
-                    className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-lime-400 hover:bg-lime-300 text-black text-xs font-bold transition-all shadow-sm"
+                    className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 text-xs font-semibold transition-all shadow-sm active:scale-[0.98]"
                   >
                     <Download className="w-4 h-4" />
                     <span>Download ZIP</span>
@@ -361,7 +361,7 @@ export const ConverterPage: React.FC = () => {
 
                   <button
                     onClick={handleSaveBatchToLibrary}
-                    className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition-all"
+                    className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-xs font-medium transition-all border border-zinc-200 dark:border-zinc-700"
                   >
                     <FolderPlus className="w-4 h-4" />
                     <span>Save All to Library</span>

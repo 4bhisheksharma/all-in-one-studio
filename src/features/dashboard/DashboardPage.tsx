@@ -52,123 +52,125 @@ export const DashboardPage: React.FC = () => {
   return (
     <div className="space-y-8 pb-12">
       <PageHeader
-        title="Welcome to Imago Studio"
-        description="Your all-in-one client-side creative image workspace. Upload once, organize in projects, process anywhere, and reuse everywhere."
+        title="Workspace Overview"
+        description="Client-side creative image suite. Process, optimize, and organize assets securely in local storage."
         actions={
           <div className="flex items-center gap-2">
             <button
               onClick={() => setActiveCreateProjectModal(true)}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-100 text-xs font-semibold border border-zinc-700 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800/60 text-xs font-medium transition-colors cursor-pointer"
             >
-              <FolderPlus className="w-4 h-4 text-zinc-300" />
+              <FolderPlus className="w-3.5 h-3.5" />
               <span>Create Project</span>
             </button>
             <button
               onClick={() => setActiveUploadModal(true)}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-zinc-100 hover:bg-white text-zinc-900 text-xs font-semibold shadow-sm transition-all"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-900 text-xs font-medium shadow-sm transition-all duration-150 active:scale-[0.98] cursor-pointer"
             >
-              <UploadCloud className="w-4 h-4" />
+              <UploadCloud className="w-3.5 h-3.5" />
               <span>Upload Images</span>
             </button>
           </div>
         }
       />
 
-      {/* Live Metrics Row */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 animate-fade-in">
-        <div className="p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
-          <div className="space-y-1">
-            <span className="text-xs text-zinc-400">Total Images</span>
-            <p className="text-2xl font-bold text-zinc-100 font-mono">{assets.length}</p>
+      {/* Metrics Row */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5 animate-fade-in">
+        <div className="p-4 rounded-xl bg-white dark:bg-[#121216] border border-zinc-200 dark:border-[#22222a] flex items-center justify-between">
+          <div className="space-y-0.5">
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">Total Images</span>
+            <p className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 font-mono tracking-tight">{assets.length}</p>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-zinc-800/80 flex items-center justify-center text-zinc-300">
-            <Images className="w-5 h-5" />
-          </div>
-        </div>
-
-        <div className="p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
-          <div className="space-y-1">
-            <span className="text-xs text-zinc-400">Active Projects</span>
-            <p className="text-2xl font-bold text-zinc-100 font-mono">{projects.length}</p>
-          </div>
-          <div className="w-10 h-10 rounded-lg bg-zinc-800/80 flex items-center justify-center text-zinc-300">
-            <FolderPlus className="w-5 h-5" />
+          <div className="w-9 h-9 rounded-lg bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700/40 flex items-center justify-center text-zinc-600 dark:text-zinc-300">
+            <Images className="w-4 h-4" />
           </div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
-          <div className="space-y-1">
-            <span className="text-xs text-zinc-400">Storage Used</span>
-            <p className="text-2xl font-bold text-zinc-100 font-mono">{formatBytes(storageUsed)}</p>
+        <div className="p-4 rounded-xl bg-white dark:bg-[#121216] border border-zinc-200 dark:border-[#22222a] flex items-center justify-between">
+          <div className="space-y-0.5">
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">Active Projects</span>
+            <p className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 font-mono tracking-tight">{projects.length}</p>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-zinc-800/80 flex items-center justify-center text-zinc-300">
-            <HardDrive className="w-5 h-5" />
+          <div className="w-9 h-9 rounded-lg bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700/40 flex items-center justify-center text-zinc-600 dark:text-zinc-300">
+            <FolderPlus className="w-4 h-4" />
           </div>
         </div>
 
-        <div className="p-4 rounded-xl bg-[#141418] border border-[#23232c] flex items-center justify-between">
-          <div className="space-y-1">
-            <span className="text-xs text-zinc-400">Privacy Mode</span>
-            <p className="text-sm font-semibold text-zinc-200">100% Client-Side</p>
+        <div className="p-4 rounded-xl bg-white dark:bg-[#121216] border border-zinc-200 dark:border-[#22222a] flex items-center justify-between">
+          <div className="space-y-0.5">
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">Storage Used</span>
+            <p className="text-xl font-semibold text-zinc-900 dark:text-zinc-100 font-mono tracking-tight">{formatBytes(storageUsed)}</p>
           </div>
-          <div className="w-10 h-10 rounded-lg bg-zinc-800/80 flex items-center justify-center text-zinc-300">
-            <Sparkles className="w-5 h-5" />
+          <div className="w-9 h-9 rounded-lg bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700/40 flex items-center justify-center text-zinc-600 dark:text-zinc-300">
+            <HardDrive className="w-4 h-4" />
+          </div>
+        </div>
+
+        <div className="p-4 rounded-xl bg-white dark:bg-[#121216] border border-zinc-200 dark:border-[#22222a] flex items-center justify-between">
+          <div className="space-y-0.5">
+            <span className="text-[11px] text-zinc-500 dark:text-zinc-400 font-medium">Privacy Status</span>
+            <p className="text-xs font-medium text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5 mt-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+              100% Client-Side
+            </p>
+          </div>
+          <div className="w-9 h-9 rounded-lg bg-zinc-100 dark:bg-zinc-800/80 border border-zinc-200 dark:border-zinc-700/40 flex items-center justify-center text-zinc-600 dark:text-zinc-300">
+            <Sparkles className="w-4 h-4" />
           </div>
         </div>
       </div>
 
       {/* Featured Recipe Banner: Smart Image Recipes */}
-      <div className="p-5 rounded-2xl bg-[#141418] border border-[#23232c] flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="p-4 sm:p-5 rounded-xl bg-white dark:bg-[#121216] border border-zinc-200 dark:border-[#22222a] flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div className="flex items-start sm:items-center gap-3.5">
-          <div className="w-11 h-11 rounded-xl bg-zinc-800 border border-zinc-700/60 flex items-center justify-center text-zinc-100 shrink-0">
-            <Wand2 className="w-5 h-5 text-zinc-200" />
+          <div className="w-9 h-9 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/60 flex items-center justify-center text-zinc-700 dark:text-zinc-300 shrink-0">
+            <Wand2 className="w-4 h-4" />
           </div>
-          <div className="space-y-1">
+          <div className="space-y-0.5">
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded bg-zinc-800 text-zinc-300 border border-zinc-700/60">
-                Automation
+              <span className="text-[10px] font-mono uppercase px-1.5 py-0.2 rounded bg-zinc-100 text-zinc-700 dark:bg-zinc-800 dark:text-zinc-300 border border-zinc-200 dark:border-zinc-700/60">
+                Pipeline
               </span>
-              <h3 className="text-sm font-semibold text-zinc-100">Smart Image Recipes</h3>
-              <span className="text-xs text-zinc-400">• Pipeline Execution</span>
+              <h3 className="text-xs font-semibold text-zinc-900 dark:text-zinc-100">Smart Image Recipes</h3>
             </div>
-            <p className="text-xs text-zinc-400 max-w-2xl leading-relaxed">
-              Chain multi-step transformations (e.g. Website Product Image: resize 1200×1200, rounded corners, convert to WebP, compress under 150KB) and batch apply to library assets in one click.
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-2xl leading-relaxed">
+              Chain multi-step transformations (resize, format conversion, compression) and batch apply across library assets.
             </p>
           </div>
         </div>
 
         <Link
           to="/recipes"
-          className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-zinc-100 hover:bg-white text-zinc-900 font-semibold text-xs shadow-sm transition-all shrink-0 cursor-pointer"
+          className="flex items-center justify-center gap-2 px-3.5 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-900 font-medium text-xs shadow-sm transition-all shrink-0 cursor-pointer"
         >
-          <Wand2 className="w-4 h-4 text-zinc-900" />
+          <Wand2 className="w-3.5 h-3.5" />
           <span>Open Smart Recipes</span>
         </Link>
       </div>
 
       {/* Quick Launchpad */}
       <div className="space-y-3">
-        <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-400">
-          Quick Image Tools
+        <h2 className="text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+          Image Processing Tools
         </h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
           {quickTools.map((tool) => {
             const Icon = tool.icon;
             return (
               <Link
                 key={tool.to}
                 to={tool.to}
-                className="interactive-card group p-4 rounded-xl bg-[#131317] border border-[#22222a] hover:border-zinc-700 hover:bg-[#181820] transition-all flex flex-col justify-between h-36"
+                className="interactive-card group p-3.5 rounded-xl bg-white dark:bg-[#121216] border border-zinc-200 dark:border-[#22222a] hover:border-zinc-300 dark:hover:border-zinc-700 transition-all flex flex-col justify-between h-30"
               >
                 <div className="flex items-center justify-between">
-                  <div className="w-9 h-9 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-300 group-hover:text-zinc-100 transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-zinc-100 dark:bg-zinc-800/70 border border-zinc-200 dark:border-zinc-700/50 flex items-center justify-center text-zinc-600 dark:text-zinc-400 group-hover:text-zinc-900 dark:group-hover:text-zinc-100 transition-colors">
                     <Icon className="w-4 h-4" />
                   </div>
-                  <ArrowRight className="w-4 h-4 text-zinc-600 group-hover:text-zinc-300 group-hover:translate-x-0.5 transition-all" />
+                  <ArrowRight className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-600 group-hover:text-zinc-700 dark:group-hover:text-zinc-300 group-hover:translate-x-0.5 transition-all" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm text-zinc-200 group-hover:text-zinc-100">{tool.title}</h3>
-                  <p className="text-xs text-zinc-500 line-clamp-1">{tool.desc}</p>
+                  <h3 className="font-medium text-xs text-zinc-900 dark:text-zinc-100 group-hover:text-zinc-950 dark:group-hover:text-white">{tool.title}</h3>
+                  <p className="text-[11px] text-zinc-500 dark:text-zinc-400 line-clamp-1 mt-0.5">{tool.desc}</p>
                 </div>
               </Link>
             );
@@ -179,11 +181,11 @@ export const DashboardPage: React.FC = () => {
       {/* Recent Assets Section */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-semibold uppercase tracking-wider text-zinc-400">
+          <h2 className="text-xs font-medium uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
             Recently Added Assets
           </h2>
           {assets.length > 0 && (
-            <Link to="/library" className="text-xs font-semibold text-lime-400 hover:underline flex items-center gap-1">
+            <Link to="/library" className="text-xs font-medium text-zinc-600 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200 flex items-center gap-1 transition-colors">
               <span>View All ({assets.length})</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
@@ -202,7 +204,7 @@ export const DashboardPage: React.FC = () => {
             }}
           />
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3.5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
             {recentAssets.map((asset) => (
               <AssetCard key={asset.id} asset={asset} onOpenPreview={setPreviewAsset} />
             ))}

@@ -138,38 +138,39 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
     <div className="space-y-6 pb-16">
       {/* Draft Recovery Banner */}
       {savedDraft && !selectedAsset && (
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-amber-400/10 border border-amber-400/30 text-xs animate-in fade-in">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3 rounded-lg bg-amber-500/10 border border-amber-500/20 text-xs animate-fade-in">
           <div className="flex items-center gap-2.5">
-            <FileEdit className="w-4 h-4 text-amber-400 shrink-0" />
-            <span className="text-zinc-200">
+            <FileEdit className="w-4 h-4 text-amber-500 shrink-0" />
+            <span className="text-zinc-800 dark:text-zinc-200">
               You have an unfinished editing session saved in your browser.
             </span>
           </div>
           <div className="flex items-center gap-2 self-end sm:self-auto">
             <button
               onClick={handleResumeDraft}
-              className="px-3 py-1 bg-amber-400 hover:bg-amber-300 text-black font-semibold rounded-lg transition-colors cursor-pointer"
+              className="px-2.5 py-1 bg-amber-500 hover:bg-amber-400 text-black font-medium rounded-md transition-colors cursor-pointer text-xs"
             >
               Resume Session
             </button>
             <button
               onClick={handleDiscardDraft}
-              className="px-2.5 py-1 text-zinc-400 hover:text-zinc-200 transition-colors cursor-pointer"
+              className="px-2 py-1 text-zinc-500 hover:text-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 transition-colors cursor-pointer text-xs"
             >
               Discard
             </button>
           </div>
         </div>
       )}
+
       {/* Tool Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-[#22222a]">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pb-4 border-b border-zinc-200 dark:border-[#22222a]">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-lime-400/10 border border-lime-400/20 flex items-center justify-center text-lime-400">
-            <Icon className="w-5 h-5" />
+          <div className="w-9 h-9 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700/60 flex items-center justify-center text-zinc-700 dark:text-zinc-300">
+            <Icon className="w-4 h-4" />
           </div>
           <div>
-            <h1 className="text-xl font-bold text-zinc-100">{title}</h1>
-            <p className="text-xs text-zinc-400 max-w-xl">{description}</p>
+            <h1 className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">{title}</h1>
+            <p className="text-xs text-zinc-500 dark:text-zinc-400 max-w-xl">{description}</p>
           </div>
         </div>
 
@@ -177,7 +178,7 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
           {selectedAsset && (
             <button
               onClick={() => setPickerOpen(true)}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold transition-colors interactive-press"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 text-xs font-medium transition-colors interactive-press cursor-pointer"
             >
               <RefreshCw className="w-3.5 h-3.5" />
               <span>Change Image</span>
@@ -187,9 +188,9 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
           {!selectedAsset && (
             <button
               onClick={() => setPickerOpen(true)}
-              className="flex items-center gap-2 px-3.5 py-2 rounded-lg bg-lime-400 hover:bg-lime-300 text-black text-xs font-semibold shadow-sm transition-all interactive-press"
+              className="flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-white dark:bg-zinc-100 dark:hover:bg-white dark:text-zinc-900 text-xs font-medium shadow-sm transition-all interactive-press cursor-pointer"
             >
-              <FolderOpen className="w-4 h-4" />
+              <FolderOpen className="w-3.5 h-3.5" />
               <span>Select from Library</span>
             </button>
           )}
@@ -198,16 +199,16 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
 
       {/* Selected Asset Header Chip */}
       {selectedAsset && (
-        <div className="flex items-center justify-between p-3 rounded-xl bg-[#141419] border border-[#262632] shadow-sm animate-fade-in">
+        <div className="flex items-center justify-between p-2.5 rounded-xl bg-white dark:bg-[#121216] border border-zinc-200 dark:border-[#22222a] shadow-xs animate-fade-in">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-10 h-10 rounded-lg overflow-hidden bg-zinc-900 border border-zinc-800 shrink-0">
+            <div className="w-9 h-9 rounded-lg overflow-hidden bg-zinc-100 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 shrink-0">
               <AssetThumbnail assetId={selectedAsset.id} alt={selectedAsset.filename} />
             </div>
             <div className="space-y-0.5 truncate">
-              <h4 className="text-xs font-bold text-zinc-200 truncate" title={selectedAsset.filename}>
+              <h4 className="text-xs font-medium text-zinc-900 dark:text-zinc-200 truncate" title={selectedAsset.filename}>
                 {selectedAsset.filename}
               </h4>
-              <div className="flex items-center gap-2 text-[10px] text-zinc-400 font-mono">
+              <div className="flex items-center gap-2 text-[10px] text-zinc-400 dark:text-zinc-500 font-mono">
                 <span>{selectedAsset.width} × {selectedAsset.height} px</span>
                 <span>•</span>
                 <span>{formatBytes(selectedAsset.currentSize)}</span>
@@ -219,7 +220,7 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
 
           <button
             onClick={handleClear}
-            className="p-1.5 rounded-lg text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-colors interactive-press"
+            className="p-1 rounded-md text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors interactive-press cursor-pointer"
             title="Deselect image"
           >
             <X className="w-4 h-4" />
@@ -238,13 +239,13 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
         <div
           className={`${
             isExpanded ? 'lg:col-span-8' : 'lg:col-span-7 xl:col-span-8'
-          } min-h-[380px] sm:min-h-[500px] lg:min-h-[740px] xl:min-h-[820px] rounded-2xl bg-[#0e0e12] border border-[#23232c] overflow-hidden flex flex-col justify-center items-center relative p-3 sm:p-4 transition-all`}
+          } min-h-[380px] sm:min-h-[500px] lg:min-h-[740px] xl:min-h-[820px] rounded-xl bg-zinc-100/60 dark:bg-[#0c0c0e] border border-zinc-200 dark:border-[#22222a] overflow-hidden flex flex-col justify-center items-center relative p-3 sm:p-4 transition-all`}
         >
           {/* Maximize / Spacious toggle button (Desktop only) */}
           <button
             type="button"
             onClick={() => setIsExpanded(!isExpanded)}
-            className="hidden lg:block absolute top-3 right-3 z-30 px-2 py-1 bg-zinc-900/90 hover:bg-zinc-800 text-zinc-400 hover:text-zinc-200 text-[11px] rounded-lg border border-zinc-800 shadow backdrop-blur transition-colors interactive-press"
+            className="hidden lg:block absolute top-3 right-3 z-30 px-2 py-1 bg-white/90 hover:bg-white text-zinc-600 hover:text-zinc-900 dark:bg-zinc-900/90 dark:hover:bg-zinc-800 dark:text-zinc-400 dark:hover:text-zinc-200 text-[11px] rounded-md border border-zinc-200 dark:border-zinc-800 shadow-xs backdrop-blur-sm transition-colors interactive-press cursor-pointer"
             title={isExpanded ? 'Normal workspace' : 'Expand workspace'}
           >
             {isExpanded ? 'Compact' : 'Expand Workspace'}
@@ -257,23 +258,23 @@ export const ToolLayout: React.FC<ToolLayoutProps> = ({
               <img
                 src={URL.createObjectURL(originalBlob)}
                 alt="Selected"
-                className="max-h-[640px] max-w-full object-contain rounded-lg shadow-md"
+                className="max-h-[640px] max-w-full object-contain rounded-lg shadow-sm"
               />
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center text-center p-8 text-zinc-500 space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-600">
-                <FolderOpen className="w-6 h-6" />
+              <div className="w-11 h-11 rounded-lg bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 flex items-center justify-center text-zinc-400 dark:text-zinc-500 shadow-xs">
+                <FolderOpen className="w-5 h-5" />
               </div>
               <div className="space-y-1">
-                <p className="text-sm font-semibold text-zinc-300">No image loaded</p>
-                <p className="text-xs text-zinc-500 max-w-xs">
+                <p className="text-xs font-semibold text-zinc-800 dark:text-zinc-200">No image loaded</p>
+                <p className="text-[11px] text-zinc-500 max-w-xs">
                   Choose an existing image from your project library or upload a new photo.
                 </p>
               </div>
               <button
                 onClick={() => setPickerOpen(true)}
-                className="px-3.5 py-1.5 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-xs font-semibold transition-colors"
+                className="px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-800 dark:text-zinc-200 text-xs font-medium transition-colors cursor-pointer"
               >
                 Choose Image
               </button>

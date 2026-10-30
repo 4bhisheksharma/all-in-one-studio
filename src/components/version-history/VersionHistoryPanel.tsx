@@ -156,26 +156,26 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
     : 0;
 
   return (
-    <div className="flex flex-col h-full bg-[#101014] text-zinc-200 select-none">
+    <div className="flex flex-col h-full bg-white dark:bg-[#101014] text-zinc-800 dark:text-zinc-200 select-none">
       {/* Top Controls Toolbar */}
-      <div className="flex items-center justify-between px-4 py-3 border-b border-[#20202a] bg-[#141419]">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-zinc-200 dark:border-[#20202a] bg-zinc-50/50 dark:bg-[#141419]">
         <div className="flex items-center gap-2">
-          <History className="w-4 h-4 text-lime-400" />
-          <h3 className="font-semibold text-xs tracking-wide text-zinc-100 uppercase">
+          <History className="w-4 h-4 text-zinc-600 dark:text-zinc-400" />
+          <h3 className="font-semibold text-xs tracking-wide text-zinc-800 dark:text-zinc-100 uppercase">
             Transformation Lineage & History
           </h3>
-          <span className="text-[11px] px-2 py-0.5 rounded-full bg-zinc-800 text-zinc-400 font-mono">
+          <span className="text-[11px] px-2 py-0.5 rounded-full bg-zinc-200 dark:bg-zinc-800 text-zinc-700 dark:text-zinc-400 font-mono">
             {history.length} versions
           </span>
         </div>
 
         <div className="flex items-center gap-2">
           {selectedVersionB && (
-            <div className="flex items-center bg-[#0d0d10] p-0.5 rounded-lg border border-[#22222a]">
+            <div className="flex items-center bg-zinc-100 dark:bg-[#0d0d10] p-0.5 rounded-lg border border-zinc-200 dark:border-[#22222a]">
               <button
                 onClick={() => setCompareMode('split')}
                 className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
-                  compareMode === 'split' ? 'bg-zinc-800 text-lime-400 shadow' : 'text-zinc-400 hover:text-zinc-200'
+                  compareMode === 'split' ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs' : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
                 }`}
               >
                 Split Slider
@@ -183,7 +183,7 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
               <button
                 onClick={() => setCompareMode('side-by-side')}
                 className={`flex items-center gap-1 px-2.5 py-1 rounded text-xs font-medium transition-colors ${
-                  compareMode === 'side-by-side' ? 'bg-zinc-800 text-zinc-100 shadow' : 'text-zinc-400 hover:text-zinc-200'
+                  compareMode === 'side-by-side' ? 'bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 shadow-xs' : 'text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-200'
                 }`}
               >
                 <Columns className="w-3 h-3" />
@@ -195,7 +195,7 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
           <button
             onClick={() => handleRestore(selectedVersionA)}
             disabled={restoring}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-100 hover:bg-white text-zinc-900 font-semibold text-xs transition-all shadow-sm active:scale-95 disabled:opacity-50 cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-zinc-200 text-white dark:text-zinc-900 font-semibold text-xs transition-colors disabled:opacity-50 cursor-pointer"
             title="Restore this version as newest library asset"
           >
             <RotateCcw className={`w-3.5 h-3.5 ${restoring ? 'animate-spin' : ''}`} />
@@ -207,7 +207,7 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
       {/* Main Content: Split into Visual Comparison Area & Lineage Timeline */}
       <div className="flex-1 flex flex-col md:flex-row overflow-hidden">
         {/* Left Viewport: Interactive Comparison */}
-        <div className="flex-1 flex flex-col bg-[#0a0a0c] relative overflow-hidden">
+        <div className="flex-1 flex flex-col bg-zinc-100 dark:bg-zinc-950 relative overflow-hidden">
           {loading ? (
             <div className="flex-1 flex items-center justify-center text-zinc-500 text-xs">
               <span className="animate-pulse">Loading version nodes...</span>
@@ -254,18 +254,18 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
               <div className="absolute top-6 left-6 z-10 px-2.5 py-1 rounded bg-black/80 backdrop-blur border border-zinc-800 text-[11px] text-zinc-200 font-mono">
                 v{selectedVersionA.version ?? 1} (Left)
               </div>
-              <div className="absolute top-6 right-6 z-10 px-2.5 py-1 rounded bg-black/80 backdrop-blur border border-zinc-800 text-[11px] text-cyan-400 font-mono">
+              <div className="absolute top-6 right-6 z-10 px-2.5 py-1 rounded bg-black/80 backdrop-blur border border-zinc-800 text-[11px] text-zinc-300 font-mono">
                 v{selectedVersionB.version ?? 1} (Right)
               </div>
             </div>
           ) : compareMode === 'side-by-side' && selectedVersionB && urlA && urlB ? (
             <div className="flex-1 grid grid-cols-2 gap-3 p-4 overflow-hidden">
-              <div className="flex flex-col bg-[#121216] rounded-xl border border-[#22222c] overflow-hidden p-3">
-                <div className="flex items-center justify-between pb-2 border-b border-zinc-800 text-[11px]">
-                  <span className="font-semibold text-lime-400 font-mono">
+              <div className="flex flex-col bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden p-3 shadow-xs">
+                <div className="flex items-center justify-between pb-2 border-b border-zinc-200 dark:border-zinc-800 text-[11px]">
+                  <span className="font-semibold text-zinc-800 dark:text-zinc-200 font-mono">
                     Version {selectedVersionA.version ?? 1}
                   </span>
-                  <span className="text-zinc-400">
+                  <span className="text-zinc-500 dark:text-zinc-400">
                     {selectedVersionA.width}×{selectedVersionA.height}px · {formatBytes(selectedVersionA.currentSize)}
                   </span>
                 </div>
@@ -278,12 +278,12 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
                 </div>
               </div>
 
-              <div className="flex flex-col bg-[#121216] rounded-xl border border-[#22222c] overflow-hidden p-3">
-                <div className="flex items-center justify-between pb-2 border-b border-zinc-800 text-[11px]">
-                  <span className="font-semibold text-cyan-400 font-mono">
+              <div className="flex flex-col bg-white dark:bg-zinc-900 rounded-xl border border-zinc-200 dark:border-zinc-800 overflow-hidden p-3 shadow-xs">
+                <div className="flex items-center justify-between pb-2 border-b border-zinc-200 dark:border-zinc-800 text-[11px]">
+                  <span className="font-semibold text-zinc-800 dark:text-zinc-200 font-mono">
                     Version {selectedVersionB.version ?? 1}
                   </span>
-                  <span className="text-zinc-400">
+                  <span className="text-zinc-500 dark:text-zinc-400">
                     {selectedVersionB.width}×{selectedVersionB.height}px · {formatBytes(selectedVersionB.currentSize)}
                   </span>
                 </div>
@@ -308,11 +308,11 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
 
           {/* Bottom Diff Metrics Bar */}
           {selectedVersionB && (
-            <div className="h-12 border-t border-[#1e1e28] bg-[#121216]/90 backdrop-blur px-4 flex items-center justify-between text-xs font-mono">
-              <div className="flex items-center gap-4 text-zinc-400">
+            <div className="h-12 border-t border-zinc-200 dark:border-zinc-800 bg-white/90 dark:bg-zinc-900/90 backdrop-blur px-4 flex items-center justify-between text-xs font-mono">
+              <div className="flex items-center gap-4 text-zinc-600 dark:text-zinc-400">
                 <span>
                   Size Diff:{' '}
-                  <span className={sizeDiff <= 0 ? 'text-lime-400 font-semibold' : 'text-amber-400 font-semibold'}>
+                  <span className={sizeDiff <= 0 ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : 'text-amber-600 dark:text-amber-400 font-semibold'}>
                     {sizeDiff <= 0 ? '-' : '+'}{formatBytes(Math.abs(sizeDiff))}
                   </span>
                 </span>
@@ -320,7 +320,7 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
                   Dims: {selectedVersionA.width}×{selectedVersionA.height} vs {selectedVersionB.width}×{selectedVersionB.height}
                 </span>
               </div>
-              <div className="text-[11px] text-zinc-500">
+              <div className="text-[11px] text-zinc-400 dark:text-zinc-500">
                 Drag slider to inspect pixels
               </div>
             </div>
@@ -328,13 +328,13 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
         </div>
 
         {/* Right Sidebar: Timeline Lineage */}
-        <div className="w-full md:w-80 border-t md:border-t-0 md:border-l border-[#20202a] bg-[#131317] flex flex-col h-72 md:h-full">
-          <div className="p-3 border-b border-[#20202a] flex items-center justify-between">
-            <span className="text-[11px] font-semibold text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
-              <GitBranch className="w-3.5 h-3.5 text-zinc-500" />
+        <div className="w-full md:w-80 border-t md:border-t-0 md:border-l border-zinc-200 dark:border-[#20202a] bg-zinc-50/50 dark:bg-[#131317] flex flex-col h-72 md:h-full">
+          <div className="p-3 border-b border-zinc-200 dark:border-[#20202a] flex items-center justify-between">
+            <span className="text-[11px] font-semibold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+              <GitBranch className="w-3.5 h-3.5 text-zinc-400" />
               Transformation Tree
             </span>
-            <span className="text-[10px] text-zinc-500">Click to compare</span>
+            <span className="text-[10px] text-zinc-400">Click to compare</span>
           </div>
 
           <div className="flex-1 overflow-y-auto p-3 space-y-2.5">
@@ -346,12 +346,12 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
               return (
                 <div
                   key={item.id}
-                  className={`p-3 rounded-xl border transition-all cursor-pointer relative ${
+                  className={`p-3 rounded-lg border transition-all cursor-pointer relative ${
                     isSelectedA
-                      ? 'bg-zinc-800/80 border-zinc-500 shadow-sm'
+                      ? 'bg-white dark:bg-zinc-800/80 border-zinc-400 dark:border-zinc-500 shadow-xs'
                       : isSelectedB
-                      ? 'bg-zinc-800/50 border-zinc-600'
-                      : 'bg-[#18181f] border-[#262634] hover:border-zinc-700'
+                      ? 'bg-zinc-100 dark:bg-zinc-800/50 border-zinc-300 dark:border-zinc-600'
+                      : 'bg-white dark:bg-[#18181f] border-zinc-200 dark:border-[#262634] hover:border-zinc-300 dark:hover:border-zinc-700'
                   }`}
                   onClick={() => {
                     if (selectedVersionA.id !== item.id) {
@@ -362,24 +362,22 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex items-center gap-2">
-                      <span className={`text-[11px] font-mono font-bold px-1.5 py-0.5 rounded ${
-                        isRoot ? 'bg-zinc-800 text-zinc-300' : 'bg-zinc-800 text-zinc-300 font-mono'
-                      }`}>
+                      <span className="text-[11px] font-mono font-bold px-1.5 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300">
                         v{item.version ?? (index + 1)}
                       </span>
-                      <span className="font-medium text-xs text-zinc-200 truncate max-w-[130px]">
+                      <span className="font-medium text-xs text-zinc-800 dark:text-zinc-200 truncate max-w-[130px]">
                         {isRoot ? 'Original Master' : item.variantType ? item.variantType.toUpperCase() : 'Derived'}
                       </span>
                     </div>
 
                     <div className="flex items-center gap-1">
                       {isSelectedA && (
-                        <span className="text-[10px] bg-zinc-100 text-zinc-900 px-1.5 py-0.5 rounded font-bold">
+                        <span className="text-[10px] bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 px-1.5 py-0.5 rounded font-bold">
                           Active
                         </span>
                       )}
                       {isSelectedB && !isSelectedA && (
-                        <span className="text-[10px] bg-zinc-700 text-zinc-200 px-1.5 py-0.5 rounded font-bold">
+                        <span className="text-[10px] bg-zinc-200 text-zinc-800 dark:bg-zinc-700 dark:text-zinc-200 px-1.5 py-0.5 rounded font-bold">
                           Compare
                         </span>
                       )}
@@ -387,12 +385,12 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
                   </div>
 
                   {/* Operation Note */}
-                  <p className="text-[11px] text-zinc-400 mt-1.5 leading-snug">
+                  <p className="text-[11px] text-zinc-600 dark:text-zinc-400 mt-1.5 leading-snug">
                     {item.operationNote || (isRoot ? 'Imported source image' : `Processed with ${item.variantType}`)}
                   </p>
 
                   {/* Metadata Specs */}
-                  <div className="flex items-center justify-between text-[10px] text-zinc-500 font-mono mt-2 pt-2 border-t border-zinc-800/60">
+                  <div className="flex items-center justify-between text-[10px] text-zinc-400 dark:text-zinc-500 font-mono mt-2 pt-2 border-t border-zinc-100 dark:border-zinc-800/60">
                     <span>{item.width}×{item.height}px</span>
                     <span>{formatBytes(item.currentSize)}</span>
                     <span className="uppercase">{item.mimeType.replace('image/', '')}</span>
@@ -405,7 +403,7 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
                         e.stopPropagation();
                         handleDownload(item);
                       }}
-                      className="p-1 rounded text-zinc-400 hover:text-zinc-200 hover:bg-zinc-800 transition-colors"
+                      className="p-1 rounded text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition-colors"
                       title="Download this version"
                     >
                       <Download className="w-3.5 h-3.5" />
@@ -415,10 +413,10 @@ export const VersionHistoryPanel: React.FC<VersionHistoryPanelProps> = ({
                         e.stopPropagation();
                         handleRestore(item);
                       }}
-                      className="flex items-center gap-1 px-2 py-1 rounded bg-zinc-800 hover:bg-zinc-700 text-zinc-200 text-[10px] font-medium transition-colors"
+                      className="flex items-center gap-1 px-2 py-1 rounded bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-zinc-800 dark:text-zinc-200 text-[10px] font-medium transition-colors"
                       title="Restore as newest"
                     >
-                      <RotateCcw className="w-3 h-3 text-lime-400" />
+                      <RotateCcw className="w-3 h-3 text-zinc-500" />
                       <span>Restore</span>
                     </button>
                   </div>

@@ -21,7 +21,7 @@ export const AppShell: React.FC = () => {
   }, [initTheme]);
 
   return (
-    <div className="flex h-screen w-screen overflow-hidden bg-[#0a0a0c] text-zinc-100 font-sans">
+    <div className="flex h-screen w-screen overflow-hidden bg-zinc-50 dark:bg-[#09090b] text-zinc-900 dark:text-zinc-100 font-sans">
       {/* Desktop Persistent Sidebar */}
       <div className="hidden md:block shrink-0 h-full">
         <Sidebar />
@@ -31,7 +31,7 @@ export const AppShell: React.FC = () => {
       {mobileDrawerOpen && (
         <div className="fixed inset-0 z-50 md:hidden flex">
           <div
-            className="fixed inset-0 bg-black/70 backdrop-blur-sm transition-opacity"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm transition-opacity"
             onClick={() => setMobileDrawerOpen(false)}
           />
           <div className="relative z-10 flex h-full">
@@ -44,7 +44,7 @@ export const AppShell: React.FC = () => {
       <div className="flex-1 flex flex-col h-full min-w-0 overflow-hidden">
         <TopBar />
 
-        <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 pb-24 md:p-6 md:pb-6 lg:p-8 bg-[#0a0a0c]">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden p-4 pb-24 md:p-6 md:pb-6 lg:p-8 bg-zinc-50 dark:bg-[#09090b]">
           <div className="max-w-7xl mx-auto w-full">
             <ErrorBoundary>
               <Outlet />

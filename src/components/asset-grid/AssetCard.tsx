@@ -45,14 +45,14 @@ export const AssetCard: React.FC<AssetCardProps> = ({ asset, onOpenPreview, isTr
         onContextMenu={handleContextMenu}
         onClick={() => onOpenPreview(asset)}
         className={cn(
-          'interactive-card group relative flex flex-col rounded-xl bg-[#131317] border transition-all duration-200 cursor-pointer overflow-hidden select-none hover:shadow-lg',
+          'interactive-card group relative flex flex-col rounded-xl bg-white dark:bg-[#121216] border transition-all duration-150 cursor-pointer overflow-hidden select-none',
           isSelected
-            ? 'border-lime-400 ring-1 ring-lime-400 shadow-[0_0_12px_rgba(163,230,53,0.15)]'
-            : 'border-[#22222a] hover:border-zinc-700 hover:bg-[#16161d]'
+            ? 'border-zinc-900 dark:border-zinc-100 ring-1 ring-zinc-900 dark:ring-zinc-100 shadow-sm'
+            : 'border-zinc-200 dark:border-[#22222a] hover:border-zinc-300 dark:hover:border-zinc-700'
         )}
       >
         {/* Thumbnail Viewport */}
-        <div className="relative aspect-square w-full overflow-hidden bg-[#0c0c0e]">
+        <div className="relative aspect-square w-full overflow-hidden bg-zinc-100 dark:bg-[#0c0c0e]">
           <AssetThumbnail assetId={asset.id} alt={asset.filename} />
 
           {/* Top Overlays: Checkbox & Star */}
@@ -60,14 +60,14 @@ export const AssetCard: React.FC<AssetCardProps> = ({ asset, onOpenPreview, isTr
             <button
               onClick={handleSelectClick}
               className={cn(
-                'w-6 h-6 sm:w-5 sm:h-5 rounded-md flex items-center justify-center transition-all interactive-press',
+                'w-5 h-5 rounded-md flex items-center justify-center transition-all interactive-press',
                 isSelected
-                  ? 'bg-lime-400 text-black shadow-sm opacity-100'
-                  : 'bg-black/60 text-white/40 hover:text-white/80 hover:bg-black/80 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 border border-white/20'
+                  ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-xs opacity-100'
+                  : 'bg-black/40 text-white/60 hover:text-white hover:bg-black/70 opacity-0 group-hover:opacity-100 border border-white/20'
               )}
               title={isSelected ? 'Deselect' : 'Select'}
             >
-              <Check className="w-3.5 h-3.5 stroke-[3]" />
+              <Check className="w-3 h-3 stroke-[2.5]" />
             </button>
           </div>
 
@@ -76,30 +76,30 @@ export const AssetCard: React.FC<AssetCardProps> = ({ asset, onOpenPreview, isTr
               <button
                 onClick={handleFavoriteClick}
                 className={cn(
-                  'w-6 h-6 rounded-md flex items-center justify-center transition-all interactive-press',
+                  'w-5 h-5 rounded-md flex items-center justify-center transition-all interactive-press',
                   asset.isFavorite
-                    ? 'text-yellow-400 bg-black/60 shadow-sm opacity-100'
-                    : 'text-white/70 hover:text-yellow-400 bg-black/50 hover:bg-black/80 opacity-80 sm:opacity-0 sm:group-hover:opacity-100'
+                    ? 'text-amber-400 bg-black/60 shadow-xs opacity-100'
+                    : 'text-white/60 hover:text-amber-300 bg-black/40 hover:bg-black/70 opacity-0 group-hover:opacity-100'
                 )}
                 title={asset.isFavorite ? 'Remove Favorite' : 'Favorite'}
               >
-                <Star className="w-3.5 h-3.5" fill={asset.isFavorite ? 'currentColor' : 'none'} />
+                <Star className="w-3 h-3" fill={asset.isFavorite ? 'currentColor' : 'none'} />
               </button>
             )}
 
             <button
               onClick={handleDotsClick}
-              className="w-6 h-6 rounded-md flex items-center justify-center text-white/70 hover:text-white bg-black/50 hover:bg-black/80 opacity-80 sm:opacity-0 sm:group-hover:opacity-100 transition-all interactive-press"
+              className="w-5 h-5 rounded-md flex items-center justify-center text-white/60 hover:text-white bg-black/40 hover:bg-black/70 opacity-0 group-hover:opacity-100 transition-all interactive-press"
               title="More actions"
             >
-              <MoreVertical className="w-3.5 h-3.5" />
+              <MoreVertical className="w-3 h-3" />
             </button>
           </div>
 
           {/* Variant Badge */}
           {asset.variantType && (
             <div className="absolute bottom-2 left-2 z-10">
-              <span className="px-1.5 py-0.5 rounded bg-black/75 backdrop-blur-sm border border-lime-400/40 text-[9px] font-mono uppercase text-lime-400 tracking-wider font-semibold">
+              <span className="px-1.5 py-0.2 rounded bg-black/75 backdrop-blur-sm border border-white/10 text-[9px] font-mono uppercase text-zinc-300 tracking-wider font-medium">
                 {asset.variantType}
               </span>
             </div>
@@ -107,12 +107,12 @@ export const AssetCard: React.FC<AssetCardProps> = ({ asset, onOpenPreview, isTr
         </div>
 
         {/* Card Footer Info */}
-        <div className="p-3 space-y-1">
-          <p className="text-xs font-semibold text-zinc-200 truncate" title={asset.filename}>
+        <div className="p-2.5 space-y-0.5">
+          <p className="text-xs font-medium text-zinc-800 dark:text-zinc-200 truncate" title={asset.filename}>
             {asset.filename}
           </p>
 
-          <div className="flex items-center justify-between text-[11px] text-zinc-500 font-mono">
+          <div className="flex items-center justify-between text-[10px] text-zinc-400 dark:text-zinc-500 font-mono">
             <span>{asset.width}×{asset.height}</span>
             <span>{formatBytes(asset.currentSize)}</span>
           </div>

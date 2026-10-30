@@ -315,16 +315,16 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
   return (
     <div className="w-full h-full flex flex-col justify-between select-none overflow-hidden relative">
       {/* Top Inspector Bar */}
-      <div className="w-full flex items-center justify-between px-4 py-2.5 bg-zinc-900/90 backdrop-blur-md border-b border-zinc-800 z-30 text-xs">
+      <div className="w-full flex items-center justify-between px-4 py-2.5 bg-white/95 dark:bg-zinc-900/95 backdrop-blur-md border-b border-zinc-200 dark:border-zinc-800 z-30 text-xs">
         {/* Comparison View Mode Toggles */}
-        <div className="flex items-center gap-1.5 bg-zinc-950 p-1 rounded-lg border border-zinc-800">
+        <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-950 p-1 rounded-lg border border-zinc-200 dark:border-zinc-800">
           <button
             type="button"
             onClick={() => setViewMode('split')}
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
               viewMode === 'split'
-                ? 'bg-lime-400 text-black shadow-sm'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-sm'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
             }`}
             title="Interactive Split Slider"
           >
@@ -335,10 +335,10 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
           <button
             type="button"
             onClick={() => setViewMode('sideBySide')}
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
               viewMode === 'sideBySide'
-                ? 'bg-lime-400 text-black shadow-sm'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-sm'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
             }`}
             title="Side-by-Side Dual View"
           >
@@ -349,10 +349,10 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
           <button
             type="button"
             onClick={() => setViewMode('heatmap')}
-            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold transition-all ${
+            className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium transition-all ${
               viewMode === 'heatmap'
-                ? 'bg-lime-400 text-black shadow-sm'
-                : 'text-zinc-400 hover:text-zinc-200'
+                ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 shadow-sm'
+                : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-zinc-200'
             }`}
             title="Artifact Heatmap (Difference Delta)"
           >
@@ -363,11 +363,11 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
 
         {/* Zoom & Magnification Controls (100% to 800% for pixel artifact inspection) */}
         <div className="flex items-center gap-2">
-          <div className="flex items-center gap-1 bg-zinc-950 p-1 rounded-lg border border-zinc-800 text-zinc-400">
+          <div className="flex items-center gap-1 bg-zinc-100 dark:bg-zinc-950 p-1 rounded-lg border border-zinc-200 dark:border-zinc-800 text-zinc-600 dark:text-zinc-400">
             <button
               type="button"
               onClick={() => setZoomLevel((z) => Math.max(100, z / 2))}
-              className="p-1 hover:text-zinc-200"
+              className="p-1 hover:text-zinc-900 dark:hover:text-zinc-200"
               title="Zoom Out"
             >
               <ZoomOut className="w-3.5 h-3.5" />
@@ -381,8 +381,10 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
                   setZoomLevel(level);
                   if (level === 100) setPan({ x: 0, y: 0 });
                 }}
-                className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-semibold transition-colors ${
-                  zoomLevel === level ? 'bg-zinc-800 text-lime-400' : 'hover:text-zinc-200'
+                className={`px-1.5 py-0.5 rounded text-[10px] font-mono font-medium transition-colors ${
+                  zoomLevel === level
+                    ? 'bg-zinc-200 text-zinc-900 dark:bg-zinc-800 dark:text-zinc-100'
+                    : 'hover:text-zinc-900 dark:hover:text-zinc-200'
                 }`}
               >
                 {level}%
@@ -392,7 +394,7 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
             <button
               type="button"
               onClick={() => setZoomLevel((z) => Math.min(800, z * 2))}
-              className="p-1 hover:text-zinc-200"
+              className="p-1 hover:text-zinc-900 dark:hover:text-zinc-200"
               title="Zoom In"
             >
               <ZoomIn className="w-3.5 h-3.5" />
@@ -401,7 +403,7 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
             <button
               type="button"
               onClick={handleResetZoom}
-              className="p-1 hover:text-zinc-200 border-l border-zinc-800 ml-1"
+              className="p-1 hover:text-zinc-900 dark:hover:text-zinc-200 border-l border-zinc-200 dark:border-zinc-800 ml-1"
               title="Reset 1:1 view"
             >
               <Maximize2 className="w-3.5 h-3.5" />
@@ -417,12 +419,12 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
         style={{
           cursor: zoomLevel > 100 ? (isPanning ? 'grabbing' : 'grab') : 'default',
         }}
-        className="flex-1 w-full overflow-hidden relative flex items-center justify-center p-4 bg-[radial-gradient(#1c1c24_1px,transparent_1px)] bg-[size:16px_16px] bg-[#0c0c10]"
+        className="flex-1 w-full overflow-hidden relative flex items-center justify-center p-4 bg-zinc-50 dark:bg-zinc-950 border-b border-zinc-200 dark:border-zinc-800"
       >
         {/* Loading Spinner Indicator */}
         {isProcessing && (
-          <div className="absolute top-4 right-4 z-40 flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-black/80 backdrop-blur border border-lime-400/40 text-[10px] text-lime-400 font-semibold shadow-lg">
-            <Sparkles className="w-3 h-3 animate-spin" />
+          <div className="absolute top-4 right-4 z-40 flex items-center gap-1.5 px-2.5 py-1 rounded-md bg-white/90 dark:bg-zinc-900/90 backdrop-blur border border-zinc-200 dark:border-zinc-800 text-[11px] text-zinc-900 dark:text-zinc-100 font-medium shadow-sm">
+            <Sparkles className="w-3 h-3 animate-spin text-zinc-600 dark:text-zinc-400" />
             <span>Analyzing quality...</span>
           </div>
         )}
@@ -462,19 +464,19 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
             {/* Draggable Split Divider Line & Handle */}
             <div
               onMouseDown={handleSplitMouseDown}
-              className="absolute inset-y-0 w-1 bg-lime-400 cursor-ew-resize z-20 shadow-[0_0_10px_rgba(163,230,53,0.8)]"
+              className="absolute inset-y-0 w-0.5 bg-white cursor-ew-resize z-20 shadow-md"
               style={{ left: `${splitPos}%` }}
             >
-              <div className="absolute top-1/2 -translate-y-1/2 -left-3.5 w-8 h-8 rounded-full bg-lime-400 border-2 border-black flex items-center justify-center text-black shadow-lg cursor-ew-resize hover:scale-110 transition-transform">
-                <Columns className="w-3.5 h-3.5" />
+              <div className="absolute top-1/2 -translate-y-1/2 -left-3 w-6 h-6 rounded-full bg-white border border-zinc-300 dark:border-zinc-700 flex items-center justify-center text-zinc-900 shadow-md cursor-ew-resize hover:scale-105 transition-transform">
+                <Columns className="w-3 h-3" />
               </div>
             </div>
 
             {/* Badges on Viewport */}
-            <div className="absolute top-3 left-3 pointer-events-none z-10 px-2.5 py-1 rounded-md bg-black/75 backdrop-blur border border-white/10 text-[10px] font-mono text-zinc-300">
+            <div className="absolute top-3 left-3 pointer-events-none z-10 px-2 py-0.5 rounded-md bg-black/75 backdrop-blur-sm border border-white/10 text-[10px] font-mono text-zinc-300">
               ORIGINAL ({formatBytes(originalSize)})
             </div>
-            <div className="absolute top-3 right-3 pointer-events-none z-10 px-2.5 py-1 rounded-md bg-black/75 backdrop-blur border border-white/10 text-[10px] font-mono text-lime-400 font-bold">
+            <div className="absolute top-3 right-3 pointer-events-none z-10 px-2 py-0.5 rounded-md bg-black/75 backdrop-blur-sm border border-white/10 text-[10px] font-mono text-white font-medium">
               COMPRESSED ({processedSize > 0 ? formatBytes(processedSize) : '...'})
             </div>
           </div>
@@ -502,13 +504,13 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
             </div>
 
             {/* Right: Compressed */}
-            <div className="flex flex-col items-center justify-center p-2 rounded-xl bg-zinc-900/60 border border-zinc-800 relative">
+            <div className="flex flex-col items-center justify-center p-2 rounded-xl bg-zinc-100/60 dark:bg-zinc-900/60 border border-zinc-200 dark:border-zinc-800 relative">
               <img
                 src={processedUrl || originalUrl}
                 alt="Compressed"
                 className="max-h-[460px] max-w-full object-contain rounded-lg"
               />
-              <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-black/80 text-[10px] font-mono text-lime-400 font-bold">
+              <div className="absolute top-3 left-3 px-2 py-0.5 rounded bg-zinc-900/90 text-[10px] font-mono text-zinc-100 font-semibold shadow-sm">
                 Compressed ({processedSize > 0 ? formatBytes(processedSize) : '...'})
               </div>
             </div>
@@ -518,15 +520,15 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
         {/* View Mode 3: Artifact Heatmap (Difference Delta) */}
         {viewMode === 'heatmap' && (
           <div
-            className="relative max-h-[520px] max-w-full inline-block overflow-hidden rounded-xl border border-zinc-800 shadow-2xl transition-transform duration-75"
+            className="relative max-h-[520px] max-w-full inline-block overflow-hidden rounded-xl border border-zinc-200 dark:border-zinc-800 shadow-2xl transition-transform duration-75"
             style={{
               transform: `scale(${zoomLevel / 100}) translate(${pan.x / (zoomLevel / 100)}px, ${pan.y / (zoomLevel / 100)}px)`,
               transformOrigin: 'center center',
             }}
           >
             <canvas ref={heatmapCanvasRef} className="max-h-[500px] max-w-full object-contain block" />
-            <div className="absolute top-3 left-3 px-2.5 py-1 rounded bg-black/80 text-[10px] text-zinc-300 font-mono flex items-center gap-1.5">
-              <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-pulse" />
+            <div className="absolute top-3 left-3 px-2.5 py-1 rounded-md bg-zinc-900/90 text-[10px] text-zinc-100 font-mono flex items-center gap-1.5 border border-white/10 shadow-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-rose-500" />
               <span>Amplified Artifact Difference Map</span>
             </div>
           </div>
@@ -535,10 +537,10 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
 
       {/* Warnings Banner (Lost Transparency or Extreme Artifacts) */}
       {(isLossyAlphaWarning || isAggressiveQualityWarning) && (
-        <div className="px-4 py-2 border-t border-zinc-800/80 bg-zinc-950/80 flex items-center gap-3">
+        <div className="px-4 py-2 border-t border-zinc-200 dark:border-zinc-800 bg-amber-500/5 dark:bg-amber-500/10 flex items-center gap-3">
           {isLossyAlphaWarning && (
-            <div className="flex items-center gap-2 text-xs text-amber-300 bg-amber-500/10 px-3 py-1 rounded-lg border border-amber-500/20">
-              <AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <div className="flex items-center gap-2 text-xs text-amber-700 dark:text-amber-300 bg-amber-500/10 px-3 py-1 rounded-lg border border-amber-500/20">
+              <AlertTriangle className="w-3.5 h-3.5 text-amber-500 shrink-0" />
               <span>
                 <strong>Lost Transparency Warning:</strong> JPEG discards alpha channels. Transparent areas will become white matte.
               </span>
@@ -546,7 +548,7 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
                 <button
                   type="button"
                   onClick={() => onFormatChange('image/webp')}
-                  className="ml-2 underline font-semibold text-amber-200 hover:text-white"
+                  className="ml-2 underline font-semibold text-amber-800 dark:text-amber-200 hover:opacity-80"
                 >
                   Switch to WebP
                 </button>
@@ -555,8 +557,8 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
           )}
 
           {isAggressiveQualityWarning && !isLossyAlphaWarning && (
-            <div className="flex items-center gap-2 text-xs text-amber-300 bg-amber-500/10 px-3 py-1 rounded-lg border border-amber-500/20">
-              <Activity className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+            <div className="flex items-center gap-2 text-xs text-amber-700 dark:text-amber-300 bg-amber-500/10 px-3 py-1 rounded-lg border border-amber-500/20">
+              <Activity className="w-3.5 h-3.5 text-amber-500 shrink-0" />
               <span>
                 <strong>High Artifact Risk:</strong> Quality is below 45%. Fine lines, gradients, and text may show noticeable blocking and ringing.
               </span>
@@ -566,13 +568,13 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
       )}
 
       {/* Bottom Quality Ladder & Metrics Comparison Bar */}
-      <div className="px-4 py-3 bg-[#111116] border-t border-zinc-800 flex flex-col gap-2.5 z-20">
+      <div className="px-4 py-3 bg-white dark:bg-zinc-900 border-t border-zinc-200 dark:border-zinc-800 flex flex-col gap-2.5 z-20">
         {/* Multi-Quality Comparison Ladder (Lets user compare 4 presets before saving) */}
         {ladderData.length > 0 && format !== 'image/png' && (
           <div className="space-y-1.5">
-            <div className="flex items-center justify-between text-[11px] text-zinc-400">
-              <span className="font-semibold flex items-center gap-1 text-zinc-300">
-                <Sliders className="w-3.5 h-3.5 text-lime-400" />
+            <div className="flex items-center justify-between text-[11px] text-zinc-500 dark:text-zinc-400">
+              <span className="font-medium flex items-center gap-1.5 text-zinc-800 dark:text-zinc-200">
+                <Sliders className="w-3.5 h-3.5 text-zinc-600 dark:text-zinc-400" />
                 Compare Quality Settings Before Saving
               </span>
               <span>Click any preset to apply</span>
@@ -586,19 +588,19 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
                     key={item.quality}
                     type="button"
                     onClick={() => onQualityChange && onQualityChange(item.quality)}
-                    className={`p-2 rounded-xl text-left border transition-all cursor-pointer ${
+                    className={`p-2.5 rounded-lg text-left border transition-all cursor-pointer ${
                       isSelected
-                        ? 'bg-lime-400/15 border-lime-400 text-lime-300 shadow-sm'
-                        : 'bg-zinc-900/80 border-zinc-800 hover:border-zinc-700 text-zinc-300'
+                        ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 border-zinc-900 dark:border-zinc-100 shadow-sm'
+                        : 'bg-zinc-50 dark:bg-zinc-950 border-zinc-200 dark:border-zinc-800 hover:border-zinc-300 dark:hover:border-zinc-700 text-zinc-700 dark:text-zinc-300'
                     }`}
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-bold text-xs">{item.quality}% Quality</span>
-                      {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-lime-400" />}
+                      <span className="font-semibold text-xs">{item.quality}% Quality</span>
+                      {isSelected && <CheckCircle2 className="w-3.5 h-3.5 text-white dark:text-zinc-900" />}
                     </div>
                     <div className="flex items-center justify-between mt-1 text-[11px] font-mono">
-                      <span className="text-zinc-400">{formatBytes(item.size)}</span>
-                      <span className={item.savings > 0 ? 'text-lime-400 font-semibold' : 'text-zinc-500'}>
+                      <span className={isSelected ? 'text-zinc-300 dark:text-zinc-600' : 'text-zinc-500'}>{formatBytes(item.size)}</span>
+                      <span className={isSelected ? 'text-white dark:text-zinc-900 font-semibold' : item.savings > 0 ? 'text-emerald-600 dark:text-emerald-400 font-semibold' : 'text-zinc-500'}>
                         {item.savings > 0 ? `-${item.savings}%` : '0%'}
                       </span>
                     </div>
@@ -610,22 +612,22 @@ export const QualityInspector: React.FC<QualityInspectorProps> = ({
         )}
 
         {/* Technical Specs Footer */}
-        <div className="flex items-center justify-between pt-1 border-t border-zinc-800/60 text-xs">
-          <div className="flex items-center gap-4 text-zinc-400">
-            <span className="flex items-center gap-1">
-              <Info className="w-3.5 h-3.5 text-zinc-500" />
-              <span>Dimensions: <strong className="font-mono text-zinc-200">{sourceAsset?.width || processedOutput?.width} × {sourceAsset?.height || processedOutput?.height} px</strong></span>
+        <div className="flex items-center justify-between pt-1 border-t border-zinc-200 dark:border-zinc-800/80 text-xs">
+          <div className="flex items-center gap-4 text-zinc-600 dark:text-zinc-400">
+            <span className="flex items-center gap-1.5">
+              <Info className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500" />
+              <span>Dimensions: <strong className="font-mono text-zinc-900 dark:text-zinc-200">{sourceAsset?.width || processedOutput?.width} × {sourceAsset?.height || processedOutput?.height} px</strong></span>
             </span>
             <span>•</span>
-            <span>Format: <strong className="font-mono text-zinc-200 uppercase">{format.replace('image/', '')}</strong></span>
+            <span>Format: <strong className="font-mono text-zinc-900 dark:text-zinc-200 uppercase">{format.replace('image/', '')}</strong></span>
           </div>
 
           <div className="flex items-center gap-3">
-            <span className="text-zinc-400 font-mono">
-              {formatBytes(originalSize)} → <strong className="text-lime-400 font-bold">{processedSize > 0 ? formatBytes(processedSize) : '...'}</strong>
+            <span className="text-zinc-500 dark:text-zinc-400 font-mono">
+              {formatBytes(originalSize)} → <strong className="text-zinc-900 dark:text-zinc-100 font-semibold">{processedSize > 0 ? formatBytes(processedSize) : '...'}</strong>
             </span>
             {savingsPercent > 0 && (
-              <span className="px-2 py-0.5 rounded-full bg-lime-400/20 text-lime-400 font-mono font-bold text-[11px]">
+              <span className="px-2 py-0.5 rounded-md bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20 font-mono font-semibold text-[11px]">
                 -{savingsPercent}% Saved
               </span>
             )}
